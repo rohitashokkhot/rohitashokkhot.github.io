@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS selectors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      :root {
+        --main-bg: #1b1212;
+        --main-text: #f0ead6;
+        --main-text2: #fff5ee;
+        --main-border: rgba(240, 234, 214, 0.4);
+      }
+      body {
+        background-color: var(--main-bg);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        margin: 0 auto;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.2rem;
+        color: var(--main-text2);
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        overflow-wrap: break-word;
+      }
+      #root,
+      #__next {
+        isolation: isolate;
+      }
+
+      header,
+      footer {
+        width: 500px;
+        border: 1px dashed var(--main-border);
+        margin: 0 auto;
+        padding: 5px 10px;
+        border-radius: 30px;
+        /* margin-top: 30px; */
+        height: 40px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      h1 {
+        font-family: "Luckiest Guy", cursive;
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 30px;
+        letter-spacing: 0.15rem;
+      }
+
+      main {
+        width: 500px;
+        border: 1px dashed var(--main-border);
+        margin: 0 auto;
+        padding: 5px 10px;
+        border-radius: 30px;
+        margin-top: 30px;
+        height: 400px;
+      }
+
+      div,
+      nav,
+      p {
+        width: 400px;
+        border: 1px dashed var(--main-border);
+        margin: 0 auto;
+        padding: 5px 10px;
+        border-radius: 30px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        height: 40px;
+        text-align: center;
+      }
+
+      p {
+        background-color: limegreen;
+      }
+
+      .class1 {
+        background-color: hotpink;
+      }
+
+      #firstp,
+      #firstdiv {
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS selectors</h1>
+    <header>Header</header>
+    <main>
+      <nav>Nav</nav>
+      <p class="class1">P class="class1"</p>
+      <p id="firstp">P id="firstp"</p>
+      <div id="firstdiv">DIV id="firstdiv"</div>
+      <div class="class1">DIV class="class1"</div>
+    </main>
+    <p id="firstp">P id="firstp"</p>
+    <footer>Footer</footer>
+  </body>
+</html>
