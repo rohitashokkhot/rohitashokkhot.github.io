@@ -20,7 +20,7 @@ section {
 
 img {
   /* min-width: 100%; */
-  padding: 10px;
+  /* padding: 10px; */
   border: 2px solid goldenrod;
 }
 
@@ -52,6 +52,13 @@ nav {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
+  justify-content: end;
+  align-items: flex-start;
+  border: 4px dotted darkgoldenrod;
+}
+
+.portfolio > img {
+  /* margin: auto; */
 }
 
 .my-para {
@@ -64,4 +71,9 @@ nav {
   font-family: "Luckiest Guy", cursive;
   font-weight: 400;
   font-style: normal;
+}
+
+.image-container > img {
+  margin: auto;
+  /* width: 100%; */
 }
