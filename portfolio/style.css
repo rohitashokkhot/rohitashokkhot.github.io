@@ -5,12 +5,17 @@ body {
   margin: auto;
   background-color: bisque;
   color: black;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 header,
 main,
 section {
   padding: 30px 0;
+  /* margin: auto; */
 }
 
 img {
@@ -19,13 +24,18 @@ img {
   border: 2px solid goldenrod;
 }
 
+h1 {
+  font-size: 2rem;
+  padding-bottom: 10px;
+}
+
 .cover,
 nav {
   display: flex;
   gap: 1rem;
   justify-content: center;
   padding-bottom: 10px;
-  background-color: darkseagreen;
+  border: 1px dotted sienna;
   align-items: center;
 }
 
@@ -35,11 +45,23 @@ nav {
 
 .cover > * {
   flex: 1;
-  background-color: greenyellow;
+  border: 1px dotted darkgoldenrod;
 }
 
 .portfolio {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1rem;
+}
+
+.my-para {
+  width: 600px;
+  margin: auto;
+  border: 1px dashed coral;
+}
+
+.my-heading {
+  font-family: "Luckiest Guy", cursive;
+  font-weight: 400;
+  font-style: normal;
 }
