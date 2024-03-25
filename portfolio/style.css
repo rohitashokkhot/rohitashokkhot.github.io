@@ -1,0 +1,45 @@
+body {
+  text-align: center;
+  /* display: flex; */
+  max-width: 900px;
+  margin: auto;
+  background-color: bisque;
+  color: black;
+}
+
+header,
+main,
+section {
+  padding: 30px 0;
+}
+
+img {
+  /* min-width: 100%; */
+  padding: 10px;
+  border: 2px solid goldenrod;
+}
+
+.cover,
+nav {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  padding-bottom: 10px;
+  background-color: darkseagreen;
+  align-items: center;
+}
+
+.cover {
+  min-height: 300px;
+}
+
+.cover > * {
+  flex: 1;
+  background-color: greenyellow;
+}
+
+.portfolio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
