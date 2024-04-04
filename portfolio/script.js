@@ -26,3 +26,12 @@ console.log("Step is now", step);
 let heading = document.querySelector(".my-heading");
 let myD = ` <h1> my full name is: rohit khot </h1>`;
 console.log(heading);
+
+let myImage = document.querySelector(".image-container img");
+console.log(myImage.dataset.name);
+
+myImage.addEventListener("click", function () {
+  if (myImage.dataset.name != "Rohit")
+    alert(`Sorry you are not Rohit, ${myImage.dataset.name} !!!`);
+  else alert(`Welcome ${myImage.dataset.name} !!!`);
+});
