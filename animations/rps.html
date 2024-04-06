@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f0f0f0;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .choices {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+      }
+
+      .choice {
+        display: inline-block;
+        width: 150px;
+        height: 150px;
+        margin: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .choice:hover {
+        transform: scale(1.1);
+      }
+
+      .result {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #333;
+      }
+
+      /* CSS animations for result display */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fadeIn {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="choices">
+      <div
+        class="choice"
+        onclick="playRound('rock')"
+        style="background-image: url('rock.png'); background-size: cover"
+      ></div>
+      <div
+        class="choice"
+        onclick="playRound('paper')"
+        style="background-image: url('paper.png'); background-size: cover"
+      ></div>
+      <div
+        class="choice"
+        onclick="playRound('scissors')"
+        style="background-image: url('scissors.png'); background-size: cover"
+      ></div>
+    </div>
+    <div class="result hidden" id="result"></div>
+
+    <!-- Sound effects -->
+    <audio id="winSound" src="win.mp3"></audio>
+    <audio id="loseSound" src="lose.mp3"></audio>
+    <audio id="tieSound" src="tie.mp3"></audio>
+
+    <script>
+      function playRound(playerChoice) {
+        const choices = ["rock", "paper", "scissors"];
+        const computerChoice =
+          choices[Math.floor(Math.random() * choices.length)];
+
+        const result = getResult(playerChoice, computerChoice);
+
+        displayResult(playerChoice, computerChoice, result);
+
+        playSound(result);
+      }
+
+      function getResult(playerChoice, computerChoice) {
+        if (playerChoice === computerChoice) {
+          return "tie";
+        } else if (
+          (playerChoice === "rock" && computerChoice === "scissors") ||
+          (playerChoice === "paper" && computerChoice === "rock") ||
+          (playerChoice === "scissors" && computerChoice === "paper")
+        ) {
+          return "win";
+        } else {
+          return "lose";
+        }
+      }
+
+      function displayResult(playerChoice, computerChoice, result) {
+        const resultElement = document.getElementById("result");
+        const resultText = getResultText(result);
+        resultElement.textContent = `${resultText} You chose ${playerChoice}. Computer chose ${computerChoice}.`;
+        resultElement.classList.remove("hidden");
+        resultElement.classList.add("fadeIn");
+
+        setTimeout(() => {
+          resultElement.classList.add("hidden");
+          resultElement.classList.remove("fadeIn");
+        }, 2000);
+      }
+
+      function getResultText(result) {
+        switch (result) {
+          case "win":
+            return "You win!";
+          case "lose":
+            return "You lose!";
+          default:
+            return "It's a tie!";
+        }
+      }
+
+      function playSound(result) {
+        const winSound = document.getElementById("winSound");
+        const loseSound = document.getElementById("loseSound");
+        const tieSound = document.getElementById("tieSound");
+
+        switch (result) {
+          case "win":
+            winSound.play();
+            break;
+          case "lose":
+            loseSound.play();
+            break;
+          case "tie":
+            tieSound.play();
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>

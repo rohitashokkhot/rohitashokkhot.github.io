@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.outer {
+  width: 800px;
+  height: 400px;
+  background-color: palevioletred;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.inner {
+  width: 200px;
+  height: 150px;
+  background-color: lightblue;
+  /* margin-bottom: 50px; */
+  line-height: 150px;
+  /* padding: 10px; */
+  border: 15px solid brown;
+}
