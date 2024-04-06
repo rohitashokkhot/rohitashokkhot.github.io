@@ -9,10 +9,6 @@ body {
   width: 800px;
   height: 400px;
   background-color: palevioletred;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  gap: 1rem;
 }
 
 .inner {
@@ -23,4 +19,29 @@ body {
   line-height: 150px;
   /* padding: 10px; */
   border: 15px solid brown;
+  flex-shrink: 0;
+}
+
+.flex-outer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.grid-outer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  overflow-x: auto;
+  overflow-y: auto;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-inner {
+  align-self: center;
+  justify-self: center;
 }
