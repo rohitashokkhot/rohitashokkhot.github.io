@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop Background Color</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      .color-box {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        cursor: move;
+      }
+
+      #box1 {
+        background-color: #3498db;
+      }
+
+      #box2 {
+        background-color: #e74c3c;
+      }
+
+      #box3 {
+        background-color: #2ecc71;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="box1" class="color-box" draggable="true"></div>
+    <div id="box2" class="color-box" draggable="true"></div>
+    <div id="box3" class="color-box" draggable="true"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
