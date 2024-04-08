@@ -7,7 +7,7 @@ body {
   margin: auto;
   max-width: 1000px;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -18,9 +18,10 @@ body {
 }
 
 .outer {
+  background-color: #1a120b;
   border: 2px dashed #e5e5cb;
-  width: 400px;
-  min-height: 200px;
+  width: 500px;
+  min-height: 150px;
   padding: 10px;
   display: flex;
   gap: 1rem;
@@ -28,10 +29,11 @@ body {
 
 .inner {
   background-color: #d5cea3;
-  width: 200px;
+  width: 100px;
   height: 100px;
   margin: 10px auto;
   border: 2px dotted #3c2a21;
+  border-radius: 50%;
   padding: 10px;
   /* line-height: 80px; */
 }
