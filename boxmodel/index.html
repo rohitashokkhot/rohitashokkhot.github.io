@@ -1,133 +1,35 @@
-<!-- Steps to understand box model: 
-  1. Open inspector (right click + inspect) or
-press Command+Shift+C or Command+Option+C (Control+Shift+C for windows).
-2. Look into -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS selectors</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Space+Grotesk&display=swap"
       rel="stylesheet"
     />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        /* box-sizing: content-box; */
-      }
-      * {
-        margin: 0;
-      }
-      body {
-        line-height: 1.5;
-        -webkit-font-smoothing: antialiased;
-        /* margin: 0 auto; */
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.2rem;
-        min-height: 100vh;
-        font-size: 1.25rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      img,
-      picture,
-      video,
-      canvas,
-      svg {
-        display: block;
-        max-width: 100%;
-      }
-      input,
-      button,
-      textarea,
-      select {
-        font: inherit;
-      }
-      p,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        overflow-wrap: break-word;
-      }
-      #root,
-      #__next {
-        isolation: isolate;
-      }
-
-      :root {
-        --clr-primary: #ee6352;
-      }
-
-      header {
-        font-family: "Luckiest Guy", cursive;
-        font-size: 2rem;
-        text-align: center;
-        padding-bottom: 20px;
-        letter-spacing: 0.15rem;
-      }
-
-      main {
-        display: flex;
-        align-items: center;
-      }
-
-      .parent {
-        display: flex;
-        height: 20vh;
-        border: 20px solid var(--clr-primary);
-        width: 80%;
-        max-width: 600px;
-        margin: 0 auto;
-        align-content: center;
-        justify-content: center;
-        padding: 20px;
-        background-color: mediumorchid;
-        margin-bottom: 20px;
-        /* margin: 20px; */
-      }
-
-      .child {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: auto;
-        width: 100%;
-        height: 100%;
-        background-color: aquamarine;
-        /* outline: 3px solid limegreen; */
-        text-align: center;
-      }
-
-      .centered {
-        margin: auto;
-        width: 50%;
-        border: 5px dashed #eee;
-        padding: 30px;
-      }
-    </style>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>Understanding box model</header>
-    <div class="parent">
-      <p class="child">content</p>
+    <div class="outer">
+      <!-- <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente eaque
+        ipsum dolorem quaerat accusantium quo atque eos minima ad porro. Ratione
+        itaque id laboriosam deserunt! Ducimus minima exercitationem hic
+        placeat.Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Sapiente eaque ipsum dolorem quaerat accusantium quo atque eos minima ad
+        porro. Ratione itaque id laboriosam deserunt! Ducimus minima
+        exercitationem hic placeat.
+      </p> -->
+      <div class="inner">
+        <p><a href="#">link 1</a><a href="#">link 2</a></p>
+      </div>
+      <div class="inner">
+        <p>Paragraph 2</p>
+      </div>
     </div>
-    <div class="parent">
-      <p class="child">content</p>
-    </div>
-
-    <!-- <footer>Footer</footer> -->
   </body>
 </html>
