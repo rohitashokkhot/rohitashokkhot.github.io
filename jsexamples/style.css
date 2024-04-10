@@ -30,3 +30,13 @@ body {
 .outer > * {
   padding: 5px;
 }
+
+.grade {
+  font-size: 1.4rem;
+  color: coral;
+}
+
+.fgrade {
+  font-size: 1.4rem;
+  color: crimson;
+}
