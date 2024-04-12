@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A simple calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <h1>A simple calculator</h1>
+    <div class="calculator-box">
+      <input type="text" id="display-screen" readonly />
+      <div class="keypad">
+        <button id="keyc" onclick="clearDisplay()">c</button>
+        <button id="keymemory" onclick="recallValue()">m</button>
+        <button id="keypercent" onclick="addToDisplay('%')">%</button>
+        <button id="keydivide" onclick="addToDisplay('/')">÷</button>
+        <button id="key7" onclick="addToDisplay('7')">7</button>
+        <button id="key8" onclick="addToDisplay('8')">8</button>
+        <button id="key9" onclick="addToDisplay('9')">9</button>
+        <button id="keyinto" onclick="addToDisplay('*')">x</button>
+        <button id="key4" onclick="addToDisplay('4')">4</button>
+        <button id="key5" onclick="addToDisplay('5')">5</button>
+        <button id="key6" onclick="addToDisplay('6')">6</button>
+        <button id="keyminus" onclick="addToDisplay('-')">-</button>
+        <button id="key1" onclick="addToDisplay('1')">1</button>
+        <button id="key2" onclick="addToDisplay('2')">2</button>
+        <button id="key3" onclick="addToDisplay('3')">3</button>
+        <button id="keyplus" onclick="addToDisplay('+')">+</button>
+        <button id="key0" onclick="addToDisplay('0')">0</button>
+        <button id="keydot" onclick="addToDisplay('.')">.</button>
+        <button id="keyequals" onclick="calculate('.')">=</button>
+      </div>
+    </div>
+  </body>
+</html>
