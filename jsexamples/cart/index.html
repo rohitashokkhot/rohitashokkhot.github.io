@@ -3,8 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="script.js"></script>
+    <title>Javascript examples</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <div class="outer">
+      <h1>Select Items from the Cart</h1>
+      <form id="cartForm">
+        <input
+          type="checkbox"
+          id="item1"
+          name="items"
+          value="T-shirt"
+          data-price="20"
+        />
+        <label for="item1">T-shirt - $20</label><br />
+
+        <input
+          type="checkbox"
+          id="item2"
+          name="items"
+          value="Jeans"
+          data-price="50"
+        />
+        <label for="item2">Jeans - $50</label><br />
+
+        <input
+          type="checkbox"
+          id="item3"
+          name="items"
+          value="Sneakers"
+          data-price="80"
+        />
+        <label for="item3">Sneakers - $80</label><br />
+
+        <input
+          type="checkbox"
+          id="item4"
+          name="items"
+          value="Backpack"
+          data-price="30"
+        />
+        <label for="item4">Backpack - $30</label><br />
+
+        <button type="button" onclick="submitForm()">Submit</button>
+      </form>
+    </div>
+  </body>
 </html>

@@ -24,3 +24,36 @@ function checkGrade(score) {
     body.style.backgroundColor = "gray";
   }
 }
+function getWeatherCategory(score) {
+  if (score > 30) return 4;
+  if (score > 20) return 3; // Score is between 21 and 30
+  if (score > 10) return 2; // Score is between 11 and 20
+  return 1; // Score is 10 or below
+}
+
+function checkWeather(score) {
+  const category = getWeatherCategory(score);
+  switch (category) {
+    case 4:
+      answerBox.textContent = "It's boiling, really hot!!!";
+      body.style.backgroundColor = "crimson";
+      break;
+    case 3:
+      answerBox.textContent = "You feels warm and sunny!!!";
+      body.style.backgroundColor = "orange";
+      break;
+    case 2:
+      answerBox.textContent = "You feels cool and breezy!!!";
+      body.style.backgroundColor = "lightblue";
+      break;
+    case 1:
+      answerBox.textContent = "I am shivering!!!";
+      body.style.backgroundColor = "gray";
+      break;
+    default:
+      answerBox.textContent = "Weather condition unknown.";
+      body.style.backgroundColor = "white";
+  }
+}
+
+// Usage: call `checkWeather(score);` where `score` is the temperature value.

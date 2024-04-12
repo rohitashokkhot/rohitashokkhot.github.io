@@ -7,11 +7,26 @@ let shoppingCart = [
 
 function calculateTotal(cart) {
   let total = 0;
-  for (let i = 0; i < cart.length; i++) {
-    total = total + cart[i].price;
+  cart.forEach(calculate);
+  function calculate(item) {
+    total += item.price;
   }
+  // for (let i = 0; i < cart.length; i++) {
+  //   total = total + cart[i].price;
+  // }
   console.log(total);
   return total;
+}
+
+function submitForm() {
+  const selectedItems = document.querySelectorAll(
+    'input[name="items"]:checked'
+  );
+  let total = 0;
+  selectedItems.forEach((item) => {
+    total += parseFloat(item.dataset.price); // Using dataset to get the price
+  });
+  alert("Total Price: $" + total);
 }
 
 function calculateDiscount(total) {
