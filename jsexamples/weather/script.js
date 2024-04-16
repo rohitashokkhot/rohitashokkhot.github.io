@@ -14,10 +14,10 @@ function checkGrade(score) {
     answerBox.textContent = "It's boiling, really hot!!!";
     body.style.backgroundColor = "crimson";
   } else if (score > 20 && score <= 30) {
-    answerBox.textContent = "You feels warm and sunny!!!";
+    answerBox.textContent = "It feels warm and sunny!!!";
     body.style.backgroundColor = "orange";
   } else if (score > 10 && score <= 20) {
-    answerBox.textContent = "You feels cool and breezy!!!";
+    answerBox.textContent = "It feels cool and breezy!!!";
     body.style.backgroundColor = "lightblue";
   } else {
     answerBox.textContent = "I am shivering!!!";
