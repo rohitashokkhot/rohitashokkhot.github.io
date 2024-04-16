@@ -26,7 +26,7 @@ function submitForm() {
   selectedItems.forEach((item) => {
     total += parseFloat(item.dataset.price); // Using dataset to get the price
   });
-  alert("Total Price: $" + total);
+  console.log("Total Price: $" + total);
 }
 
 function calculateDiscount(total) {
