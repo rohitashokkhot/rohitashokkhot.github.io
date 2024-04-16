@@ -27,6 +27,10 @@ function submitForm() {
     total += parseFloat(item.dataset.price); // Using dataset to get the price
   });
   console.log("Total Price: $" + total);
+  let finalPrice = calculateDiscount(total);
+  console.log("discounted price", finalPrice);
+  let msg = document.querySelector("#msg");
+  msg.innerHTML = `the total price is <strong> ${total} </strong> <br/> The discounted price is <strong> ${finalPrice} </strong>`;
 }
 
 function calculateDiscount(total) {
