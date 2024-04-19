@@ -23,6 +23,7 @@ body {
   min-height: 200px;
   padding: 10px;
   display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
@@ -34,6 +35,10 @@ body {
   border: 2px dotted #3c2a21;
   padding: 10px;
   /* line-height: 80px; */
+}
+
+.round {
+  border-radius: 50%;
 }
 
 a {
