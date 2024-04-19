@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="outer">
+      <p>What's your choice?</p>
+      <div class="inner mine">
+        <button id="rock-button" class="rock">
+          <img src="img/rock.png" alt="" />
+        </button>
+
+        <button id="paper-button" class="paper" onclick="check(2)">
+          <img src="img/paper.png" alt="" />
+        </button>
+        <button id="scissors-button" class="scissors" onclick="check(3)">
+          <img src="img/scissor.png" alt="" />
+        </button>
+      </div>
+      <div id="selection"></div>
+      <div id="result"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+/* https://colorhunt.co/palette/1a120b3c2a21d5cea3e5e5cb */
+
+body {
+  background-color: #1a120b;
+  display: flex;
+  text-align: center;
+  margin: auto;
+  max-width: 1000px;
+  flex-direction: row;
+  gap: 4rem;
+  justify-content: center;
+  align-items: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #e5e5cb;
+  font-size: 1.3rem;
+}
+
+.outer {
+  border: 1px dashed #e5e5cb9e;
+  min-height: 300px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+.mine > button:hover {
+  scale: 1.1;
+}
+
+.mine > button:active {
+  scale: 1.1;
+}
+
+img {
+  width: 150px;
+  height: 300px;
+  padding: 10px;
+}
+.inner {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+a {
+  margin-right: 10px;
+  display: block;
+}
+
+.rock {
+  background-color: limegreen;
+}
+.paper {
+  background-color: purple;
+}
+#box3 {
+  background-color: aquamarine;
+}
+.scissors {
+  background-color: coral;
+}
+#selection {
+  display: flex;
+  justify-content: space-between;
+}
+
+#result {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.tie {
+  color: aquamarine;
+}
+.win {
+  color: goldenrod;
+}
+
+.loose {
+  color: crimson;
+}
