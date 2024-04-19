@@ -16,10 +16,13 @@ function check(myChoice) {
   const sel = document.querySelector("#selection");
   const res = document.querySelector("#result");
   let computerChoice = Math.floor(Math.random() * 3);
-  sel.innerHTML = `<p id="my-choice"> Your pick: ${choices[myChoice]} </p>
-  <p id="computer-choice"> Computer's pick: ${choices[computerChoice]}</p>`;
+  sel.innerHTML = `<p id="my-choice"> Your pick: <span class="${choices[
+    myChoice
+  ].toLowerCase()}">${choices[myChoice]} </span> </p>
+  <p id="computer-choice"> Computer's pick: <span class="${choices[
+    computerChoice
+  ].toLowerCase()}"> ${choices[computerChoice]}</span></p>`;
   if (choices[myChoice] === choices[computerChoice]) {
-    // result = "It's a tie!";
     res.innerHTML = `<span class="tie">It's a tie! </span> `;
   } else if (
     (choices[myChoice] === "ROCK" && choices[computerChoice] === "SCISSORS") ||

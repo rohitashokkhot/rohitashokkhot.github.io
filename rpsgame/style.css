@@ -6,7 +6,7 @@ body {
   text-align: center;
   margin: auto;
   max-width: 1000px;
-  flex-direction: row;
+  /* flex-direction: column; */
   gap: 4rem;
   justify-content: center;
   align-items: center;
@@ -17,7 +17,10 @@ body {
   color: #e5e5cb;
   font-size: 1.3rem;
 }
-
+h1 {
+  padding-top: 10px;
+  font-size: 4rem;
+}
 .outer {
   border: 1px dashed #e5e5cb9e;
   min-height: 300px;
@@ -26,6 +29,7 @@ body {
   justify-content: center;
   flex-direction: column;
   gap: 2rem;
+  flex-shrink: 0;
 }
 
 button {
@@ -76,11 +80,13 @@ a {
 #selection {
   display: flex;
   justify-content: space-between;
+  min-height: 1.5rem;
 }
 
 #result {
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-transform: uppercase;
+  min-height: 2rem;
 }
 
 .tie {
