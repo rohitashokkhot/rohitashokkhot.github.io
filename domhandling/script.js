@@ -17,7 +17,7 @@ function toggleMe() {
 }
 
 let allParagraphs = document.querySelectorAll("p");
-//allParagraphs.forEach(changeColor);
+// allParagraphs.forEach(changeColor);
 
 function changeColor(item) {
   //console.log(item);
