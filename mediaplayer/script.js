@@ -18,4 +18,4 @@ function updateProgressBar() {
   const value = (video.currentTime / video.duration) * 100;
   progressBar.style.width = value + "%";
 }
-// Add your existing code for progress bar and other functionalities here
+// Add other functionalities here
