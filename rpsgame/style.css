@@ -6,7 +6,6 @@ body {
   text-align: center;
   margin: auto;
   max-width: 1000px;
-  /* flex-direction: column; */
   gap: 4rem;
   justify-content: center;
   align-items: center;
@@ -33,37 +32,32 @@ h1 {
   flex-shrink: 0;
 }
 
+/* adding pointer based cursor to indicate to user that it is a button   */
 button {
   border: none;
   cursor: pointer;
 }
 
-.mine > button:hover {
+/* enlarge the button by 10% on hover  */
+button:hover {
   scale: 1.1;
 }
 
-.mine > button:active {
+button:active {
   scale: 1.1;
 }
 
+/* For consistency, all images have default size of 150x300  */
 img {
   width: 150px;
   height: 300px;
   padding: 10px;
 }
+
 .inner {
   display: flex;
   justify-content: center;
   gap: 2rem;
-}
-
-.round {
-  border-radius: 50%;
-}
-
-a {
-  margin-right: 10px;
-  display: block;
 }
 
 .rock {
@@ -78,6 +72,10 @@ a {
 .scissors {
   background-color: coral;
 }
+
+/* We use space between to arrange both choices on extreme end
+User's choice on left and computer's choice on right.  */
+
 #selection {
   display: flex;
   justify-content: space-between;
