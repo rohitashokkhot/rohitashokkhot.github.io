@@ -15,9 +15,13 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <audio controls src="airport.mp3"></audio>
+    <!-- simple way to add audio to the website with inbuilt controls  -->
+    <audio controls src="airport.mp3">
+      Your browser does not support audio.
+    </audio>
 
     <div class="outer">
+      <!-- whenever user clicks this button the audio file below is played -->
       <button id="clickButton">Click Me!</button>
       <audio src="pop.mp3" id="clickSound"></audio>
     </div>
