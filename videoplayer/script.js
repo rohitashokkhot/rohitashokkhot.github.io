@@ -1,8 +1,9 @@
-// const videoList = ["zenscape.mp4", "stardust.mp4"];
+// We create an object array containing the videos
 const videoList = [
   { name: "Zenscape", link: "zenscape.mp4" },
   { name: "Stardust", link: "stardust.mp4" },
 ];
+
 const playPauseButton = document.querySelector("#play-pause-btn");
 playPauseButton.addEventListener("click", togglePlay);
 const playPauseImg = document.querySelector("#play-pause-img");
@@ -10,14 +11,19 @@ const myVideo = document.querySelector("#my-video");
 const videoName = document.querySelector("#video-name");
 const videoTime = document.querySelector("#video-time");
 const progressBar = document.querySelector("#progress-bar-fill");
-myVideo.removeAttribute("controls");
-// playPauseBtn.addEventListener("click", togglePlayPause);
+// myVideo.removeAttribute("controls");
 myVideo.addEventListener("timeupdate", updateProgressBar);
+myVideo.addEventListener("volumechange", updateVolume);
 const firstVideoButton = document.querySelector("#first-video-btn");
 firstVideoButton.addEventListener("click", function playIt() {
   myVideo.pause();
   playVideo(0);
 });
+
+function updateVolume() {
+  const volume = myVideo.volume;
+  console.log("Volume changed:", volume);
+}
 
 const secondVideoButton = document.querySelector("#second-video-btn");
 secondVideoButton.addEventListener("click", function playIt() {

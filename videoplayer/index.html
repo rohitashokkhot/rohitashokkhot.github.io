@@ -15,10 +15,26 @@
     <script src="script.js" defer></script>
   </head>
   <body>
+    <!-- as always we have the outer box that acts as a container for video  -->
     <div class="outer">
+      <!-- We divide the content of the box into three sections
+      1. video-container = it contains the videoplayer as well as playlist
+      2. video-title = it contains meta information about video currently being played
+      3. video-controls = it gives options for users to control the video such as 
+         play, pause, make it fullscreen etc.  -->
       <section class="video-container">
-        <video src="zenscape.mp4" controls id="my-video"></video>
+        <!-- we further divide video-container into two sections
+        1. video player
+        2. video-list: a section containing clickable images of videos 
+           that can be played.  -->
+        <video id="my-video" controls>
+          <source src="zenscape.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
         <section class="video-list">
+          <!-- We use buttons, whenever user clicks on them, the correspoding 
+          video will be played  -->
           <button id="first-video-btn">
             <img id="first-video-img" src="zenscape.png" alt="Zenscape" />
           </button>
@@ -28,10 +44,13 @@
         </section>
       </section>
       <section class="video-title">
+        <!-- in this section, we display the name of the video and current playtime -->
         <h1>Now Playing: <span id="video-name"></span></h1>
         <h1>Current playtime: <span id="video-time"></span></h1>
       </section>
       <section class="video-controls">
+        <!-- Here we create controls using buttons to play pause video
+        as well as use a div to show progress.  -->
         <button id="play-pause-btn">
           <img
             id="play-pause-img"
@@ -41,6 +60,7 @@
             height="24"
           />
         </button>
+
         <div class="progress-bar">
           <span id="progress-bar-fill"></span>
         </div>
