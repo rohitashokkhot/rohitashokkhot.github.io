@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Booth</title>
+    <style>
+      #videoPlayer {
+        width: 640px;
+        height: 480px;
+        border: 2px solid black;
+        float: left; /* Float the video to the left */
+      }
+      #canvasOutput {
+        display: none; /* Hide canvas by default */
+      }
+      #photosContainer {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .photo {
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="videoPlayer" autoplay></video>
+    <canvas id="canvasOutput"></canvas>
+    <button id="takePhotoBtn">Take Photo</button>
+    <select id="filterSelect">
+      <option value="none">None</option>
+      <option value="grayscale(100%)">Grayscale</option>
+      <option value="sepia(100%)">Sepia</option>
+      <option value="invert(100%)">Invert</option>
+    </select>
+    <div id="photosContainer"></div>
+
+    <script>
+      const video = document.getElementById("videoPlayer");
+      const canvas = document.getElementById("canvasOutput");
+      const ctx = canvas.getContext("2d");
+      const takePhotoBtn = document.getElementById("takePhotoBtn");
+      const filterSelect = document.getElementById("filterSelect");
+      const photosContainer = document.getElementById("photosContainer");
+      let photos = [];
+
+      // Set up webcam stream
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (error) {
+          console.error("Error accessing webcam:", error);
+        });
+
+      // Event listener for filter selection change
+      filterSelect.addEventListener("change", function () {
+        video.style.filter = filterSelect.value;
+      });
+
+      // Event listener for taking photo
+      takePhotoBtn.addEventListener("click", function () {
+        // Set canvas dimensions to match video dimensions
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        // Apply selected filter to canvas context
+        ctx.filter = filterSelect.value;
+
+        // Draw video frame onto canvas
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Get the data URL of the canvas
+        const dataURL = canvas.toDataURL("image/png");
+
+        // Store the data URL in the photos array
+        photos.push(dataURL);
+
+        // Display the captured photos
+        displayPhotos();
+      });
+
+      // Function to display captured photos
+      function displayPhotos() {
+        // Generate HTML for photos
+        const photosHTML = photos
+          .map(
+            (photo, index) => `
+      <img src="${photo}" alt="Photo ${index + 1}" class="photo">
+    `
+          )
+          .join("");
+
+        // Update photos container with HTML
+        photosContainer.innerHTML = photosHTML;
+      }
+    </script>
+  </body>
+</html>

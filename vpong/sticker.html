@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Booth</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      #videoPlayer {
+        width: 480px;
+        height: auto;
+        border: 2px solid #333;
+      }
+      #stickersContainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .sticker {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      .photo {
+        margin: 0 10px 10px 0;
+        width: 120px;
+        height: auto;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+      .photo:hover {
+        transform: scale(1.05);
+      }
+      .canvas-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <video id="videoPlayer" autoplay></video>
+    <div id="stickersContainer"></div>
+    <div id="photosContainer"></div>
+
+    <script>
+      const video = document.getElementById("videoPlayer");
+      const stickersContainer = document.getElementById("stickersContainer");
+      const photosContainer = document.getElementById("photosContainer");
+      const stickersData = [
+        { src: "happy.png", width: 50, height: 50 },
+        { src: "surprised.png", width: 60, height: 60 },
+        // Add more stickers as needed
+      ];
+      let selectedSticker = null;
+
+      // Set up webcam stream
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (error) {
+          console.error("Error accessing webcam:", error);
+        });
+
+      // Load stickers
+      stickersData.forEach((sticker, index) => {
+        const img = new Image();
+        img.src = sticker.src;
+        img.className = "sticker";
+        img.width = sticker.width;
+        img.height = sticker.height;
+        img.addEventListener("click", function () {
+          selectSticker(img);
+        });
+        stickersContainer.appendChild(img);
+      });
+
+      // Event listener for selecting sticker
+      function selectSticker(sticker) {
+        selectedSticker = sticker;
+      }
+
+      // Event listener for taking photo
+      video.addEventListener("click", function () {
+        if (selectedSticker) {
+          takePhoto(selectedSticker);
+        }
+      });
+
+      // Function to take photo with sticker
+      function takePhoto(sticker) {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(sticker, 0, 0, sticker.width, sticker.height);
+        const photo = new Image();
+        photo.src = canvas.toDataURL("image/png");
+        photo.className = "photo";
+        photo.addEventListener("click", function () {
+          showFullPhoto(photo.src);
+        });
+        photosContainer.appendChild(photo);
+      }
+
+      // Function to show full-size photo in modal
+      function showFullPhoto(src) {
+        const modal = document.createElement("div");
+        modal.style.position = "fixed";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100%";
+        modal.style.height = "100%";
+        modal.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        modal.style.display = "flex";
+        modal.style.justifyContent = "center";
+        modal.style.alignItems = "center";
+        modal.addEventListener("click", function () {
+          modal.remove();
+        });
+        const img = new Image();
+        img.src = src;
+        img.style.maxWidth = "80vw";
+        img.style.maxHeight = "80vh";
+        img.style.borderRadius = "10px";
+        modal.appendChild(img);
+        document.body.appendChild(modal);
+      }
+
+      // Function to draw sticker on video feed
+      function drawSticker() {
+        if (selectedSticker) {
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          ctx.drawImage(
+            selectedSticker,
+            0,
+            0,
+            selectedSticker.width,
+            selectedSticker.height
+          );
+          const imgData = canvas.toDataURL("image/png");
+          const tempImg = new Image();
+          tempImg.src = imgData;
+          tempImg.className = "canvas-overlay";
+          video.parentNode.insertBefore(tempImg, video.nextSibling);
+        }
+      }
+
+      // Redraw sticker on each frame of video
+      video.addEventListener("play", function () {
+        const drawFrame = () => {
+          if (video.paused || video.ended) {
+            return;
+          }
+          drawSticker();
+          requestAnimationFrame(drawFrame);
+        };
+        drawFrame();
+      });
+    </script>
+  </body>
+</html>
