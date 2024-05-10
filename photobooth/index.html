@@ -16,6 +16,47 @@
   </head>
   <body>
     <!-- as always we have the outer box that acts as a container for video  -->
-    <div class="outer"></div>
+    <div class="outer">
+      <section class="video-container">
+        <video id="videoStream" autoplay></video>
+      </section>
+
+      <section class="video-controls">
+        <button id="live-button">
+          <img
+            id="live-img"
+            src="live.png"
+            alt="Live Button"
+            width="24"
+            height="24"
+          />
+        </button>
+        <button id="snap-button">
+          <img
+            id="snap-img"
+            src="camera.png"
+            alt="Snap Button"
+            width="24"
+            height="24"
+          />
+        </button>
+        <select id="filterSelect">
+          <option value="none">None</option>
+          <option value="grayscale(100%)">Grayscale</option>
+          <option value="sepia(100%)">Sepia</option>
+          <option value="invert(100%)">Invert</option>
+        </select>
+      </section>
+      <canvas id="canvasOutput"></canvas>
+    </div>
+    <div id="img-container">
+      <h1>Captured photos</h1>
+    </div>
+    <!-- <a href="https://www.flaticon.com/free-icons/camera" title="camera icons"
+      >Camera icons created by Freepik - Flaticon</a
+    >
+    <a href="https://www.flaticon.com/free-icons/live" title="live icons"
+      >Live icons created by Debi Alpa Nugraha - Flaticon</a
+    > -->
   </body>
 </html>
