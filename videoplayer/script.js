@@ -106,8 +106,10 @@ function replay() {
 function loopVideo() {
   if (loop) {
     loop = false;
+    loopButton.style.backgroundColor = "#d5cea3";
   } else {
     loop = true;
+    loopButton.style.backgroundColor = "#7b775e";
   }
   console.log("loop is", loop);
 }
