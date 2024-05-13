@@ -48,6 +48,8 @@ myVideo.addEventListener("volumechange", updateVolume);
 myVideo.addEventListener("ended", replay);
 
 const firstVideoButton = document.querySelector("#first-video-btn");
+
+// Event listener to play the first video
 firstVideoButton.addEventListener("click", function playIt() {
   myVideo.pause();
   playVideo(0);
@@ -58,18 +60,21 @@ function updateVolume() {
   console.log("Volume changed:", volume);
 }
 
+//volume values range from 0 to 1 with an increment of 0.1
 function increaseVolume() {
   if (myVideo.volume < 0.9) {
     myVideo.volume += 0.1;
   }
 }
 
+//since you do not want the value to go to negative the check is not at 0 but 0.11
 function decreaseVolume() {
   if (myVideo.volume > 0.11) {
     myVideo.volume -= 0.1;
   }
 }
 
+//if the timestamp for step 1 is at 16.41s then it will set the currenttime to that
 function gotoStep1() {
   myVideo.currentTime = 16.41;
 }
@@ -80,6 +85,8 @@ secondVideoButton.addEventListener("click", function playIt() {
   playVideo(1);
 });
 
+//video will be played if it is currently paused or ended
+//otherwise the same function will pause the video
 function togglePlay() {
   if (myVideo.paused || myVideo.ended) {
     myVideo.play();
@@ -90,6 +97,8 @@ function togglePlay() {
   }
 }
 
+//to mute the video we check if it is already muted or not, if not
+//mute it or unmute it.
 function toggleAudio() {
   if (myVideo.muted) {
     myVideo.muted = false;
@@ -100,12 +109,18 @@ function toggleAudio() {
   }
 }
 
+//depending on the number, it will fetch the right video and its name
+//from the VideoList array, see at the top.
 function playVideo(no) {
   myVideo.src = videoList[no].link;
   videoName.textContent = videoList[no].name;
   // myVideo.load();
   // myVideo.play();
 }
+
+//to loop or replay the video, we set and check the value of loop
+//loop is a boolean variable, originally false, but can be set to true
+// by clicking the loop button
 
 function replay() {
   console.log("loop is", loop);
@@ -115,6 +130,7 @@ function replay() {
   }
 }
 
+//this function will set the value of loop to true or false
 function loopVideo() {
   if (loop) {
     loop = false;
@@ -126,6 +142,8 @@ function loopVideo() {
   console.log("loop is", loop);
 }
 
+//we increase the width of the progress bar depending on the percentage
+// how much video is played in comparison to how much is left or its duration.
 function updateProgressBar() {
   videoTime.textContent = myVideo.currentTime.toFixed(2);
   const value = (myVideo.currentTime / myVideo.duration) * 100;
