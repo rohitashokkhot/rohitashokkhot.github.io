@@ -80,11 +80,10 @@ function togglePlay() {
 function toggleAudio() {
   if (myVideo.muted) {
     myVideo.muted = false;
-    muteUnmuteImg.src =
-      "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
+    muteUnmuteButton.style.backgroundColor = "#d5cea3";
   } else {
     myVideo.muted = true;
-    muteUnmuteImg.src = "https://img.icons8.com/ios-glyphs/30/no-audio--v1.png";
+    muteUnmuteButton.style.backgroundColor = "#7b775e";
   }
 }
 
