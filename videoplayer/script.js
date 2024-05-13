@@ -7,23 +7,29 @@ const videoList = [
 let loop = false;
 
 const playPauseButton = document.querySelector("#play-pause-btn");
+// Event listener to toggle between playing and pausing video on clicking the button
 playPauseButton.addEventListener("click", togglePlay);
 const playPauseImg = document.querySelector("#play-pause-img");
 
 const muteUnmuteButton = document.querySelector("#mute-unmute-btn");
+// Event listener to mute or unmute audio on clicking the button
 muteUnmuteButton.addEventListener("click", toggleAudio);
 const muteUnmuteImg = document.querySelector("#mute-unmute-img");
 
 const increaseVolumeButton = document.querySelector("#increase-volume-btn");
+// Event listener to increase volume on clicking the button
 increaseVolumeButton.addEventListener("click", increaseVolume);
 
 const decreaseVolumeButton = document.querySelector("#decrease-volume-btn");
+// Event listener to decrease volume on clicking the button
 decreaseVolumeButton.addEventListener("click", decreaseVolume);
 
 const loopButton = document.querySelector("#loop-btn");
+// Event listener to loop or replay the video on clicking the button
 loopButton.addEventListener("click", loopVideo);
 
 const step1Button = document.querySelector("#step-1-btn");
+// Event listener to navigate to step 1 timestamp in video on clicking the button
 step1Button.addEventListener("click", gotoStep1);
 
 const myVideo = document.querySelector("#my-video");
@@ -31,9 +37,16 @@ const videoName = document.querySelector("#video-name");
 const videoTime = document.querySelector("#video-time");
 const progressBar = document.querySelector("#progress-bar-fill");
 // myVideo.removeAttribute("controls");
+
+// Event listener to check time update on video to update the progress bar
 myVideo.addEventListener("timeupdate", updateProgressBar);
+
+// Event listener to check current volume
 myVideo.addEventListener("volumechange", updateVolume);
+
+// Event listener to check if the video is ended to replay it
 myVideo.addEventListener("ended", replay);
+
 const firstVideoButton = document.querySelector("#first-video-btn");
 firstVideoButton.addEventListener("click", function playIt() {
   myVideo.pause();
@@ -119,7 +132,7 @@ function updateProgressBar() {
   progressBar.style.width = value + "%";
 }
 
-// Function to toggle fullscreen mode
+// We use this function to toggle in and out of full screen
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
     // If no element is in fullscreen, request fullscreen on the video player
