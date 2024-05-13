@@ -4,9 +4,28 @@ const videoList = [
   { name: "Stardust", link: "stardust.mp4" },
 ];
 
+let loop = false;
+
 const playPauseButton = document.querySelector("#play-pause-btn");
 playPauseButton.addEventListener("click", togglePlay);
 const playPauseImg = document.querySelector("#play-pause-img");
+
+const muteUnmuteButton = document.querySelector("#mute-unmute-btn");
+muteUnmuteButton.addEventListener("click", toggleAudio);
+const muteUnmuteImg = document.querySelector("#mute-unmute-img");
+
+const increaseVolumeButton = document.querySelector("#increase-volume-btn");
+increaseVolumeButton.addEventListener("click", increaseVolume);
+
+const decreaseVolumeButton = document.querySelector("#decrease-volume-btn");
+decreaseVolumeButton.addEventListener("click", decreaseVolume);
+
+const loopButton = document.querySelector("#loop-btn");
+loopButton.addEventListener("click", loopVideo);
+
+const step1Button = document.querySelector("#step-1-btn");
+step1Button.addEventListener("click", gotoStep1);
+
 const myVideo = document.querySelector("#my-video");
 const videoName = document.querySelector("#video-name");
 const videoTime = document.querySelector("#video-time");
@@ -14,6 +33,7 @@ const progressBar = document.querySelector("#progress-bar-fill");
 // myVideo.removeAttribute("controls");
 myVideo.addEventListener("timeupdate", updateProgressBar);
 myVideo.addEventListener("volumechange", updateVolume);
+myVideo.addEventListener("ended", replay);
 const firstVideoButton = document.querySelector("#first-video-btn");
 firstVideoButton.addEventListener("click", function playIt() {
   myVideo.pause();
@@ -23,6 +43,22 @@ firstVideoButton.addEventListener("click", function playIt() {
 function updateVolume() {
   const volume = myVideo.volume;
   console.log("Volume changed:", volume);
+}
+
+function increaseVolume() {
+  if (myVideo.volume < 0.9) {
+    myVideo.volume += 0.1;
+  }
+}
+
+function decreaseVolume() {
+  if (myVideo.volume > 0.11) {
+    myVideo.volume -= 0.1;
+  }
+}
+
+function gotoStep1() {
+  myVideo.currentTime = 16.41;
 }
 
 const secondVideoButton = document.querySelector("#second-video-btn");
@@ -41,11 +77,39 @@ function togglePlay() {
   }
 }
 
+function toggleAudio() {
+  if (myVideo.muted) {
+    myVideo.muted = false;
+    muteUnmuteImg.src =
+      "https://img.icons8.com/ios-glyphs/30/high-volume--v1.png";
+  } else {
+    myVideo.muted = true;
+    muteUnmuteImg.src = "https://img.icons8.com/ios-glyphs/30/no-audio--v1.png";
+  }
+}
+
 function playVideo(no) {
   myVideo.src = videoList[no].link;
   videoName.textContent = videoList[no].name;
   // myVideo.load();
   // myVideo.play();
+}
+
+function replay() {
+  console.log("loop is", loop);
+  if (loop) {
+    myVideo.currentTime = 0;
+    myVideo.play();
+  }
+}
+
+function loopVideo() {
+  if (loop) {
+    loop = false;
+  } else {
+    loop = true;
+  }
+  console.log("loop is", loop);
 }
 
 function updateProgressBar() {

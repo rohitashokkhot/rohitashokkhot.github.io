@@ -3,6 +3,8 @@
 body {
   background-color: #1a120b;
   display: flex;
+  flex-direction: column;
+  gap: 4rem;
   /* text-align: center; */
   margin: auto;
   max-width: 1000px;
@@ -65,14 +67,20 @@ img {
   flex: 1;
 }
 
-.video-controls {
+.video-controls,
+.timeline {
   display: flex;
   gap: 1rem;
+  flex-wrap: nowrap;
 }
 
 .video-controls button {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
+}
+
+.timeline button {
+  padding: 0 10px;
 }
 
 .video-title {
