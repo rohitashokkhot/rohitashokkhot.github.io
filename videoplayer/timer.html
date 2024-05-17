@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Recording</title>
+  </head>
+  <body>
+    <button id="startButton">Start Recording</button>
+    <button id="stopButton">Stop Recording</button>
+    <p id="currentTime"></p>
+    <ul id="recordedTimes"></ul>
+
+    <script>
+      let startTime;
+      let timerInterval;
+      const recordedTimesList = document.getElementById("recordedTimes");
+
+      document
+        .getElementById("startButton")
+        .addEventListener("click", function () {
+          startTime = new Date();
+          timerInterval = setInterval(updateTimer, 1000); // Update every second
+        });
+
+      document
+        .getElementById("stopButton")
+        .addEventListener("click", function () {
+          clearInterval(timerInterval);
+          const stopTime = Date.now();
+          const elapsedTime = stopTime - startTime;
+          const formattedTime = formatTime(elapsedTime);
+          const listItem = document.createElement("li");
+          listItem.textContent = `Recorded time: ${formattedTime}`;
+          recordedTimesList.appendChild(listItem);
+        });
+
+      function updateTimer() {
+        const currentTime = Date.now();
+        document.getElementById("currentTime").textContent = currentTime;
+        const elapsedTime = currentTime - startTime;
+        const formattedTime = formatTime(elapsedTime);
+        document.getElementById("timerDisplay").textContent = formattedTime;
+      }
+
+      function formatTime(milliseconds) {
+        const totalSeconds = Math.floor(milliseconds / 1000);
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes.toString().padStart(2, "0")}:${seconds
+          .toString()
+          .padStart(2, "0")}`;
+      }
+    </script>
+  </body>
+</html>

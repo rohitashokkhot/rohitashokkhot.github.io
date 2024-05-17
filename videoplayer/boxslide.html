@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Background Color on Scroll</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 200%;
+      }
+      .center-box {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        background-color: transparent;
+        transition: background-color 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-box"></div>
+
+    <script>
+      const centerBox = document.querySelector(".center-box");
+
+      function handleScroll() {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const scrollHeight = document.body.scrollHeight;
+        const gradientStart = 0; // Start position for gradient transition
+        const gradientEnd = windowHeight * 2; // End position for gradient transition
+
+        // Calculate the percentage progress within the gradient transition
+        const gradientProgress =
+          (scrollPosition - gradientStart) / (gradientEnd - gradientStart);
+
+        // Define gradient colors transitioning from light blue to dark blue
+        const lightBlue = [78, 140, 255]; // RGB values for light blue
+        const darkBlue = [16, 37, 149]; // RGB values for dark blue
+
+        // Interpolate colors based on gradient progress
+        const gradientColor = interpolateColors(
+          lightBlue,
+          darkBlue,
+          gradientProgress
+        );
+
+        // Set the background color of the centerBox element
+        centerBox.style.background = `rgb(${gradientColor.join(",")})`;
+
+        // Stop the gradient at 200% of the viewport height
+        if (scrollPosition >= scrollHeight - windowHeight * 2) {
+          centerBox.style.background = `rgb(${darkBlue.join(",")})`; // Set final color to dark blue
+        }
+      }
+
+      // Function to interpolate colors between two RGB colors
+      function interpolateColors(color1, color2, ratio) {
+        const result = [];
+        for (let i = 0; i < 3; i++) {
+          result.push(Math.round(color1[i] * (1 - ratio) + color2[i] * ratio));
+        }
+        return result;
+      }
+
+      document.addEventListener("scroll", handleScroll);
+    </script>
+  </body>
+</html>

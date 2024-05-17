@@ -7,7 +7,7 @@ body {
   gap: 4rem;
   /* text-align: center; */
   margin: auto;
-  max-width: 1000px;
+  max-width: 900px;
   justify-content: center;
   align-items: center;
   font-family: "Space Grotesk", sans-serif;
@@ -82,7 +82,7 @@ img {
 }
 
 .video-controls button img {
-  padding: 2px;
+  /* padding: 2px; */
 }
 
 .timeline button {

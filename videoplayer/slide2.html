@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vertical Slideshow</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .slide {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        opacity: 0; /* Hide slides by default */
+        transition: opacity 0.5s, background-color 0.5s; /* Smooth opacity and color transitions */
+      }
+      .active {
+        opacity: 1; /* Show active slide */
+      }
+      #slide1 {
+        background-color: lightsalmon;
+      } /* Background color for slide1 */
+      #slide2 {
+        background-color: lightseagreen;
+      } /* Background color for slide2 */
+      #slide3 {
+        background-color: lightpink;
+      } /* Background color for slide3 */
+    </style>
+  </head>
+  <body>
+    <div id="slide1" class="slide">Slide 1</div>
+    <div id="slide2" class="slide">Slide 2</div>
+    <div id="slide3" class="slide">Slide 3</div>
+    <!-- Add more slides as needed -->
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+      let scrolling = false;
+
+      function handleScroll() {
+        scrolling = true;
+        setTimeout(function () {
+          scrolling = false;
+          const closestSlide = findClosestSlide();
+          if (closestSlide) {
+            slides.forEach((s) => s.classList.remove("active"));
+            closestSlide.classList.add("active");
+          }
+        }, 150); // Adjust the delay according to your preference
+      }
+
+      function findClosestSlide() {
+        const slideHeight = window.innerHeight;
+        const scrollPosition = window.scrollY;
+        let closestSlide;
+        let minDistance = Infinity;
+
+        slides.forEach(function (slide, index) {
+          const distance = Math.abs(scrollPosition - index * slideHeight);
+          if (distance < minDistance) {
+            closestSlide = slide;
+            minDistance = distance;
+          }
+        });
+
+        return closestSlide;
+      }
+
+      document.addEventListener("scroll", function () {
+        if (!scrolling) {
+          handleScroll();
+        }
+      });
+      // Trigger handleScroll on page load
+      handleScroll();
+    </script>
+  </body>
+</html>

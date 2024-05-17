@@ -137,3 +137,28 @@ button:hover {
 #side-drawer ul > li {
   padding: 10px;
 }
+
+.box {
+  animation-name: my-animation;
+  animation-duration: 5s;
+  animation-iteration-count: 3;
+
+  background-color: purple;
+}
+@keyframes my-animation {
+  0% {
+    background-color: purple;
+  }
+  25% {
+    background-color: red;
+  }
+  50% {
+    background-color: orange;
+  }
+  75% {
+    background-color: brown;
+  }
+  100% {
+    background-color: purple;
+  }
+}

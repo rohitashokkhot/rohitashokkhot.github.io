@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smooth Color Transition</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 300%;
+      }
+      .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center; /* Center vertically */
+      }
+      .item {
+        width: 80%;
+        padding: 20px;
+        margin: 10px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        text-align: center;
+        animation: colorTransition 8s infinite;
+        background-color: #4e8cff; /* Initial color */
+        position: fixed; /* Fix the position */
+        top: 50%; /* Align to the center vertically */
+        left: 50%; /* Align to the center horizontally */
+        transform: translate(-50%, -50%); /* Center the element */
+      }
+
+      @keyframes colorTransition {
+        0% {
+          background-color: #4e8cff;
+        } /* Light blue */
+        14.29% {
+          background-color: #5bc0de;
+        } /* Sky blue */
+        28.57% {
+          background-color: #63c2de;
+        } /* Light cyan */
+        42.86% {
+          background-color: #7db9de;
+        } /* Medium blue */
+        57.14% {
+          background-color: #98b0df;
+        } /* Cornflower blue */
+        71.43% {
+          background-color: #b2a8e0;
+        } /* Medium purple */
+        85.71% {
+          background-color: #c9a1e0;
+        } /* Lavender */
+        100% {
+          background-color: #d99ce0;
+        } /* Light purple */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item">Item 1</div>
+      <div class="item">Item 2</div>
+      <!-- Add more items -->
+    </div>
+
+    <script>
+      document.addEventListener("scroll", function handleScroll() {
+        const scrollPosition = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const scrollHeight = document.body.scrollHeight;
+        const intervalSize = windowHeight * 2; // Set interval size to 200% of viewport height
+        const intervalIndex = Math.floor(scrollPosition / intervalSize);
+
+        // Stop the gradient at 200% of the viewport height
+        if (scrollPosition >= scrollHeight - windowHeight * 2) {
+          document.querySelectorAll(".item").forEach(function (item) {
+            item.style.animation = "none"; // Remove animation
+            item.style.backgroundColor = "#d99ce0"; // Set final color to dark blue
+          });
+        } else {
+          document.querySelectorAll(".item").forEach(function (item) {
+            item.style.animation = "colorTransition 8s infinite"; // Restart animation
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

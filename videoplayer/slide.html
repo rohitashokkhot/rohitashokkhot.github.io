@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vertical Slideshow</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+      .slide {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        opacity: 0; /* Hide slides by default */
+        transition: opacity 0.5s; /* Smooth opacity transition */
+      }
+      .active {
+        opacity: 1;
+      } /* Show active slide */
+      #slide1 {
+        background-color: #f0f0f0;
+      } /* Background color for slide1 */
+      #slide2 {
+        background-color: #e0e0e0;
+      } /* Background color for slide2 */
+      #slide3 {
+        background-color: #d0d0d0;
+      } /* Background color for slide3 */
+    </style>
+  </head>
+  <body>
+    <div id="slide1" class="slide">Slide 1</div>
+    <div id="slide2" class="slide">Slide 2</div>
+    <div id="slide3" class="slide">Slide 3</div>
+    <!-- Add more slides as needed -->
+
+    <script>
+      const slides = document.querySelectorAll(".slide");
+
+      function handleScroll() {
+        const slideHeight = window.innerHeight;
+        const scrollPosition = window.scrollY;
+        slides.forEach(bringForward);
+
+        function bringForward(slide, index) {
+          if (
+            scrollPosition >= index * slideHeight &&
+            scrollPosition < (index + 1) * slideHeight
+          ) {
+            slides.forEach(sendOthersback);
+            slide.classList.add("active");
+          }
+        }
+
+        function sendOthersback(slide) {
+          slide.classList.remove("active");
+        }
+      }
+
+      document.addEventListener("scroll", handleScroll);
+      // Trigger handleScroll on page load
+      handleScroll();
+    </script>
+  </body>
+</html>
