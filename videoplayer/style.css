@@ -21,7 +21,7 @@ body {
 
 .outer {
   border: 2px dashed #e5e5cb68;
-  width: 900px;
+  max-width: 900px;
   min-height: 200px;
   padding: 10px;
   display: flex;
