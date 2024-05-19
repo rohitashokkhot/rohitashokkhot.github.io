@@ -7,10 +7,12 @@ drawerButton.addEventListener("click", openDrawer);
 function openDrawer() {
   console.log("i am clicked");
   if (!isOpen) {
-    sideDrawer.style.transform = `translateX(200px)`;
+    // sideDrawer.style.transform = `translateX(200px)`;
+    sideDrawer.style.translate = "200px";
     isOpen = true;
   } else {
-    sideDrawer.style.transform = `translateX(-200px)`;
+    sideDrawer.style.translate = "-200px";
+    // sideDrawer.style.transform = `translateX(-200px)`;
     isOpen = false;
   }
 }
