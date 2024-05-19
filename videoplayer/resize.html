@@ -16,10 +16,9 @@
     </audio>
 
     <script>
-      // Get reference to the audio player
-      const audioPlayer = document.getElementById("audioPlayer");
+      const audioPlayer = document.querySelector("#audioPlayer");
 
-      // Function to check window width and start playing audio if it's at its minimum size
+      // the following code will play the audio when user resizes the window to 400px
       function checkWindowWidth() {
         // Get current window width
         const windowWidth = window.innerWidth;
