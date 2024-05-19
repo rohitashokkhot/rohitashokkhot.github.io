@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play Previous or Next Video</title>
+  </head>
+  <body>
+    <!-- Video player -->
+    <video id="videoPlayer" width="640" height="360" controls>
+      <source src="stardust.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <!-- Buttons to play previous and next videos -->
+    <button onclick="playPreviousVideo()">Previous</button>
+    <button onclick="playNextVideo()">Next</button>
+
+    <script>
+      // Array of video sources
+      const videos = ["stardust.mp4", "zenscape.mp4", "video3.mp4"];
+
+      // Get reference to the video player
+      const videoPlayer = document.getElementById("videoPlayer");
+
+      // Variable to track current video index
+      let currentIndex = 0;
+
+      // Function to play the previous video
+      function playPreviousVideo() {
+        currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+        playVideoAtIndex(currentIndex);
+      }
+
+      // Function to play the next video
+      function playNextVideo() {
+        currentIndex = (currentIndex + 1) % videos.length;
+        playVideoAtIndex(currentIndex);
+      }
+
+      // Function to play video at a specific index
+      function playVideoAtIndex(index) {
+        videoPlayer.pause(); // Pause the video before changing source
+        videoPlayer.src = videos[index];
+        videoPlayer.load(); // Load the new source
+        videoPlayer.play(); // Play the video
+      }
+    </script>
+  </body>
+</html>

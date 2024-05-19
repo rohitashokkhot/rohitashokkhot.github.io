@@ -28,10 +28,7 @@
         2. video-list: a section containing clickable images of videos 
            that can be played.  -->
         <video id="my-video" controls>
-          <source
-            src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4"
-            type="video/mp4"
-          />
+          <source src="stardust.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
@@ -72,7 +69,24 @@
             height="24"
           />
         </button>
-
+        <button id="previous-btn">
+          <img
+            id="previous-img"
+            src="https://img.icons8.com/ios-glyphs/30/skip-to-start--v2.png"
+            alt="Previous Button"
+            width="24"
+            height="24"
+          />
+        </button>
+        <button id="next-btn">
+          <img
+            id="next-img"
+            src="https://img.icons8.com/ios-glyphs/30/end--v2.png"
+            alt="Next Button"
+            width="24"
+            height="24"
+          />
+        </button>
         <div class="progress-bar">
           <span id="progress-bar-fill"></span>
         </div>
@@ -106,6 +120,16 @@
       </section>
       <section class="timeline">
         <button id="step-1-btn">step 1</button>
+        <button id="like-btn">
+          <img
+            id="like-img"
+            src="https://img.icons8.com/ios-filled/50/facebook-like.png"
+            alt="Like Button"
+            width="24"
+            height="24"
+          />
+        </button>
+        <span>Total likes: <span id="likes"></span></span>
       </section>
     </div>
     <footer>

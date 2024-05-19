@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play Audio on Window Resize</title>
+  </head>
+  <body>
+    <!-- Audio player -->
+    <audio id="audioPlayer" controls>
+      <source
+        src="https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/p-hase_Hes.mp3"
+        type="audio/mp3"
+      />
+      Your browser does not support the audio tag.
+    </audio>
+
+    <script>
+      // Get reference to the audio player
+      const audioPlayer = document.getElementById("audioPlayer");
+
+      // Function to check window width and start playing audio if it's at its minimum size
+      function checkWindowWidth() {
+        // Get current window width
+        const windowWidth = window.innerWidth;
+        console.log(windowWidth);
+        // Define minimum window width threshold
+        const minWidthThreshold = 400; // Adjust as needed
+
+        // If window width is at or below the minimum threshold, start playing audio
+        if (windowWidth <= minWidthThreshold) {
+          audioPlayer.play();
+        } else {
+          audioPlayer.pause();
+        }
+      }
+
+      // Add event listener for window resize
+      window.addEventListener("resize", checkWindowWidth);
+
+      // Check window width initially
+      checkWindowWidth();
+    </script>
+  </body>
+</html>

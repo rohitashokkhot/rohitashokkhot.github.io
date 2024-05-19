@@ -2,6 +2,10 @@
 const videoList = [
   { name: "Zenscape", link: "zenscape.mp4" },
   { name: "Stardust", link: "stardust.mp4" },
+  {
+    name: "Video art",
+    link: "https://thelongesthumstore.sgp1.cdn.digitaloceanspaces.com/IM-2250/miac.mp4",
+  },
 ];
 
 let loop = false;
@@ -112,10 +116,11 @@ function toggleAudio() {
 //depending on the number, it will fetch the right video and its name
 //from the VideoList array, see at the top.
 function playVideo(no) {
+  myVideo.pause();
   myVideo.src = videoList[no].link;
   videoName.textContent = videoList[no].name;
-  // myVideo.load();
-  // myVideo.play();
+  myVideo.load();
+  myVideo.play();
 }
 
 //to loop or replay the video, we set and check the value of loop
@@ -172,3 +177,54 @@ document.addEventListener("fullscreenchange", function () {
     console.log("Exited fullscreen");
   }
 });
+
+// The following code allows moving to previous and next audio or video
+const prevButton = document.querySelector("#previous-btn");
+console.log(prevButton);
+prevButton.addEventListener("click", prevTrack);
+
+const nextButton = document.querySelector("#next-btn");
+console.log(nextButton);
+nextButton.addEventListener("click", nextTrack);
+
+let currentIndex = 0;
+
+function prevTrack() {
+  console.log("previous track loading");
+  currentIndex = (currentIndex - 1 + videoList.length) % videoList.length;
+  console.log(currentIndex);
+  playVideoAtIndex(currentIndex);
+}
+
+function nextTrack() {
+  console.log("next track loading");
+  currentIndex = (currentIndex + 1) % videoList.length;
+  console.log(currentIndex);
+  playVideoAtIndex(currentIndex);
+}
+
+// Function to play video at a specific index
+function playVideoAtIndex(index) {
+  myVideo.pause(); // Pause the video before changing source
+  console.log(videoList[index].link);
+  myVideo.src = videoList[index].link;
+  myVideo.load(); // Load the new source
+  myVideo.play(); // Play the video
+}
+
+//-----------------------------------------------------------------
+
+// The following code allows users to like the video and display total likes
+let likeCount = 0;
+
+const likeButton = document.querySelector("#like-btn");
+console.log(likeButton);
+likeButton.addEventListener("click", addLikes);
+const likes = document.querySelector("#likes");
+likes.textContent = likeCount;
+
+function addLikes() {
+  likeCount++;
+  likes.textContent = likeCount;
+}
+//-----------------------------------------------------------------

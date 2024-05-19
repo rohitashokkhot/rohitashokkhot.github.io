@@ -142,7 +142,6 @@ button:hover {
   animation-name: my-animation;
   animation-duration: 5s;
   animation-iteration-count: 3;
-
   background-color: purple;
 }
 @keyframes my-animation {
