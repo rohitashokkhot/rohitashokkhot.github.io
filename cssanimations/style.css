@@ -35,6 +35,8 @@ body {
 
 .tilt:hover {
   transform: scale(1.1) rotate(10deg);
+  /* scale: 1.1; */
+  /* rotate: 10deg; */
   background-color: #2ecc71; /* Change color on hover */
 }
 
