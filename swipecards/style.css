@@ -2,14 +2,7 @@
 
 body {
   background-color: #1a120b;
-
   text-align: center;
-  margin: auto;
-  max-width: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
   font-family: "Space Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -17,6 +10,45 @@ body {
   color: #e5e5cb;
   /* color: #3c2a21; */
   font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  height: 150px;
+}
+
+h1 {
+  font-size: 4rem;
+  font-family: "Luckiest guy", sans-serif;
+}
+
+h1 span,
+h2 span {
+  color: coral;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-family: "Luckiest guy", sans-serif;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
 }
 
 .outer {
@@ -44,37 +76,13 @@ body {
 #dislikes img {
   width: 100px;
   height: 100px;
+  z-index: 100;
+  transition: scale 0.3s ease translate 0.3s ease;
 }
 
 #likes p,
 #dislikes p {
   font-size: 4rem;
-}
-
-.card {
-  /* width: 100%;
-  height: 100%; */
-  background-color: #ccc;
-  border: 1px solid #999;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  /* position: absolute; */
-  /* top: 0;
-  left: 0; */
-  /* cursor: pointer; */
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-}
-
-.card.like {
-  transform: translateX(100px) rotate(20deg);
-}
-
-.card.dislike {
-  transform: translateX(-100px) rotate(-20deg);
-}
-
-.card.fade-out {
-  opacity: 0;
 }
 
 .image-container {
@@ -92,6 +100,7 @@ body {
   object-fit: cover;
   cursor: grab;
   background-color: cornsilk;
+  transition: translate 0.5s ease-out rotate 0.5s ease-out opacity 0.5s ease-out;
 }
 
 .like {

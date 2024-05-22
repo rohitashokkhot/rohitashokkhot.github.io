@@ -19,7 +19,7 @@ body {
 
 .outer {
   background-color: #1a120b;
-  border: 2px dashed #e5e5cb;
+  /* border: 2px dashed #e5e5cb; */
   width: 500px;
   min-height: 150px;
   padding: 10px;

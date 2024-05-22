@@ -1,117 +1,76 @@
-// const card = document.querySelector(".card");
-// let isDragging = false;
-// let startX = 0;
+const imageList = document.querySelectorAll(".image-container img");
+console.log(imageList);
 
-const images = document.querySelectorAll(".image-stack img");
+let isDragging = false;
+let currentIndex = 0;
+
+const likeImg = document.querySelector("#like-img");
+console.log(likeImg);
+const dislikeImg = document.querySelector("#dislike-img");
+console.log(dislikeImg);
 const likeCount = document.querySelector("#like-count");
 const dislikeCount = document.querySelector("#dislike-count");
-let currentIndex = 0;
-let startX = 0;
-
 let likes = 0;
 let dislikes = 0;
-images.forEach((image) => {
-  image.style.display = "none"; // Initially hide all images
-});
 
-images[currentIndex].style.display = "block"; // Display the first image
-
-images.forEach((image) => {
+imageList.forEach(stackIt);
+// Adjust z-index to stack images on top of each other
+function stackIt(image, index) {
+  image.style.zIndex = imageList.length - index;
   image.addEventListener("mousedown", startDrag);
-});
+}
 
-//card.addEventListener("mousedown", startDrag);
 document.addEventListener("mousemove", drag);
 document.addEventListener("mouseup", endDrag);
 
-// card.addEventListener("dragstart", startDrag);
-// document.addEventListener("dragover", drag);
-// document.addEventListener("dragend", endDrag);
-
-// function startDrag(event) {
-//   isDragging = true;
-//   startX = event.clientX;
-//   event.preventDefault(); // Prevent default text selection behavior
-// }
-
 function startDrag(event) {
+  event.preventDefault();
   startX = event.clientX;
-  event.target.setPointerCapture(event.pointerId); // Capture pointer to continue receiving events
+  isDragging = true;
+  console.log(startX);
 }
 
 function drag(event) {
+  if (!isDragging) return;
+
   const offsetX = event.clientX - startX;
-  const image = images[currentIndex];
-
-  if (Math.abs(offsetX) >= 50) {
-    if (offsetX > 0) {
-      image.classList.add("like");
-      likes++;
-      likeCount.textContent = likes;
-    } else {
-      image.classList.add("dislike");
-      dislikes++;
-      dislikeCount.textContent = dislikes;
-    }
-
-    //image.classList.add(offsetX > 0 ? "like" : "dislike");
+  console.log(offsetX);
+  const image = imageList[currentIndex];
+  image.style.translate = offsetX + "px";
+  image.style.rotate = offsetX * 0.1 + "deg";
+  if (offsetX > 0) {
+    likeImg.style.scale = "1.2";
+    likeImg.style.translate = "0x -10px";
   } else {
-    image.classList.remove("like", "dislike");
-    image.style.transform = `translateX(${offsetX}px)`; // Translate image horizontally
+    dislikeImg.style.scale = "1.2";
+    dislikeImg.style.translate = "0x -10px";
   }
+  //console.log(image.src);
+
+  // image.style.transform = `translateX(${offsetX}px) rotate(${
+  //   offsetX * 0.1
+  // }deg)`;
 }
 
 function endDrag(event) {
+  if (!isDragging) return;
+  isDragging = false;
   const offsetX = event.clientX - startX;
-  const image = images[currentIndex];
-
-  if (Math.abs(offsetX) < 50) {
-    image.style.transition = "transform 0.3s"; // Add transition for smooth animation
-    image.style.transform = ""; // Reset image position
-  } else {
-    image.style.transition = "opacity 0.3s"; // Add transition for smooth opacity change
-    image.style.opacity = "0"; // Hide current image
-    currentIndex++; // Move to the next image
-    if (currentIndex < images.length) {
-      images[currentIndex].style.display = "block"; // Display the next image
+  console.log(offsetX);
+  const image = imageList[currentIndex];
+  if (Math.abs(offsetX) > 50) {
+    image.style.opacity = "0";
+    currentIndex++;
+    if (offsetX > 0) {
+      likes++;
+      likeCount.textContent = likes;
+      likeImg.style.scale = "1";
+      likeImg.style.translate = "0x 0px";
+    } else {
+      dislikes++;
+      dislikeCount.textContent = dislikes;
+      dislikeImg.style.scale = "1";
+      dislikeImg.style.translate = "0x 0px";
     }
   }
-
-  image.removeEventListener("transitionend", () => {
-    image.style.transition = ""; // Reset transition property
-  });
-}
-
-// function drag(event) {
-//   if (!isDragging) return;
-//   const card = images[currentIndex];
-//   const offsetX = event.clientX - startX;
-//   card.style.transform = `translateX(${offsetX}px) rotate(${offsetX * 0.1}deg)`;
-// }
-
-function endDrag1(event) {
-  if (!isDragging) return;
-  const card = images[currentIndex];
-  const offsetX = event.clientX - startX;
-
-  if (offsetX > 50) {
-    card.classList.add("like", "fade-out");
-  } else if (offsetX < -50) {
-    card.classList.add("dislike", "fade-out");
-  } else {
-    resetCardPosition();
-  }
-
-  isDragging = false;
-  currentIndex++; // Move to the next image
-  if (currentIndex < images.length) {
-    images[currentIndex].style.display = "block"; // Display the next image
-  }
-}
-
-function resetCardPosition() {
-  const card = images[currentIndex];
-  card.remove();
-  //card.style.transform = "";
-  //card.classList.remove("like", "dislike", "fade-out");
 }
