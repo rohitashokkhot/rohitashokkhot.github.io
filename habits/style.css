@@ -110,3 +110,9 @@ main {
 .dislike {
   transform: translateX(-200px) rotate(-20deg);
 }
+
+footer {
+  font-size: 0.8rem;
+  max-width: 600px;
+  padding-bottom: 20px;
+}
