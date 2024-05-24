@@ -2,6 +2,7 @@ const cardContainer = document.querySelector("#card-container");
 console.log(cardContainer);
 window.addEventListener("scroll", handleScroll);
 let cardCount = 5;
+console.log("body offset", document.body.offsetHeight);
 
 function loadCards() {
   let newCards = "";
@@ -36,6 +37,9 @@ function checkVisiblity() {
 }
 
 function handleScroll() {
+  console.log("Window innerheight", window.innerHeight);
+  console.log("Scroll Y", window.scrollY);
+  console.log("body offset", document.body.offsetHeight);
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
     loadCards();
   }
