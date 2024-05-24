@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infinite Scroll with Animations</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        scroll-behavior: smooth; /* Smooth scrolling */
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .item {
+        opacity: 0;
+        transform: translateY(20px);
+        padding: 20px;
+        margin: 10px 0;
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        transition: opacity 0.6s, transform 0.6s;
+      }
+      .item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <!-- Initial content -->
+      <div class="item">Item 1</div>
+      <div class="item">Item 2</div>
+      <div class="item">Item 3</div>
+      <div class="item">Item 4</div>
+      <div class="item">Item 5</div>
+    </div>
+
+    <script>
+      const container = document.getElementById("container");
+      let itemCount = 5;
+
+      function loadMoreItems() {
+        let newItems = "";
+        for (let i = 0; i < 5; i++) {
+          itemCount++;
+          newItems += `<div class="item">Item ${itemCount}</div>`;
+        }
+        container.innerHTML += newItems;
+        checkVisibleItems(); // Check visibility of new items
+      }
+
+      function checkVisibleItems() {
+        const items = document.querySelectorAll(".item");
+        const triggerBottom = window.innerHeight * 0.9;
+
+        items.forEach((item) => {
+          const itemTop = item.getBoundingClientRect().top;
+          if (itemTop < triggerBottom) {
+            item.classList.add("visible");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", () => {
+        if (
+          window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 100
+        ) {
+          loadMoreItems();
+        }
+        checkVisibleItems();
+      });
+
+      // Initial load of items and check visibility
+      loadMoreItems();
+      checkVisibleItems();
+    </script>
+  </body>
+</html>
