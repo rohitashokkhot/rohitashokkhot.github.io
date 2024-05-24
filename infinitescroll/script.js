@@ -15,14 +15,22 @@ function loadCards() {
 
 function checkVisiblity() {
   const cards = document.querySelectorAll(".outer");
-  const bottomOffset = window.innerHeight * 0.5;
-
+  const bottomOffset = window.innerHeight * 0.9;
+  const topOffset = 0;
+  const viewportHeight = window.innerHeight;
   cards.forEach(makeThemVisible);
 
   function makeThemVisible(card) {
     const cardTop = card.getBoundingClientRect().top;
-    if (cardTop < bottomOffset) {
+    const cardBottom = card.getBoundingClientRect().botttom;
+    // if (cardTop < bottomOffset && cardBottom > topOffset)
+    if (
+      (cardTop >= 0 && cardTop < viewportHeight * 0.9) ||
+      (cardBottom >= 0 && cardBottom < viewportHeight)
+    ) {
       card.classList.add("visible");
+    } else {
+      card.classList.remove("visible");
     }
   }
 }
