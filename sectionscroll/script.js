@@ -11,21 +11,31 @@ console.log(leftArrowButton);
 leftArrowButton.addEventListener("click", previousSlide);
 
 function nextSlide() {
-  slideIndex++;
-  if (slideIndex < slides.length) {
+  if (slideIndex === slides.length - 1) {
+    rightArrowButton.disabled = true;
+    return;
+  }
+  if (slideIndex < slides.length - 1) {
+    slideIndex++;
     const targetElement = slides[slideIndex];
     const targetPosition = targetElement.offsetLeft;
     console.log(targetPosition);
     window.scrollTo({ left: targetPosition, behavior: "smooth" });
+    leftArrowButton.disabled = false;
   }
 }
 
 function previousSlide() {
-  slideIndex--;
-  if (slideIndex >= 0) {
+  if (slideIndex === 0) {
+    leftArrowButton.disabled = true;
+    return;
+  }
+  if (slideIndex > 0) {
+    slideIndex--;
     const targetElement = slides[slideIndex];
     const targetPosition = targetElement.offsetLeft;
     console.log(targetPosition);
     window.scrollTo({ left: targetPosition, behavior: "smooth" });
+    rightArrowButton.disabled = false;
   }
 }
