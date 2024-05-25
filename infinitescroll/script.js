@@ -24,7 +24,6 @@ function checkVisiblity() {
   function makeThemVisible(card) {
     const cardTop = card.getBoundingClientRect().top;
     const cardBottom = card.getBoundingClientRect().botttom;
-    // if (cardTop < bottomOffset && cardBottom > topOffset)
     if (
       (cardTop >= 0 && cardTop < viewportHeight * 0.9) ||
       (cardBottom >= 0 && cardBottom < viewportHeight)
