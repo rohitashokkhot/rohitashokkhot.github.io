@@ -18,21 +18,21 @@ body {
 }
 
 .outer {
-  background-color: #1a120b;
+  background-color: #1a120b5f;
   /* border: 2px dashed #e5e5cb; */
-  width: 500px;
-  min-height: 150px;
+  width: 400px;
+  /* min-height: 150px; */
   padding: 10px;
   display: flex;
   gap: 1rem;
+  border-radius: 30px;
 }
 
 .inner {
   background-color: #d5cea3;
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
   margin: 10px auto;
-  border: 2px dotted #3c2a21;
   border-radius: 50%;
   padding: 10px;
   /* line-height: 80px; */

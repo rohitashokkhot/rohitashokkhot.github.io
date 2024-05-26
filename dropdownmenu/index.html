@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSS animations</title>
+    <title>DOM handling</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,7 +15,13 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="outer colorbox" draggable="true">Drag me</div>
-    <div class="outer dropbox">Drop me here</div>
+    <header>
+      <button id="my-profile">My profile</button>
+      <div id="profile-content">
+        <a href="#">Settings</a>
+        <a href="#">Activity</a>
+        <a href="#">Sign out</a>
+      </div>
+    </header>
   </body>
 </html>

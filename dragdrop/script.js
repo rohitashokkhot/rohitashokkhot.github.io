@@ -1,32 +1,30 @@
-let bgColor = null;
-document.addEventListener("DOMContentLoaded", () => {
-  const colorBoxes = document.querySelectorAll(".color-box");
+let draggedElement = null;
 
-  // Add dragstart event listeners to color boxes
-  colorBoxes.forEach((box) => {
-    box.addEventListener("dragstart", (event) => {
-      // Get the computed background color of the dragged box
-      const computedStyle = window.getComputedStyle(event.target);
-      bgColor = computedStyle.backgroundColor;
+const colorBox = document.querySelector(".colorbox");
+const dropBox = document.querySelector(".dropbox");
 
-      // Set the data transfer (use 'text/plain' type and store background color)
-      //event.dataTransfer.setData("text/plain", bgColor);
-    });
-  });
+colorBox.addEventListener("dragstart", startDrag);
 
-  // Add dragover event listener to body (to allow dropping)
-  document.body.addEventListener("dragover", (event) => {
-    event.preventDefault(); // Allow dropping
-  });
+function startDrag() {
+  draggedElement = colorBox;
+}
 
-  // Add drop event listener to body
-  document.body.addEventListener("drop", (event) => {
-    event.preventDefault();
+dropBox.addEventListener("dragover", endDrag);
 
-    // Retrieve the background color from the data transfer
-    //const bgColor = event.dataTransfer.getData("text/plain");
+function endDrag(event) {
+  event.preventDefault();
+}
 
-    // Set the background color of the body to the dropped color
-    document.body.style.backgroundColor = bgColor;
-  });
-});
+dropBox.addEventListener("drop", handleDrop);
+
+function handleDrop() {
+  if (draggedElement) {
+    const color = window
+      .getComputedStyle(draggedElement)
+      .getPropertyValue("background-color");
+    // const color = draggedElement.style.backgroundColor;
+    dropBox.style.backgroundColor = color;
+    dropBox.textContent = "Dropped!";
+    draggedElement = null;
+  }
+}
