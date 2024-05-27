@@ -10,10 +10,3 @@ function toggleContent() {
   console.log("I am clicked");
   profileContent.classList.toggle("show");
 }
-
-// // Close the dropdown if the user clicks outside of it
-// window.addEventListener("click", (event) => {
-//   if (!dropdown.contains(event.target)) {
-//     dropdown.classList.remove("show");
-//   }
-// });
