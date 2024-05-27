@@ -4,38 +4,38 @@ let slideIndex = 0;
 
 const rightArrowButton = document.querySelector("#right-arrow-button");
 console.log(rightArrowButton);
-rightArrowButton.addEventListener("click", nextSlide);
+rightArrowButton.addEventListener("click", gotoNextSlide);
 
 const leftArrowButton = document.querySelector("#left-arrow-button");
 console.log(leftArrowButton);
-leftArrowButton.addEventListener("click", previousSlide);
+leftArrowButton.addEventListener("click", gotoPreviousSlide);
 
-function nextSlide() {
+function gotoNextSlide() {
   if (slideIndex === slides.length - 1) {
     rightArrowButton.disabled = true;
     return;
   }
   if (slideIndex < slides.length - 1) {
     slideIndex++;
-    const targetElement = slides[slideIndex];
-    const targetPosition = targetElement.offsetLeft;
-    console.log(targetPosition);
-    window.scrollTo({ left: targetPosition, behavior: "smooth" });
+    const nextSlide = slides[slideIndex];
+    const newLeftPosition = nextSlide.offsetLeft;
+    console.log(newLeftPosition);
+    window.scrollTo({ left: newLeftPosition, behavior: "smooth" });
     leftArrowButton.disabled = false;
   }
 }
 
-function previousSlide() {
+function gotoPreviousSlide() {
   if (slideIndex === 0) {
     leftArrowButton.disabled = true;
     return;
   }
   if (slideIndex > 0) {
     slideIndex--;
-    const targetElement = slides[slideIndex];
-    const targetPosition = targetElement.offsetLeft;
-    console.log(targetPosition);
-    window.scrollTo({ left: targetPosition, behavior: "smooth" });
+    const previousSlide = slides[slideIndex];
+    const newLeftPosition = previousSlide.offsetLeft;
+    console.log(newLeftPosition);
+    window.scrollTo({ left: newLeftPosition, behavior: "smooth" });
     rightArrowButton.disabled = false;
   }
 }

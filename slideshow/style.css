@@ -70,24 +70,16 @@ main {
   /* flex-direction: column; */
   gap: 2rem;
   margin: auto;
-  /* margin-top: 70px; */
-  /* width: 1000px; */
   justify-content: space-between;
-  scroll-snap-type: x mandatory;
 }
 
 .slides {
   border: 2px dashed #e5e5cb7a;
   width: 100vw;
   font-size: 4rem;
-  /* min-height: 200px; */
   height: 100vh;
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* opacity: 0; */
-  /* translate: 0px 20px; */
-  transition: opacity 0.9s translate 0.6s scale 0.3s ease;
-  scroll-snap-align: start;
 }
