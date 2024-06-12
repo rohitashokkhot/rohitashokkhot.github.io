@@ -68,6 +68,8 @@ btn.addEventListener("click", () => {
       // ** show the next question
       display.innerText = questions[counter];
       sections[counter].classList.add("show");
+    } else {
+      display.innerText = "no more questions :) ";
     }
 
     // ** increase the progress bar with each question by 25% as we have 4 questions
