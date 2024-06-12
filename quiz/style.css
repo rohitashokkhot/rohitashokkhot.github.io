@@ -1,0 +1,296 @@
+/* 
+For my design choices, I decided to create a CSS animation using teals, 
+blues and greens to add a calming ambience to the page. I also created the UI to match these colours 
+to ensure that the user could focus on their study/meditation whilst remaining in a calm state.
+
+I used a fontface that created a more futuristic vibe to match the sound of the ambient track.
+
+I also decided to use white buttons from icons8 as I felt the back was too harsh for the colour 
+palette.
+
+I kept the original font and NAV system from my first assignment to create a cohesiveness throughout 
+my website, but changed the colouring to match this specific page. 
+
+I made the footer stand out as to sort of finish off the page nicely whilst also ensuring the credit
+for the symbols and sounds were available.
+
+I made sure the media player buttons were circles to show they were seperate from the ambience 
+buttons which i kept rectangles. I also wanted the ambience to be able to stack so I made the buttons
+change colour whilst the audio was on. */
+
+body {
+  background-image: linear-gradient(
+    to bottom,
+    #242424,
+    #2e2c38,
+    #38344c,
+    #423c61,
+    #4c4477
+  );
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  text-align: center;
+  margin: auto;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-family: "afacad", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.1rem;
+}
+
+h1 {
+  font-family: "young serif", system-ui;
+  color: #ffffff;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 5rem;
+  padding-bottom: 5rem;
+  max-width: 100%;
+  margin: auto;
+}
+
+h3 {
+  font-family: "afacad", system-ui;
+  color: #ffffff;
+  font-size: 3rem;
+  font-weight: 100;
+  font-style: italic;
+  padding-bottom: 3rem;
+  margin: auto;
+  max-width: 100%;
+}
+
+.outer {
+  width: 100%;
+  min-height: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 1.5rem; */
+  /* flex-wrap: wrap; */
+}
+
+/* img {
+  cursor: pointer;
+  max-height: 100%;
+  border-radius: 10px;
+  object-fit: fill;
+} */
+
+#progress-bar {
+  width: 60%;
+  height: 30px;
+  background-color: #242424;
+  overflow: hidden;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.progress-bar-fill {
+  display: block;
+  height: 100%;
+  background-color: #07594194;
+  width: 0;
+}
+
+nav {
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Pirata One", system-ui;
+  font-weight: 400;
+  font-style: italic;
+  word-spacing: 6rem;
+  letter-spacing: 0.25rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  color: whitesmoke;
+  opacity: 50%;
+  padding-top: 2rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.answers {
+  display: flex;
+  justify-content: center;
+  /* margin: 20px; */
+}
+
+#answer {
+  height: 250px;
+  background: none;
+  border-radius: 10px;
+  display: flex;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+footer {
+  background-color: #242424;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+.next-question button {
+  height: 100px;
+  background-color: #423c61;
+  border-radius: 100px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 3rem;
+  font-style: italic;
+  padding: 7px;
+  width: 500px;
+}
+
+button:hover {
+  background-color: darkslateblue;
+  /* scale: 1.1; */
+}
+
+.wrapper {
+  display: none;
+  /* hide all questions at the beginning  */
+}
+
+.show {
+  display: flex;
+  /* to show only the right question  */
+}
+
+#first {
+  width: 60%;
+}
+
+#dropbox {
+  height: 290px;
+  width: 365px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  border-style: dotted;
+  border-width: 3px;
+}
+
+.image {
+  height: 250px;
+  width: 365px;
+  border-radius: 10px;
+  background-size: cover;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1586902197503-e71026292412?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.image2 {
+  height: 250px;
+  width: 365px;
+  border-radius: 10px;
+  background-size: cover;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  text-align: center;
+  background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1445543949571-ffc3e0e2f55e?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.image3 {
+  height: 250px;
+  width: 365px;
+  border-radius: 10px;
+  background-size: cover;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  text-align: center;
+  background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1577862236121-c237c73ef4ed?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.image4 {
+  height: 250px;
+  width: 365px;
+  border-radius: 10px;
+  background-size: cover;
+  cursor: pointer;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-position: center;
+  background-image: url("https://images.unsplash.com/photo-1504788363733-507549153474?q=80&w=2934&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.image:hover {
+  border: #ffffff;
+  border-style: solid;
+  border-width: 10px;
+  scale: 1.1;
+}
+
+.image2:hover {
+  border: #ffffff;
+  border-style: solid;
+  border-width: 10px;
+  scale: 1.1;
+}
+.image3:hover {
+  border: #ffffff;
+  border-style: solid;
+  border-width: 10px;
+  scale: 1.1;
+}
+.image4:hover {
+  border: #ffffff;
+  border-style: solid;
+  border-width: 10px;
+  scale: 1.1;
+}
+h4 {
+  font-weight: 600;
+  font-size: 4rem;
+  color: whitesmoke;
+  -webkit-text-stroke: 3px darkslateblue;
+}

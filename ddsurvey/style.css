@@ -1,0 +1,55 @@
+body {
+  background-color: #1a120b;
+  display: flex;
+  /* flex-direction: column; */
+  text-align: center;
+  margin: auto;
+  max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #3c2a21;
+  font-size: 1.1rem;
+  gap: 2rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  /* width: 1000px; */
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid cornsilk; */
+  min-height: 400px;
+  min-width: 400px;
+}
+
+img {
+  cursor: pointer;
+}
+button {
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  background-color: rgb(42, 39, 30);
+}
+
+.response {
+  min-width: 360px;
+  min-height: 240px;
+  border: 2px dashed #ccc;
+  width: 360px;
+  height: 240px;
+  cursor: pointer;
+}

@@ -1,0 +1,288 @@
+<!-- This is my logic and reasoning for the elements I included in my media player design.
+
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>seasonal survey</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&family=Young+Serif&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad:ital,wght@0,400..700;1,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <nav>
+      <a href="../assignment1/index.html">A1</a>
+      <a href="../assignment2/index.html">A2</a>
+      <a href="#">A3</a>
+      <a href="../index.html">Home</a>
+    </nav>
+    <div class="outer">
+      <h1>Seasonal Experience Survey</h1>
+
+      <section class="questions">
+        <section id="question">
+          <h3>Question One: What is your favourite season?</h3>
+        </section>
+      </section>
+      <div id="progress-bar">
+        <div class="progress-bar-fill"></div>
+        <div id="question-counter"></div>
+      </div>
+
+      <!-- I used breaks here as I forgot how to add spacing sorry :( -->
+      <br />
+      <div class="wrapper show">
+        <div id="first">
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag1"
+              >
+                <h4>summer</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image2"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag2"
+              >
+                <h4>winter</h4>
+              </div>
+            </div>
+          </div>
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image3"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag3"
+              >
+                <h4>spring</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image4"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag4"
+              >
+                <h4>autumn</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="final"
+          id="dropbox"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+      </div>
+      <div class="wrapper">
+        <div id="first">
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag1"
+              >
+                <h4>summer</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image2"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag2"
+              >
+                <h4>winter</h4>
+              </div>
+            </div>
+          </div>
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image3"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag3"
+              >
+                <h4>spring</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image4"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag4"
+              >
+                <h4>autumn</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="final"
+          id="dropbox"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+      </div>
+      <div class="wrapper">
+        <div id="first">
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag1"
+              >
+                <h4>summer</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image2"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag2"
+              >
+                <h4>winter</h4>
+              </div>
+            </div>
+          </div>
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image3"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag3"
+              >
+                <h4>spring</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image4"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag4"
+              >
+                <h4>autumn</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="final"
+          id="dropbox"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+      </div>
+      <div class="wrapper">
+        <div id="first">
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag1"
+              >
+                <h4>summer</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image2"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag2"
+              >
+                <h4>winter</h4>
+              </div>
+            </div>
+          </div>
+          <div class="answers">
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image3"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag3"
+              >
+                <h4>spring</h4>
+              </div>
+            </div>
+
+            <div class="inner" id="text-answer" ondragover="allowDrop(event)">
+              <div
+                class="image4"
+                draggable="true"
+                ondragstart="drag(event)"
+                id="drag4"
+              >
+                <h4>autumn</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="final"
+          id="dropbox"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+        ></div>
+      </div>
+
+      <div class="next-question">
+        <button id="next-question" id="nextbutton"><p>next question</p></button>
+      </div>
+    </div>
+    <footer>
+      All images sourced from <a href="unsplash.com"> unsplash.com</a>
+    </footer>
+  </body>
+</html>
