@@ -6,7 +6,6 @@ const progressBarFill = document.querySelector(".progress-bar-fill");
 // here it needs a . and not # as you defined progress-bar-fill as class in HTML
 let newWidth = 0; // ** variable to store the progress bar width
 // progressBarFill.style.width = "33.33%";
-let draggedElement = null; //** variable to store the dragged element
 // const boxes = document.querySelectorAll(".final"),
 //   image = document.querySelector(".inner");
 
@@ -59,15 +58,20 @@ display.innerText = questions[counter];
 let btn = document.getElementById("next-question");
 
 btn.addEventListener("click", () => {
+  // ** we should check if counter is not going beyond the no of questions we have.
   if (counter < sections.length) {
     sections[counter].classList.remove("show");
+    // ** hide the current question
     counter++;
 
-    newWidth += 25;
     if (counter != sections.length) {
+      // ** show the next question
       display.innerText = questions[counter];
       sections[counter].classList.add("show");
     }
+
+    // ** increase the progress bar with each question by 25% as we have 4 questions
+    newWidth += 25;
     progressBarFill.style.width = newWidth + "%"; // **increment width with each question
   }
 });
@@ -76,8 +80,8 @@ btn.addEventListener("click", () => {
 // ** you do not need this
 // function reset1() {
 //   var wrapper = document.getElementById("wrapper");
-//   // ** if you are using getelementbyId do not use . or # just use the id name, which is wrapper here.
-//   // ** also do not use var it is old JS, use let or const.
+// ** if you are using getelementbyId do not use . or # just use the id name, which is wrapper here.
+// ** also do not use var it is old JS, use let or const.
 //   wrapper.innerHTML = html;
 // }
 // var html;
