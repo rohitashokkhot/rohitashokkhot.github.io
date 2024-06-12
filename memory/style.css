@@ -1,0 +1,158 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16 px;
+  font-family: "Poppins", sans-serif;
+  color: black;
+}
+
+body {
+  width: 100vh;
+  height: 100vh;
+  display: flex;
+  background: #51b7df;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.memory-game {
+  width: 1264px;
+  height: 490px;
+  margin: auto;
+  /* margin-top: 4rem; */
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  perspective: 1000px;
+  /* align-items: center; */
+}
+
+.memory-card {
+  /* height: 5rem;
+  width: 3.125rem; */
+  /* padding: 50px; */
+  /* margin: 5px; */
+  padding-left: 2rem;
+  padding-right: 6rem;
+  padding-bottom: 0.625rem;
+  padding-top: 0.625rem;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /* flex-wrap: wrap;
+  position: relative; */
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  /* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3); */
+  border: none;
+  /* align-items: center; */
+}
+
+.memory-card:active {
+  transform: scale(0.9);
+  transition: transform 0.2s;
+}
+
+.memory-card.flip {
+  transform: rotateY(180deg) translateX(50%);
+}
+
+.front-face,
+.back-face {
+  /* width: 8rem;
+  height: 12rem; */
+  /* padding: 2rem; */
+  position: absolute;
+  /* border-radius: 5px; */
+  backface-visibility: hidden;
+  border: none;
+}
+
+.front-face {
+  transform: rotateY(180deg);
+}
+
+h2 {
+  font-size: 50px;
+  color: black;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  text-align: center;
+}
+
+.reset {
+  /* height: max-content; */
+  /* width: max-content; */
+  margin: auto;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: blue;
+  background: white;
+  border: none;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 700;
+  /* align-items: flex-end; */
+  /* justify-content: space-around; */
+}
+
+.reset:focus {
+  color: white;
+  background: blue;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  /* width: 40rem;
+  height: 35rem; */
+  padding: 2.5rem 3rem;
+  background-color: #0071bc;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  border-radius: 0.6rem;
+  /* box-shadow: 0 0.09rem 2.8rem rgba(86, 66, 0, 0.2); */
+}
+.game-container {
+  position: relative;
+  width: 100%;
+  display: grid;
+}
+
+/* .button {
+  position: relative;
+  left: 50%;
+  margin-top: 50%;
+  justify-content: center;
+} */
+
+/* .container {
+  background: #0071bc;
+} */
+
+/* .container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  /* align-items: center; */
+
+/* img {
+  width: 100px;
+} */
