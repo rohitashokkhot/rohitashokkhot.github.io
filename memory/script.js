@@ -61,3 +61,18 @@ function resetBoard() {
 })();
 
 cards.forEach((card) => card.addEventListener("click", flipCard));
+
+<div id="image-container"></div>;
+
+const imgContainer = document.querySelector("#image-container");
+
+const newImages = ["colladump/34.png", "colladump/44.png"];
+imgContainer.innerHTML += `<div
+class="cutout"
+style="left: calc(60vw - 400px); top: calc(50vh - 280px)"
+>
+<div class="content">
+  <img src="${newImages[1]}" alt="cutout1" />
+</div>
+<div class="corner"></div>
+</div>`;

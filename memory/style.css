@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+.circle-container {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background-size: auto;
+  background-position: center;
+  background-image: url(image.jpg);
+}
+
 html {
   font-size: 16 px;
   font-family: "Poppins", sans-serif;
@@ -32,6 +41,7 @@ body {
   gap: 2rem;
   flex-wrap: wrap;
   perspective: 1000px;
+  /* background-color: transparent; */
   /* align-items: center; */
 }
 
