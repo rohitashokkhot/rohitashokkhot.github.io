@@ -147,3 +147,77 @@ button {
   justify-content: space-between;
   align-items: center;
 }
+
+.boxes {
+  margin-top: 150px;
+  width: 1100px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Echidnacontainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  /* height: 50px; */
+}
+
+.boxEch {
+  background-color: lightblue;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.Kangaroocontainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  /* height: 50px; */
+}
+
+.boxKang {
+  background-color: rgb(207, 166, 249);
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.Wombatcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  /* height: 50px; */
+}
+
+.boxWom {
+  background-color: rgb(252, 139, 152);
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
+
+.Koalacontainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  /* height: 50px; */
+}
+
+.boxKoa {
+  background-color: rgb(153, 191, 141);
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+}
