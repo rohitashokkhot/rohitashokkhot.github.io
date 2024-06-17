@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Who's Track Is That?</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Honk&family=Rubik+Bubbles&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+
+  <body>
+    <h1>Who's Track Is That?</h1>
+
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+    <img src="Eucal.png" id="Eu" style="width: 200px; height: auto" />
+
+    <h2>Hello Friend !!</h2>
+    <h2>Drag & Drop the correct tracks to the correct Australian animal.</h2>
+    <h2>Good Luck !!</h2>
+
+    <hr />
+
+    <!-- Animal Images -->
+    <h3>Australian Animals</h3>
+
+    <section></section>
+    <table>
+      <thead>
+        <tr>
+          <th>Echidna</th>
+          <th>Kangaroo</th>
+          <th>Wombat</th>
+          <th>Koala</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- All animal images purposely don't include their feet or paws so no hints are provided. -->
+        <tr>
+          <!-- I tried to achieve a consist quality of images so the images look coherent with each other  
+                I also resized the images individually to have the approximately the same size. -->
+          <td>
+            <img
+              src="Echidna.png"
+              id="Echidna"
+              style="width: 350px; height: auto"
+            />
+          </td>
+          <td>
+            <img
+              src="Kangaroo.png"
+              id="Kangaroo"
+              style="width: 220px; height: auto"
+            />
+          </td>
+          <td>
+            <img
+              src="Wombat.png"
+              id="Wombat"
+              style="width: 320px; height: auto"
+            />
+          </td>
+          <td>
+            <img
+              src="Koala.png"
+              id="Koala"
+              style="width: 300px; height: auto"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Drop Below !</th>
+          <th>Drop Below !</th>
+          <th>Drop Below !</th>
+          <th>Drop Below !</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <!-- Drop boxes -->
+
+    <table>
+      <thead>
+        <tr>
+          <th><div class="dropzone" id="dropzone-echidna"></div></th>
+          <th><div class="dropzone" id="dropzone-kangaroo"></div></th>
+          <th><div class="dropzone" id="dropzone-wombat"></div></th>
+          <th><div class="dropzone" id="dropzone-koala"></div></th>
+        </tr>
+      </thead>
+    </table>
+
+    <div class="trails">
+      <div
+        class="draggable"
+        id="draggable-wombat"
+        draggable="true"
+        data-correct-dropzone="dropzone-wombat"
+      >
+        <img
+          src="Wombat Tracks.png"
+          alt="Wombat Tracks"
+          class="draggable-image"
+        />
+      </div>
+      <div
+        class="draggable"
+        id="draggable-kangaroo"
+        draggable="true"
+        data-correct-dropzone="dropzone-kangaroo"
+      >
+        <img
+          src="Kangaroo Tracks .png"
+          alt="Kangaroo Tracks"
+          class="draggable-image"
+        />
+      </div>
+      <div
+        class="draggable"
+        id="draggable-echidna"
+        draggable="true"
+        data-correct-dropzone="dropzone-echidna"
+      >
+        <img
+          src="Echidna Tracks.png"
+          alt="Echidna Tracks"
+          class="draggable-image"
+        />
+      </div>
+      <div
+        class="draggable"
+        id="draggable-koala"
+        draggable="true"
+        data-correct-dropzone="dropzone-koala"
+      >
+        <img
+          src="Koala Tracks.png"
+          alt="Koala Tracks"
+          class="draggable-image"
+        />
+      </div>
+    </div>
+
+    <!-- Track Options -->
+    <!-- <table>
+      <thead>
+        <h3>Tracks</h3>
+      </thead>
+      <tbody>
+        <tr> 
+          <div class="container"> 
+            <td>
+            <div class="draggable" id="draggable-wombat" draggable="true" data-correct-dropzone="dropzone-wombat">
+                <img src="Wombat Tracks.png" alt="Wombat Tracks" class="draggable-image">
+            </div>
+            <div class="draggable" id="draggable-kangaroo" draggable="true" data-correct-dropzone="dropzone-kangaroo">
+                <img src="Kangaroo Tracks .png" alt="Kangaroo Tracks" class="draggable-image">
+            </div>
+            <div class="draggable" id="draggable-echidna" draggable="true" data-correct-dropzone="dropzone-echidna">
+                <img src="Echidna Tracks.png" alt="Echidna Tracks" class="draggable-image">
+            </div>
+            <div class="draggable" id="draggable-koala" draggable="true" data-correct-dropzone="dropzone-koala">
+                <img src="Koala Tracks.png" alt="Koala Tracks" class="draggable-image">
+            </div>
+          <td> 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" >  
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+            <img src = "Eu.png" id = "Eu" style = "width: 150px; height: auto;" > 
+        </tr>
+      </tbody>
+    </table>  -->
+
+    <!-- Pop Up -->
+
+    <div id="popup" class="popup hidden">
+      <p id="popup-message"></p>
+      <button onclick="closePopup()">OK</button>
+    </div>
+  </body>
+</html>
