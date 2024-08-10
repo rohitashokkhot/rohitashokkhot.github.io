@@ -38,12 +38,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* flex: 1; */
 }
 
 .coralbox {
   background-color: coral;
   color: #3c2a21;
   padding: 10px;
+  /* flex: 1; */
 }
 
 .plumbox {
