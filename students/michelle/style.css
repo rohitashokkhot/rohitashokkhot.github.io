@@ -4,7 +4,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  flex-direction: column;
+  flex-direction: row;
   color: rgb(75, 45, 2);
   /* width: 900px; */
   flex-wrap: wrap;
