@@ -1,0 +1,75 @@
+main {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  color: rgb(75, 45, 2);
+  /* width: 900px; */
+  flex-wrap: wrap;
+}
+
+h1 {
+  font-size: large;
+  position: center;
+  font-family: Cambria;
+  background-color: rgb(251, 237, 214);
+  color: rgb(145, 109, 9);
+  font-weight: bold;
+}
+
+h2 {
+  font-size: large;
+  position: center;
+  font-family: Cambria;
+  background-color: rgb(251, 237, 214);
+  font-weight: bold;
+}
+
+.my-class {
+  font-size: 50px;
+  text-align: center;
+}
+
+span {
+  color: rgb(145, 109, 9);
+  font-weight: bold;
+}
+
+.outer1 {
+  border: 3px solid rgb(75, 45, 2);
+  width: 400px;
+  height: fit-content;
+  gap: 5px;
+  flex-direction: column;
+  display: flex;
+}
+
+p {
+  padding: 15px;
+  margin: 5px;
+}
+
+.question,
+.answer {
+  background-color: rgb(236, 211, 169);
+  flex: 1;
+}
+
+.ques2 {
+  background-color: rgb(236, 211, 169);
+  flex: 1;
+  line-height: 180%;
+  list-style-type: circle;
+}
+
+.ques3 {
+  background-color: rgb(236, 211, 169);
+  flex: 1;
+}
+
+p > strong {
+  font-weight: bold;
+  font-size: large;
+}
