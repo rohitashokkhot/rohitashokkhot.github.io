@@ -1,3 +1,9 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 main {
   padding-top: 20px;
   display: flex;
@@ -6,7 +12,7 @@ main {
   gap: 10px;
   flex-direction: row;
   color: rgb(75, 45, 2);
-  /* width: 900px; */
+  width: 900px;
   flex-wrap: wrap;
 }
 
@@ -15,6 +21,7 @@ header {
   font-family: Cambria;
   font-size: large;
   font-weight: bold;
+  width: 100%;
 }
 
 h1 {
