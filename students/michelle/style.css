@@ -12,7 +12,7 @@ main {
 
 h1 {
   font-size: large;
-  position: center;
+  /* position: center; */
   font-family: Cambria;
   background-color: rgb(251, 237, 214);
   color: rgb(145, 109, 9);
@@ -21,7 +21,7 @@ h1 {
 
 h2 {
   font-size: large;
-  position: center;
+  /* position: center; */
   font-family: Cambria;
   background-color: rgb(251, 237, 214);
   font-weight: bold;
