@@ -10,21 +10,19 @@ main {
   flex-wrap: wrap;
 }
 
-h1 {
-  font-size: large;
-  /* position: center; */
-  font-family: Cambria;
+header {
   background-color: rgb(251, 237, 214);
-  color: rgb(145, 109, 9);
+  font-family: Cambria;
+  font-size: large;
   font-weight: bold;
 }
 
+h1 {
+  color: rgb(145, 109, 9);
+}
+
 h2 {
-  font-size: large;
-  /* position: center; */
-  font-family: Cambria;
-  background-color: rgb(251, 237, 214);
-  font-weight: bold;
+  color: rgb(75, 45, 2);
 }
 
 .my-class {
