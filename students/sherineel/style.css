@@ -1,0 +1,121 @@
+.anton-sc-regular {
+  font-family: "Anton SC", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.mate-regular {
+  font-family: "Mate", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+/* I chose these two fonts to mimmic the style of the website im reviewing */
+
+p {
+  /* max-width: 170ch !important; */
+  /* width: 100%; */
+}
+/* I had wanted the answers to reach the right end of the page for certain sections. 
+  After asking advice from a friend, she pointed out that the coding in reset.css is preventing this but I wasnt sure if I was allowed to change this. She suggested this as a workaround*/
+/* body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* max-width: 1200px; */
+} */
+
+div {
+  background-color: whitesmoke;
+
+  /* border: double 5px; */
+  border: 10px solid transparent;
+  border-image: url(borderline.png);
+  border-image-slice: 100;
+}
+/* I initially tried to make a scribbly border using an image of the concept sketch of the 
+concert hall, but it didnt match the overall look of the website. 
+So instead i used a more simple scribble i found when checky Getty's index */
+
+* {
+  font-family: "Mate", Courier, monospace;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 100px;
+  font-family: "Anton SC", "Franklin Gothic Medium", "Arial Narrow", Arial,
+    sans-serif;
+  text-align: center;
+  background-color: #ffa441;
+}
+/* i tried to base my colour palette on Getty's Website, as a sort of callback. 
+i also plan to  break up the questions into segments based on topic, for visual interest 
+and to emulate the text sections of the website I'm reviewing*/
+a {
+  color: whitesmoke;
+  font-family: "Anton SC", "Franklin Gothic Medium", "Arial Narrow", Arial,
+    sans-serif;
+  font-size: 25px;
+}
+
+.link {
+  text-align: center;
+  background-color: rgb(0, 0, 0);
+}
+
+.textformat {
+  padding: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flexstart {
+  align-items: start;
+}
+
+.flexend {
+  align-items: end;
+}
+
+.right {
+  text-align: right;
+}
+
+.question {
+  font-size: 35px;
+  /* padding: 10px 10px 0px 10px; */
+  padding: 10px;
+  text-indent: 30px;
+  text-decoration: underline;
+  text-decoration-thickness: 15px;
+  text-decoration-skip-ink: none;
+  text-underline-offset: -10px;
+}
+/* To create a mix of professional and approachable i thought to create a highlighter effect for the questions.
+I used different colours to segment my questions*/
+
+.answer {
+  font-size: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+}
+
+.underlinegreen {
+  text-decoration-color: #16a147aa;
+}
+
+.underlineblue {
+  text-decoration-color: #4596ff9d;
+}
+
+.underlineorange {
+  text-decoration-color: #ffa3419f;
+}
+
+.underlinered {
+  text-decoration-color: #ff6459a5;
+}
