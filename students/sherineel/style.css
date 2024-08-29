@@ -11,19 +11,8 @@
 }
 /* I chose these two fonts to mimmic the style of the website im reviewing */
 
-p {
-  /* max-width: 170ch !important; */
-  /* width: 100%; */
-}
 /* I had wanted the answers to reach the right end of the page for certain sections. 
   After asking advice from a friend, she pointed out that the coding in reset.css is preventing this but I wasnt sure if I was allowed to change this. She suggested this as a workaround*/
-/* body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  /* max-width: 1200px; */
-} */
 
 div {
   background-color: whitesmoke;
