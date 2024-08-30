@@ -6,6 +6,8 @@ body {
   height: 100vh; /* use entire height */
   width: 100vw; /* use entire width */
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 div {
@@ -49,6 +51,10 @@ a {
   border-bottom: 2px solid black;
   font-size: 3rem; /* to make the text bigger */
   font-family: comic sans MS;
+}
+
+a:hover {
+  scale: 0.9;
 }
 
 h1 {
