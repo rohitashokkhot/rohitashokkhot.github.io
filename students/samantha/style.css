@@ -1,0 +1,285 @@
+/* Written by: Samantha Lugay
+Student Number: s4087814 */
+
+/* Styling Foreword:
+I wanted to embody a similar energy to Palat Tuntaopas' Portfolio in my website design.
+Therefore, for inspiration and reference, I had inspeted and viewed the source code behind 
+the website to get an understanding on how the website built up.
+Stylistically, similar bold colours had been used to convey that bright maximalist energy.
+Font wise, the same 'Cube' font seen in Tuntaopas' portfolio had been used as header 1, as 
+a statement font. All other texts use Open Sans (sourced from Google Fonts) for high 
+readability and clean cut design.
+I also wanted to bring in some of the interaction design of Tuntaopas that I found the most 
+satisfying and interesting, though limited due to using only html and css. 
+
+I want to try create a website that combines both my own design aethetic and Tuntaopas', a 
+design choice which runs a fine line between maxinalist and minimalist. Fun but functional.
+ */
+
+/* GLOBAL ---------------------------------------------------------------------------*/
+* {
+  background-color: #cef846;
+
+  /* global font montserrat */
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* fonts ----------------------------------------------------------------------------*/
+@font-face {
+  font-family: Cube;
+  src: url("./fonts/cube.woff");
+
+  /* sourced from dafont.com, free for personal and commercial use */
+}
+
+/* HTML BODY STYLING --------------------------------------------------------------- */
+/* body styling */
+body {
+  margin-top: 7%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 2%;
+}
+
+/* article styling */
+article {
+  padding-bottom: 80px;
+}
+
+/* BLOCK STYLING IN BODY ------------------------------------------------------------*/
+/* Header block styling */
+.header {
+  text-align: center;
+}
+/* body block styling */
+.body {
+  text-align: left;
+  margin-top: 120px;
+  margin-left: 6%;
+  margin-right: 6%;
+}
+
+/* footer block styling */
+.footer {
+  text-align: center;
+}
+
+/* TEXT STYLE GUIDE ---------------------------------------------------------------*/
+/* HEADER 1 */
+/* The font was inspired from Tuntaopas' portfolio after inspecting the source code
+behind their website. I thought it only fitting seeing as this is a review of their
+portfolio. */
+h1 {
+  /* font */
+  font-family: "Cube";
+
+  /* styling */
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.5;
+
+  color: #0d3dfc;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+/* the hover element was to bring the same cheeky interactive energy from Tuntaopas' 
+work into my own */
+
+h1:hover {
+  text-transform: lowercase;
+}
+
+/* HEADER 2 */
+h2 {
+  /* keeping the same global font, montserrat, for style consistency */
+  /* styling */
+  font-size: 1.1rem;
+  font-style: oblique;
+  line-height: 1;
+
+  color: #0d3dfc;
+  text-align: left;
+  text-transform: uppercase;
+  font-kerning: normal;
+}
+
+/* HEADER 3 */
+h3 {
+  /* keeping the same global font, montserrat, for style consistency */
+  /* styling */
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: #f839e5;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+/* paragraph */
+p {
+  /* keeping the same global font, montserrat, for style consistency */
+  /* styling */
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  color: #2e2e2e;
+  text-align: left;
+}
+
+/* header subscript */
+.header-subscript {
+  /* keeping the same global font, montserrat, for style consistency */
+  /* styling */
+  font-size: 0.7rem;
+
+  color: #2e2e2e;
+  text-align: left;
+}
+
+/* footnote */
+.footer-p {
+  /* keeping the same global font, montserrat, for style consistency */
+  /* styling */
+  font-size: 0.7rem;
+
+  color: #f839e5;
+  text-align: center;
+}
+
+/* HYPERLINKS -------------------------------------------------------------------*/
+a {
+  font-weight: 300;
+  line-height: 3;
+
+  color: #0d3dfc;
+  text-decoration-line: none;
+}
+
+a:hover {
+  font-weight: 400;
+
+  color: #f839e5;
+  text-decoration: overline;
+}
+
+/* IMG STYLING -----------------------------------------------------------------*/
+.image {
+  border-width: 1px;
+  border-style: dotted;
+  color: #a0bf37;
+  max-width: 99.7%;
+  align-self: center;
+}
+
+/* PADDING SPACE  --------------------------------------------------------------*/
+.space80 {
+  margin-bottom: 80px;
+}
+
+.space2 {
+  margin-bottom: 2%;
+}
+
+/* FLEX ------------------------------------------------------------------------*/
+.row {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 7%;
+  margin-top: auto;
+  align-items: flex-start;
+  padding-bottom: 80px;
+  margin-bottom: 80px;
+}
+
+.column {
+  flex: 1;
+  text-align: center;
+}
+
+/* Similar to the hover element in H1, I wanted to incorporate more of the same cheeky 
+interactive energy from Tuntaopas' work into my own. Though limited by what has been
+taught and what can be done on html + css alone, I came across an article upon research
+named '10 Simple CSS and JavaScript Micro-interactions for Buttons', and was inspired
+by the 'Border animation on a round button' and wanted to try create a rotating border
+for the paragraph blocks upon hover. Following the example and changing to what I need,
+I created a border that appear upon hover, with a minimal gradient blue appearance.
+
+The intention is to create an interaction that highlights the fun web interaction nature
+that Tuntaopas showcases in their work but also doesn't take away from the  reading 
+experience.
+
+url to 10 Simple CSS and JavaScript Micro-interactions for Buttons article:
+
+https://www.sitepoint.com/button-micro-interactions/
+*/
+@keyframes rotate {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.box-col,
+.box-row {
+  margin-bottom: 80px;
+  position: relative;
+  z-index: 0;
+  padding: 3%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-col {
+  flex-direction: column;
+}
+
+.box-row {
+  gap: 5%;
+}
+
+.box-col::before,
+.box-row::before {
+  content: "";
+  position: absolute;
+  z-index: -5;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  background-image: linear-gradient(#0d3dfc, #00c2cb);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.box-col::before {
+  width: 400%;
+  height: 400%;
+}
+
+.box-row::before {
+  width: 1000%;
+  height: 1000%;
+}
+
+.box-col::after,
+.box-row::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  background: #cef846;
+}
+
+.box-col:hover::before,
+.box-row:hover::before,
+.box-col:target::before,
+.box-row:target::before,
+.box-col:focus-within::before,
+.box-row:focus-within::before {
+  opacity: 1;
+  animation: rotate 8s linear infinite;
+}
