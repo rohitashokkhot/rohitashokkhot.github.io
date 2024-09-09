@@ -15,16 +15,24 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="outer">
-      <p id="question">How much did you score in the assignment?</p>
+    <section class="outer">
+      <p id="question1">How much did you score in the assignment 1?</p>
       <input
         type="number"
-        id="myanswer"
+        id="answer1"
         placeholder="Enter a number between 1 to 30"
       />
-      <button onclick="getValue()">Submit</button>
+
+      <p id="question2">How much did you score in the assignment 2?</p>
+
+      <input
+        type="number"
+        id="answer2"
+        placeholder="Enter a number between 1 to 30"
+      />
+      <button onclick="checkGrade()">Check your grade</button>
       <!-- <input type="range" name="my-score" id="my-score" min="0" max="30" /> -->
-      <p id="answer"></p>
-    </div>
+      <p id="report"></p>
+    </section>
   </body>
 </html>

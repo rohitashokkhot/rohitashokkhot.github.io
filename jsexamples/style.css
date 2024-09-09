@@ -19,7 +19,7 @@ body {
 
 .outer {
   border: 2px dashed #e5e5cb;
-  width: 400px;
+  width: 600px;
   min-height: 200px;
   padding: 20px;
   display: flex;
@@ -29,6 +29,10 @@ body {
 
 .outer > * {
   padding: 5px;
+}
+
+input {
+  padding-bottom: 20px;
 }
 
 .grade {
