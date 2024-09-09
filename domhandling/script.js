@@ -17,7 +17,7 @@ function toggleMe() {
 }
 
 let allParagraphs = document.querySelectorAll("p");
-// allParagraphs.forEach(changeColor);
+//allParagraphs.forEach(changeColor);
 
 function changeColor(item) {
   //console.log(item);
@@ -25,3 +25,12 @@ function changeColor(item) {
   // item.textContent = "New text content";
 }
 console.log(allParagraphs);
+
+const myStatus = document.getElementById("status");
+console.log(myStatus);
+myStatus.addEventListener("mouseover", function () {
+  myStatus.style.backgroundColor = "lightgreen";
+});
+myStatus.addEventListener("mouseout", function () {
+  myStatus.style.backgroundColor = "lightblue";
+});
