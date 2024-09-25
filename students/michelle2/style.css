@@ -1,0 +1,161 @@
+:root {
+  --primary-bg-color: #f4f4f4;
+  --text-color: #333;
+  --main-bg-color: #efe0b9;
+  --main-text-color: #393509;
+  --main-btn-bg-color: #f8f8f3;
+}
+
+body,
+h1,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 40px;
+  margin: 50px;
+}
+body {
+  font-family: "Gill Sans", sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Create a container for the main content */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1300px;
+  width: 100%;
+  padding: 10px;
+}
+
+/* Header styling */
+header {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  font-family: Verdana, sans-serif;
+  font-size: 35px;
+  padding: 10px 0;
+  text-align: justify;
+  width: 100%;
+}
+
+/* Navigation styling */
+nav {
+  margin-top: 5px;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 50px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+/* Media player styling */
+.media-player {
+  width: 100%;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.media-player video {
+  max-width: 100%;
+  width: 600px;
+  height: 100%;
+}
+
+.custom-controls {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.custom-controls button {
+  background-color: #fbe8d1;
+  color: var(--main-text-color);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 55%;
+  height: 20px;
+  background-color: #e6e5e4;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background-color: rgb(246, 165, 37);
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+#right-container {
+  /* justify-content: center; */
+  /* align-items: center;  */
+  flex-direction: column;
+}
+
+#right-container p {
+  padding-bottom: 30px;
+}
+
+#steps {
+  /* margin: 10px; */
+  gap: 1rem;
+  display: grid;
+  /* padding: 10px; */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr; */
+  grid-template-rows: repeat(4, 1fr);
+}
+
+#steps button {
+  background-color: #fbe8d1;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.para {
+  border: 0px dashed pink;
+  justify-items: start;
+}
+/* Footer styling */
+footer {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
