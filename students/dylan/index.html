@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Study Timer</title>
+    <!-- add the font family of your choice -->
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <h1>Music Study Timer</h1>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Videos</a></li>
+        <li><a href="#">Music</a></li>
+        <li><a href="#">Playlists</a></li>
+        <!-- Add or remove navigation items as needed -->
+      </ul>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main class="container">
+      <div class="timer" id="timer">25:00</div>
+      <!-- Media Player Section -->
+      <div class="media-player">
+        <audio id="custom-audio-player" controls loop>
+          <!-- A loop property was added, as repeatedly needing to replay the music would become an inconvenience if the user is trying to focus whilst studying -->
+          <source src="erokia_ambient-wave-56-msfxp7-78.mp3" type="audio/mp3" />
+        </audio>
+        <div class="custom-controls">
+          <button id="play-pause-btn" onclick="togglePlayPause();">
+            <img
+              id="play-pause-img"
+              src="https://img.icons8.com/ios-glyphs/30/play--v1.png"
+              alt="Play Button"
+              width="24"
+              height="24"
+            />
+          </button>
+          <!-- A volume button was added if the user wishes to adjust the volume to suit their focus needs. -->
+          <button id="vol-btn" onclick="vol()">
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/high-volume--v2.png"
+              id="vol-img"
+              alt="Audio Button"
+              width="24"
+              height="24"
+            />
+          </button>
+          <button onclick="startTimer();" id="start-timer-btn">
+            Start Timer
+          </button>
+          <button onclick="stopTimer();" id="stop-timer-btn">Stop Timer</button>
+          <button onclick="resetTimer();" id="reset-timer-btn">
+            Reset Timer
+          </button>
+
+          <label for="input-time">Quantity (between 1 and 5):</label>
+          <input
+            type="number"
+            id="input-time"
+            name="input-time"
+            min="1"
+            max="5"
+          />
+          <input type="submit" id="submit" />
+
+          <!-- <button id="submit">Submit </button> -->
+          <!-- add the missing buttons or functionality here -->
+          <div class="progress-bar">
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Content Section -->
+      <section>
+        <h2>Additional Content</h2>
+        <p>This is where you can showcase any other relevant content.</p>
+        <!-- Add more content as needed -->
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Media Player Website. All rights reserved.</p>
+      <a href="https://icons8.com/icon/59862/play">Play</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+      <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+    </footer>
+  </body>
+</html>
