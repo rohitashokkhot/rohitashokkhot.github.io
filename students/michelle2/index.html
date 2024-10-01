@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Assignment 2</title>
-    <!-- add the font family of your choice -->
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
   <style>
+    /* I chose this picture to be the background of the website because most tutorial videos are seen by kids, 
+    especially DIY crafts that are easy and can be toys for them to play with. That's why I deliberately chose a colorful and 
+    full pattern background to attract kids attention and to make it look lively.*/
     body {
       background-image: url("colorful.png");
       background-repeat: no-repeat;
@@ -25,6 +27,10 @@
 
     <!-- Navigation Section -->
     <nav>
+      <!-- These navigations are the most important group that I think is really needed in a website. 
+       Since this is a DIY website, I want people to be able to watch other DIY videos as well on the same website. 
+       Also, if they want to know more about the creator or the studio itself, they can click "about us" to read the stories behind this. 
+       Furthermore, "contact us" is used to put the contacts of the studio and possibly artists who made the DIY craft. -->
       <ul>
         <li><a href="#">DIY crafts</a></li>
         <li><a href="#">About Us</a></li>
@@ -68,6 +74,9 @@
       <div id="right-container">
         <p>STEPS :</p>
         <div id="steps">
+          <!-- to easily go back to the steps that they missed, they can just click the button.
+            I purposely write what does the person did in the video to make user easier to figure which step did they
+             missed or want to rewind. -->
           <button id="step-1-btn">1. Materials</button>
           <button id="step-2-btn">2. Foam cut</button>
           <button id="step-3-btn">3. Make triangle and hole</button>
@@ -81,8 +90,9 @@
         </div>
       </div>
     </main>
-    <div>
-      <p class="para">
+    <div class="text-container">
+      <p>
+        <!-- this paragraph is a short description of the video -->
         Hello there! Here is the tutorial of how to make a handheld windmill
         fan. This steps are simple, so we hope you can make your own and have a
         play with it! If you got any questions or request on what to make next,
@@ -100,6 +110,3 @@
     </footer>
   </body>
 </html>
-
-<!--THINGS TO DO 
-add comments 300-500 words in total and refine the code -->

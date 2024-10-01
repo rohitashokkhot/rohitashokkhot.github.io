@@ -23,23 +23,23 @@ body {
   background-color: var(--primary-bg-color);
   color: var(--text-color);
   line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  /* display: flex;
+  flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
 }
 
-/* Create a container for the main content */
+/* The container is for the main content. Filled with video and the buttons as well. */
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  align-items: start;
   max-width: 1300px;
   width: 100%;
   padding: 10px;
 }
 
-/* Header styling */
+/* For the header, I wanted to make the word at the left since most website usually put their logo either on the right or left.   */
 header {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);
@@ -50,7 +50,7 @@ header {
   width: 100%;
 }
 
-/* Navigation styling */
+/* The navigation is placed in the center so that people can be aware of the navigation and it's easier to click. */
 nav {
   margin-top: 5px;
   text-align: center;
@@ -71,12 +71,17 @@ nav a {
   color: var(--text-color);
 }
 
-/* Media player styling */
+/* For the media player, I placed the controls button under the video, with play pause button and mute unmute button included. 
+I also put a progress bar so that user can see the progress clearly. */
 .media-player {
   width: 100%;
-  margin: 20px;
-  justify-content: center;
-  align-items: center;
+  /* margin: 20px; */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  /* justify-content: center;
+  align-items: center; */
 }
 
 .media-player video {
@@ -106,7 +111,7 @@ nav a {
 }
 
 .progress-bar {
-  width: 55%;
+  width: 78%;
   height: 20px;
   background-color: #e6e5e4;
   margin-top: 10px;
@@ -122,22 +127,19 @@ nav a {
 }
 
 #right-container {
-  /* justify-content: center; */
-  /* align-items: center;  */
   flex-direction: column;
+  align-content: center;
 }
 
 #right-container p {
   padding-bottom: 30px;
 }
 
+/* for the steps, I placed them in a grid to make it tidy and neat, but also in order so it's easier to read especially for kids.  */
 #steps {
-  /* margin: 10px; */
   gap: 1rem;
   display: grid;
-  /* padding: 10px; */
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  /* grid-template-rows: 1fr 1fr 1fr 1fr; */
   grid-template-rows: repeat(4, 1fr);
 }
 
@@ -145,17 +147,31 @@ nav a {
   background-color: #fbe8d1;
   border-radius: 10px;
   padding: 15px;
+  cursor: pointer;
+}
+
+#steps button:hover {
+  background-color: #f2c58a;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
 }
 
 .para {
   border: 0px dashed pink;
   justify-items: start;
+  align-items: left;
 }
-/* Footer styling */
+/* I styled the footer similar with the heading to have a constant style throughout the web. */
 footer {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);
   text-align: center;
   padding: 10px 0;
   width: 100%;
+}
+
+.text-container {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 30px;
 }

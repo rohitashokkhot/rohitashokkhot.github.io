@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- add the font family of your choice -->
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <h1> Relaxation and Study Vibes </h1>
+    </header>
+    <!-- Main Content Section -->
+     <main class="container">
+      <div class="stars"></div>
+      <!-- Media Player Section -->
+      <div class="media-player">
+        <audio id="custom-audio-player" loop>
+          <source
+            src="music.mp3"
+            type="audio/mp3"
+          />
+        </audio>
+
+         <!-- <div class="ipod-shuffle-box"> -->
+          <!-- <div class="ipod-shuffle-circle"> -->
+            <!-- <div class="quarter quarter1"></div> -->
+            <!-- <div class="quarter quarter2"></div> -->
+            <!-- <div class="quarter quarter3"></div> -->
+            <!-- <div class="quarter quarter4"></div> -->
+            <!-- <div class="cutout"> -->
+              <!-- <section class="custom-controls"> -->
+              <!-- <button id="play-pause-btn"> -->
+               <!-- <img -->
+               <!-- id="play-pause-img" -->
+                <!-- src="play_btn.png" -->
+                <!-- alt="Play Button" -->
+                <!-- width="100" -->
+                <!-- height="" -->
+            <!-- /> -->
+            <!-- </button> -->
+            <!-- </section> -->
+             <!-- </div> -->
+          <!-- </div> -->
+        <!-- </div> -->
+        <div class="display-container">
+          <h2>TIME</h2>
+        <div class="display-time"></div>
+        </div>
+
+        <div class="ipod-shuffle-box">
+          <div class="ipod-shuffle-circle">
+            <div class="top-control">
+                <button id="volume-up-btn">
+                    <img
+                        id="volume-up-img"
+                        src="volume-up.png"
+                        alt="Volume Up Button"
+                        width="24"
+                        height="24"
+                    />
+                </button>
+            </div>
+
+            <!-- volume-up icon from icons8 -->
+            <!-- https://icons8.com/icon/3220/plus -->
+
+            <div class="middle-control">
+                <button id="backward-btn">
+                    <img
+                        id="backward-img"
+                        src="https://img.icons8.com/ios-glyphs/30/skip-to-start--v2.png"
+                        alt="Backward Button"
+                        width="24"
+                        height="24"
+                    />
+                </button>
+                <button id="play-pause-btn">
+                    <img
+                        id="play-pause-img"
+                        src="play_btn.png"
+                        alt="Play Button"
+                        width="150"
+                        height="150"
+                    />
+                </button>
+                <button id="forward-btn">
+                    <img
+                        id="Forward-img"
+                        src="https://img.icons8.com/ios-glyphs/30/end--v2.png"
+                        alt="Forward Button"
+                        width="24"
+                        height="24"
+                    />
+                </button>
+            </div>
+
+            <div class="bottom-control">
+                <button id="volume-down-btn">
+                    <img
+                        id="volume-down-img"
+                        src="volume-down.png"
+                        alt="Volume Down Button"
+                        width="24"
+                        height="24"
+                    />
+                </button>
+            </div>
+          </div>
+      </div>
+        <!-- <div class="custom-controls"> -->
+          <!-- <button id="play-pause-btn" onclick="togglePlayPause()"> -->
+            <!-- <img -->
+              <!-- id="play-pause-img" -->
+              <!-- src="https://img.icons8.com/ios-glyphs/30/play--v1.png" -->
+              <!-- alt="Play Button" -->
+              <!-- width="24" -->
+              <!-- height="24" -->
+            <!-- /> -->
+          <!-- </button> -->
+          <!-- add the missing buttons or functionality here -->
+          <div class="progress-bar">
+            <span id="progress-bar-fill"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Content Section -->
+      <!-- <section> -->
+        <!-- <h2>Additional Content</h2> -->
+        <!-- <p>This is where you can showcase any other relevant content.</p> -->
+        <!-- Add more content as needed -->
+      <!-- </section> -->
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Media Player Website. All rights reserved.</p>
+      <a href="https://icons8.com/icon/59862/play">Play</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+      <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+    </footer>
+    
+  </body>
+</html>

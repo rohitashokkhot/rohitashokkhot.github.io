@@ -1,0 +1,357 @@
+:root {
+  --primary-bg-color: #f4f4f4;
+  --text-color: #ffffff;
+  --main-bg-color: #1b1133;
+  --main-text-color: #fff;
+  --main-btn-bg-color: #dadadc;
+}
+
+body,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  color: var(--text-color);
+  /* line-height: 1.6; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: radial-gradient(ellipse at bottom, #31353a 0%, #0c090f 100%);
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Add additional styles as needed */
+
+/* Create a container for the main content */
+.container {
+  max-width: 1000px;
+  width: 100%;
+  padding: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* background animation settings */
+.stars {
+  z-index: -10;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 1px;
+  width: 1px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 11vw 46vh 2px 2px #fff, 0vw 24vh 3px 3px #fff,
+    -31vw -6vh 2px 3px #fff, 13vw 2vh 3px 2px #fff, 17vw -30vh 2px 2px #fff,
+    12vw -39vh 2px 2px #fff, 37vw 13vh 2px 2px #fff, -13vw -17vh 2px 3px #fff,
+    -20vw 17vh 2px 3px #fff, 7vw 30vh 3px 2px #fff, 49vw 33vh 2px 2px #fff,
+    36vw 40vh 2px 2px #fff, -11vw 49vh 3px 3px #fff, 31vw -24vh 3px 2px #fff,
+    16vw 28vh 2px 2px #fff, -9vw 42vh 3px 3px #fff, 50vw 40vh 3px 2px #fff,
+    -13vw -17vh 3px 3px #fff, 1vw 6vh 3px 2px #fff, -14vw -2vh 3px 3px #fff,
+    -6vw 1vh 2px 2px #fff, -16vw 12vh 3px 2px #fff, -39vw 13vh 2px 3px #fff,
+    -50vw -27vh 2px 2px #fff, 6vw 40vh 2px 3px #fff, 7vw -9vh 3px 2px #fff,
+    -46vw -48vh 2px 3px #fff, -4vw 44vh 3px 3px #fff, -18vw 32vh 2px 2px #fff,
+    -36vw -21vh 2px 2px #fff, -20vw -2vh 3px 3px #fff, 28vw -8vh 2px 2px #fff,
+    10vw 37vh 3px 3px #fff, -6vw 33vh 2px 3px #fff, 31vw 12vh 3px 2px #fff,
+    -37vw -20vh 2px 3px #fff, 21vw -40vh 2px 2px #fff, -10vw -26vh 3px 2px #fff,
+    -47vw 44vh 3px 2px #fff, 23vw -50vh 2px 3px #fff, 11vw -36vh 2px 2px #fff,
+    -11vw -27vh 3px 2px #fff, -23vw -23vh 2px 2px #fff, 6vw -28vh 2px 3px #fff,
+    -44vw 23vh 2px 2px #fff, -48vw 15vh 3px 2px #fff, 43vw 32vh 3px 2px #fff,
+    20vw -26vh 2px 2px #fff, -8vw -3vh 3px 2px #fff, 17vw 43vh 2px 3px #fff,
+    27vw -3vh 3px 3px #fff, 27vw -49vh 3px 3px #fff, 41vw 33vh 2px 2px #fff,
+    -28vw 4vh 3px 2px #fff, 44vw 50vh 3px 3px #fff, 1vw -50vh 3px 3px #fff,
+    23vw -45vh 3px 2px #fff, -48vw 22vh 3px 3px #fff, -1vw -17vh 3px 3px #fff,
+    10vw -14vh 2px 3px #fff, 28vw 44vh 2px 2px #fff, 27vw 39vh 3px 2px #fff,
+    44vw 11vh 3px 2px #fff, -12vw -46vh 2px 2px #fff, -29vw -2vh 3px 2px #fff,
+    -7vw 27vh 2px 3px #fff, -47vw -43vh 2px 3px #fff, 11vw 26vh 2px 3px #fff,
+    43vw -28vh 3px 2px #fff, 27vw -33vh 3px 2px #fff, -32vw 28vh 3px 2px #fff,
+    28vw -19vh 2px 3px #fff, -36vw 21vh 2px 3px #fff, -12vw -1vh 2px 3px #fff,
+    -1vw 12vh 3px 3px #fff, -25vw -8vh 3px 2px #fff, 29vw 34vh 3px 2px #fff,
+    17vw 19vh 2px 3px #fff, -4vw 11vh 2px 3px #fff, 4vw 29vh 2px 2px #fff,
+    36vw 37vh 3px 3px #fff, -49vw -26vh 3px 2px #fff, 38vw 42vh 2px 2px #fff,
+    39vw 30vh 3px 3px #fff, -46vw -13vh 3px 2px #fff, -50vw 33vh 2px 2px #fff,
+    -50vw -4vh 2px 2px #fff, 46vw -4vh 3px 3px #fff, 27vw 12vh 3px 3px #fff,
+    -32vw 9vh 3px 3px #fff, 32vw -19vh 2px 3px #fff, -7vw -17vh 2px 2px #fff,
+    23vw 37vh 3px 3px #fff, 14vw 22vh 3px 3px #fff, 40vw -50vh 2px 2px #fff,
+    35vw 46vh 2px 2px #fff, -24vw 33vh 3px 2px #fff, 7vw 1vh 3px 2px #fff,
+    49vw -50vh 2px 3px #fff, 2vw 34vh 3px 3px #fff, 50vw -26vh 2px 3px #fff,
+    48vw 29vh 3px 2px #fff, 32vw -43vh 2px 3px #fff, 27vw -27vh 3px 3px #fff,
+    25vw -4vh 3px 2px #fff, -9vw -49vh 3px 2px #fff, 6vw -6vh 2px 2px #fff,
+    32vw -44vh 2px 2px #fff, -23vw -7vh 3px 2px #fff, 29vw 45vh 2px 3px #fff,
+    -14vw -48vh 3px 3px #fff, 14vw 4vh 3px 2px #fff, -14vw -41vh 2px 2px #fff,
+    -29vw -46vh 2px 3px #fff, 22vw 19vh 2px 2px #fff, -37vw 44vh 2px 3px #fff,
+    -46vw 29vh 2px 2px #fff, -4vw 27vh 2px 3px #fff, -45vw 25vh 3px 3px #fff,
+    10vw 31vh 3px 3px #fff, -34vw -31vh 2px 3px #fff, 36vw -23vh 2px 2px #fff,
+    40vw 29vh 3px 2px #fff, -27vw -41vh 3px 3px #fff, -3vw 34vh 3px 3px #fff,
+    -50vw -42vh 2px 2px #fff, 24vw 10vh 2px 2px #fff, -37vw -19vh 2px 2px #fff,
+    9vw 16vh 2px 3px #fff, -23vw -42vh 3px 3px #fff, -33vw 36vh 3px 2px #fff,
+    -30vw 27vh 2px 2px #fff, 16vw 20vh 3px 2px #fff, 43vw -23vh 2px 3px #fff,
+    -8vw 34vh 3px 2px #fff, -50vw -10vh 3px 3px #fff, -1vw -42vh 2px 2px #fff,
+    26vw 24vh 3px 2px #fff, 44vw -39vh 3px 2px #fff, -21vw -36vh 3px 2px #fff,
+    45vw 50vh 2px 2px #fff, 26vw 29vh 3px 3px #fff, 35vw -12vh 3px 2px #fff,
+    -31vw -43vh 3px 3px #fff, -6vw 16vh 2px 2px #fff, 11vw -1vh 2px 3px #fff,
+    16vw -26vh 3px 3px #fff, -1vw -19vh 2px 3px #fff, -37vw -37vh 2px 3px #fff,
+    24vw 20vh 2px 2px #fff, 46vw -19vh 2px 3px #fff, 30vw -18vh 3px 3px #fff,
+    43vw 21vh 2px 3px #fff, -30vw -28vh 3px 2px #fff, -26vw -27vh 3px 3px #fff,
+    -31vw -29vh 3px 3px #fff, 14vw -2vh 2px 3px #fff, -17vw 23vh 2px 2px #fff,
+    -2vw 35vh 3px 2px #fff, -8vw 11vh 2px 3px #fff, -45vw 29vh 3px 2px #fff,
+    -32vw -41vh 2px 3px #fff, 16vw 22vh 3px 2px #fff, 38vw -20vh 2px 2px #fff,
+    15vw 23vh 2px 3px #fff, -40vw -18vh 2px 2px #fff, 4vw 0vh 3px 3px #fff,
+    13vw 30vh 2px 3px #fff, -39vw -22vh 3px 3px #fff, 45vw -6vh 2px 2px #fff,
+    13vw 18vh 3px 3px #fff, -37vw 26vh 2px 3px #fff, 48vw -18vh 2px 3px #fff,
+    -31vw -33vh 2px 2px #fff, 16vw -49vh 2px 2px #fff, 9vw -40vh 2px 2px #fff,
+    21vw 50vh 2px 3px #fff, -47vw 31vh 2px 3px #fff, -48vw -41vh 3px 2px #fff,
+    -8vw 12vh 2px 3px #fff, -48vw -47vh 3px 2px #fff, -14vw -31vh 2px 3px #fff,
+    -16vw 42vh 3px 2px #fff, 26vw -32vh 2px 3px #fff, 0vw -31vh 2px 2px #fff,
+    -18vw 25vh 3px 2px #fff, -28vw -30vh 3px 3px #fff, 2vw -47vh 2px 2px #fff,
+    37vw 43vh 2px 2px #fff, 33vw -12vh 2px 2px #fff, -21vw 10vh 2px 2px #fff,
+    -5vw 13vh 2px 2px #fff, 46vw -8vh 2px 3px #fff, 13vw 3vh 3px 2px #fff,
+    1vw 40vh 2px 3px #fff, 16vw 4vh 2px 3px #fff, -21vw 32vh 3px 3px #fff,
+    -35vw -37vh 2px 3px #fff, 34vw -5vh 3px 3px #fff, 16vw -14vh 2px 2px #fff;
+  /* stars coordinates and settings from javascript */
+  animation: star-wheel 200s linear infinite;
+  /* animation-name: star-wheel; */
+  /* animation-duration: 60s; */
+  /* animation-iteration-count: 100; */
+  /* animation-timing-function: linear; */
+}
+
+@keyframes star-wheel {
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+/* HEADER STYLING */
+header {
+  /* background-color: var(--main-bg-color); */
+  color: var(--main-text-color);
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+/* TIME DISPLAY STYLING */
+.display-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+  padding-bottom: 30px;
+}
+
+.display-time {
+  display: flex;
+  font-size: 5rem;
+  font-weight: bold;
+  transition: ease-in-out 0.1s;
+}
+
+/* IPOD SHUFFLE STYLING */
+.ipod-shuffle-box {
+  border: 2px solid rgba(146, 146, 146, 0.438);
+  border-radius: 30px;
+  background-image: linear-gradient(
+    to right,
+    #939096 2%,
+    #dadadc,
+    #c7c7c9 10% 90%,
+    #dadadc,
+    #89868d
+  );
+  width: 550px;
+  height: 400px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 40px;
+}
+.ipod-shuffle-circle {
+  border: 2px solid rgba(146, 146, 146, 0.438);
+  width: 300px;
+  height: 300px;
+  color: #1a120b;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+  border-radius: 50%;
+  position: relative;
+}
+
+.top-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle-control {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.bottom-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .ipod-shuffle-circle { */
+/* position: relative; */
+/* width: 250px; */
+/* height: 250px; */
+/* display: flex; */
+/* justify-content: center; */
+/* gap: px; */
+/* flex-direction: column; */
+/* } */
+/* .quarter { */
+/* position: absolute; */
+/* width: 50%; */
+/* height: 50%; */
+/* transition: background-color 0.2s ease-in-out; */
+/* z-index: 1; */
+/* } */
+/* .quarter:hover { */
+/* background-color: #b3b3b3; */
+/* } */
+/* .quarter1 { */
+/* top: 0; */
+/* left: 0; */
+/* background-color: #FBFBFB; */
+/* border-radius: 100% 0 0 0; */
+/* rotate: 45deg; */
+/* } */
+/* .quarter2 { */
+/* top: 35%; */
+/* right: 15%; */
+/* background-color: #FBFBFB; */
+/* border-radius: 0 100% 0 0; */
+/* rotate: 45deg; */
+/* } */
+/* .quarter3 { */
+/* top: 70.1%; */
+/* right: 50%; */
+/* background-color: #FBFBFB; */
+/* border-radius: 0 0 0 100%; */
+/* rotate: -45deg; */
+/* } */
+/* .quarter4 { */
+/* top: 35%; */
+/* right: 85.4%; */
+/* background-color: #FBFBFB; */
+/* border-radius: 0 0 100% 0; */
+/* rotate: 135deg; */
+/* } */
+/* .cutout { */
+/* width: 60%; */
+/* height: 60%; */
+/* background-color: #DADADC; */
+/* position: absolute; */
+/* top: 30%; */
+/* right: 45%; */
+/* border-radius: 50%; */
+/* border: 1px solid #B0B0B0; */
+/* z-index: 2; */
+/* } */
+
+/* MEDIA PLAYER STYLING */
+.media-player {
+  /* width: 100%; */
+  margin: 0 auto;
+}
+
+.media-player audio {
+  max-width: 100%;
+}
+
+.custom-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.custom-controls button {
+  background-color: var(--main-btn-bg-color);
+  color: var(--main-text-color);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 50%;
+}
+
+#play-pause-button {
+  border-radius: 50%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 15px;
+  background-color: #ddd;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background-color: var(--main-bg-color);
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+/* Footer styling */
+footer {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
+
+#play-pause-btn img {
+  border-radius: 50%;
+}
+
+button {
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+button:hover {
+  scale: 0.9;
+}
