@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- add the font family of your choice -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Header Section -->
+    <header>
+      <h1>Study Playlist</h1>
+    </header>
+
+    <div class="music-container">
+      <div class="image-container">
+        <img src="images/coverless.jpg" alt="music-cover" id="cover" />
+      </div>
+
+      <div class="music-info">
+        <h4 id="title">Coverless</h4>
+        <div class="progress-container">
+          <div class="progress"></div>
+        </div>
+      </div>
+
+      <audio src="music/coverless.mp3" id="audio"></audio>
+
+      <div class="navigation">
+        <!-- previous button -->
+        <button id="prev" class="action-btn">
+          <img src="icons8-skip-to-start-48.png" alt="backward-btn" />
+        </button>
+        <!-- play button -->
+        <button id="play" class="action-btn action-btn-big">
+          <img src="icons8-play-30.png" alt="play-btn" />
+        </button>
+        <!-- next button -->
+        <button id="next" class="action-btn">
+          <img src="icons8-end-48.png" alt="forward-btn" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Media Player Website. All rights reserved.</p>
+      <a href="https://icons8.com/icon/59862/play">Play</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+      <a href="https://icons8.com/icon/61012/pause">Pause</a> icon by
+      <a href="https://icons8.com">Icons8</a>
+    </footer>
+  </body>
+</html>

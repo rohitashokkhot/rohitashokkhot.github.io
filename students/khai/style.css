@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+header {
+  font-size: xxx-large;
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
+body {
+  font-family: "Lexend Deca", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  background: url("rain.gif");
+  background-size: cover;
+  color: white;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.music-container {
+  width: 600px;
+  height: 500px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 30px;
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+  width: 250px;
+}
+
+.image-container > img {
+  width: inherit;
+  height: 250px;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  top: 50%;
+  left: 60%;
+
+  animation: rotate 3s linear infinite;
+  animation-play-state: paused;
+}
+
+.music-container.play .image-container img {
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.image-container::after {
+  content: "";
+  background-color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  top: 10%;
+}
+
+.action-btn {
+  background-color: transparent;
+  border-radius: 50%;
+  border: 0;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 20px;
+  margin: 0 10px;
+}
+
+.music-info {
+  top: 2%;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
+  text-align: center;
+  font-size: x-large;
+}
+
+.progress-container {
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  height: 4px;
+  width: 100%;
+}
+
+.progress {
+  background-color: cadetblue;
+  border-radius: 5px;
+  height: 100%;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Footer styling */
+footer {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+}
