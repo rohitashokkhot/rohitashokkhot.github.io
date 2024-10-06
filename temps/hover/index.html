@@ -28,16 +28,21 @@
     <div class="outer">
       <button id="gotoLastBtn">go to last</button>
     </div>
-    <div class="outer">
+    <div class="outer resizable">
       <button id="hover-button">
         <img src="cat.png" id="myImage" />
       </button>
       <div class="inner" id="more-info">
         <p>more about me</p>
       </div>
+      <button id="resize-pointer"></button>
     </div>
-    <div class="outer">This is another box</div>
-    <div class="outer">This is another box</div>
+    <div class="drag-box">
+      <div class="outer" id="purplebox" draggable="true">This is color box</div>
+      <div class="outer" id="coralbox" draggable="true">This is color box</div>
+    </div>
+
+    <div class="outer" id="dropbox">This is drop box</div>
     <div class="outer" id="scroll-content">
       <p class="long-text">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat
@@ -54,15 +59,23 @@
         laboriosam impedit nobis modi quas vitae accusamus doloribus.
       </p>
     </div>
-    <div class="button-container">
-      <button id="hscroll-button">Get horizontal scroll position</button>
-      <span id="hscroll">0</span>
-      <button id="vscroll-button">Get vertical scroll position</button>
-      <span id="vscroll">0</span>
+    <div class="button-container outer">
+      <div>
+        <button id="hscroll-button">Get horizontal scroll position</button>
+        <span id="hscroll">0</span>
+      </div>
+      <div>
+        <button id="vscroll-button">Get vertical scroll position</button>
+        <span id="vscroll">0</span>
+      </div>
       <button id="hscroll150-button">Scroll 150px horizontally</button>
       <button id="vscroll300-button">Scroll 300px vertically</button>
-      <button id="wvscroll-button">Get Window vertical scroll position</button>
-      <span id="wvscroll">0</span>
+      <div>
+        <button id="wvscroll-button">
+          Get Window vertical scroll position
+        </button>
+        <span id="wvscroll">0</span>
+      </div>
     </div>
     <div class="outer">This is another box</div>
     <div class="outer" id="last">This is another box</div>
