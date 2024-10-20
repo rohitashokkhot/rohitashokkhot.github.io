@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .items-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .draggable {
+        width: 80px;
+        height: 80px;
+        border: 2px solid #333;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: move;
+        background: white;
+        user-select: none;
+        transition: transform 0.2s;
+      }
+
+      .draggable:hover {
+        transform: scale(1.05);
+      }
+
+      .bins-container {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 20px;
+      }
+
+      .bin {
+        width: 120px;
+        height: 160px;
+        border: 3px dashed #666;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 10px;
+      }
+
+      .recycling {
+        background-color: #e8f5e9;
+      }
+
+      .garbage {
+        background-color: #ffebee;
+      }
+
+      .bin-label {
+        margin-top: 10px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .score {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      .message {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 4px;
+        display: none;
+      }
+
+      .correct {
+        background-color: #c8e6c9;
+        color: #2e7d32;
+      }
+
+      .incorrect {
+        background-color: #ffcdd2;
+        color: #c62828;
+      }
+
+      /* Bin icons */
+      .bin-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Waste Sorting Game</h1>
+      <div class="score">Score: <span id="score">0</span></div>
+
+      <div class="items-container" id="items">
+        <div class="draggable" draggable="true" data-type="recycling">
+          📄<br />Paper
+        </div>
+        <div class="draggable" draggable="true" data-type="recycling">
+          🥤<br />Can
+        </div>
+        <div class="draggable" draggable="true" data-type="garbage">
+          🍌<br />Peel
+        </div>
+        <div class="draggable" draggable="true" data-type="recycling">
+          📦<br />Box
+        </div>
+        <div class="draggable" draggable="true" data-type="garbage">
+          🦴<br />Bone
+        </div>
+        <div class="draggable" draggable="true" data-type="recycling">
+          📰<br />News
+        </div>
+      </div>
+
+      <div class="bins-container">
+        <div>
+          <div class="bin recycling" id="recycling">
+            <div class="bin-icon">♻️</div>
+          </div>
+          <div class="bin-label">Recycling</div>
+        </div>
+        <div>
+          <div class="bin garbage" id="garbage">
+            <div class="bin-icon">🗑️</div>
+          </div>
+          <div class="bin-label">Garbage</div>
+        </div>
+      </div>
+
+      <div class="message" id="message"></div>
+    </div>
+
+    <script>
+      let score = 0;
+      const scoreElement = document.getElementById("score");
+      const messageElement = document.getElementById("message");
+      const items = document.querySelectorAll(".draggable");
+      const bins = document.querySelectorAll(".bin");
+
+      // Add drag events to items
+      items.forEach((item) => {
+        item.addEventListener("dragstart", dragStart);
+        item.addEventListener("dragend", dragEnd);
+      });
+
+      // Add drag events to bins
+      bins.forEach((bin) => {
+        bin.addEventListener("dragover", dragOver);
+        bin.addEventListener("dragenter", dragEnter);
+        bin.addEventListener("dragleave", dragLeave);
+        bin.addEventListener("drop", drop);
+      });
+
+      function dragStart(e) {
+        e.target.classList.add("dragging");
+        e.dataTransfer.setData("text/plain", e.target.dataset.type);
+      }
+
+      function dragEnd(e) {
+        e.target.classList.remove("dragging");
+      }
+
+      function dragOver(e) {
+        e.preventDefault();
+      }
+
+      function dragEnter(e) {
+        e.preventDefault();
+        e.target.classList.add("dragover");
+      }
+
+      function dragLeave(e) {
+        e.target.classList.remove("dragover");
+      }
+
+      function drop(e) {
+        e.preventDefault();
+        const bin = e.target.closest(".bin");
+        const itemType = e.dataTransfer.getData("text/plain");
+        const binType = bin.id;
+
+        // Check if the item was dropped in the correct bin
+        if (itemType === binType) {
+          score += 10;
+          showMessage("Correct! +10 points", "correct");
+        } else {
+          score = Math.max(0, score - 5);
+          showMessage("Incorrect! -5 points", "incorrect");
+        }
+
+        scoreElement.textContent = score;
+
+        // Remove the dropped item
+        const draggedItem = document.querySelector(".dragging");
+        draggedItem.remove();
+
+        // Check if game is over
+        if (document.querySelectorAll(".draggable").length === 0) {
+          showMessage(`Game Over! Final Score: ${score}`, "correct");
+        }
+      }
+
+      function showMessage(text, type) {
+        messageElement.textContent = text;
+        messageElement.className = "message " + type;
+        messageElement.style.display = "block";
+
+        setTimeout(() => {
+          messageElement.style.display = "none";
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .video-container {
+        position: relative;
+        width: 320px;
+        height: 180px;
+        margin: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      .thumbnail {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+      }
+
+      .video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .video-container:hover .thumbnail {
+        opacity: 0;
+      }
+
+      .video-container:hover .video {
+        opacity: 1;
+      }
+
+      .duration {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        z-index: 2;
+      }
+
+      /* Demo layout styles */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .title {
+        margin: 8px 0;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid">
+      <!-- Video Item 1 -->
+      <div>
+        <div class="video-container" data-video-id="1">
+          <img
+            class="thumbnail"
+            src="/api/placeholder/320/180"
+            alt="Video thumbnail"
+          />
+          <video class="video" muted preload="metadata">
+            <source
+              src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div class="duration">0:30</div>
+        </div>
+        <h3 class="title">Sample Video Title 1</h3>
+      </div>
+
+      <!-- Video Item 2 -->
+      <div>
+        <div class="video-container" data-video-id="2">
+          <img
+            class="thumbnail"
+            src="/api/placeholder/320/180"
+            alt="Video thumbnail"
+          />
+          <video class="video" muted preload="metadata">
+            <source
+              src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div class="duration">1:00</div>
+        </div>
+        <h3 class="title">Sample Video Title 2</h3>
+      </div>
+    </div>
+
+    <script>
+      // Get all video containers
+      const videoContainers = document.querySelectorAll(".video-container");
+
+      // Add hover listeners to each container
+      videoContainers.forEach((container) => {
+        const video = container.querySelector(".video");
+        let timeoutId;
+
+        // Mouse enter - start video after a brief delay
+        container.addEventListener("mouseenter", () => {
+          timeoutId = setTimeout(() => {
+            video.currentTime = 0; // Reset video to start
+            video.play();
+          }, 300); // 300ms delay before playing
+        });
+
+        // Mouse leave - pause video and clear timeout
+        container.addEventListener("mouseleave", () => {
+          clearTimeout(timeoutId);
+          video.pause();
+          video.currentTime = 0; // Reset video position
+        });
+
+        // Handle video end
+        video.addEventListener("ended", () => {
+          video.currentTime = 0; // Reset to beginning
+          video.play(); // Play again
+        });
+      });
+    </script>
+  </body>
+</html>

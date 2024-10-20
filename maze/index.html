@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .maze {
+        display: grid;
+        grid-template-columns: repeat(8, 40px);
+        grid-template-rows: repeat(5, 40px);
+        background: #f0f0f0;
+        border: 2px solid #333;
+      }
+
+      .cell {
+        width: 40px;
+        height: 40px;
+        border: 1px solid #ccc;
+      }
+
+      .wall {
+        background-color: #333;
+      }
+      .player {
+        background-color: red;
+      }
+      .star {
+        background-color: gold;
+      }
+      .exit {
+        background-color: green;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(3, 50px);
+        grid-template-rows: repeat(3, 50px);
+        gap: 5px;
+      }
+
+      .control-btn {
+        padding: 10px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+
+      #up-btn {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      #left-btn {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      #right-btn {
+        grid-column: 3;
+        grid-row: 2;
+      }
+      #down-btn {
+        grid-column: 2;
+        grid-row: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="maze" id="maze"></div>
+      <div class="controls">
+        <button id="up-btn">↑</button>
+        <button id="left-btn">←</button>
+        <button id="right-btn">→</button>
+        <button id="down-btn">↓</button>
+      </div>
+    </div>
+
+    <script>
+      // Simple maze representation: 0=path, 1=wall, 2=star, 3=exit, 4=player
+      const maze = [
+        [4, 0, 1, 1, 1, 1, 1, 1],
+        [1, 0, 2, 1, 0, 0, 1, 1],
+        [1, 0, 1, 1, 0, 2, 0, 1],
+        [1, 0, 2, 0, 0, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1, 3, 1],
+      ];
+
+      let playerPos = { x: 0, y: 0 };
+      let starsCollected = 0;
+
+      // Initialize the maze
+      function renderMaze() {
+        const mazeElement = document.getElementById("maze");
+        mazeElement.innerHTML = "";
+
+        maze.forEach((row, y) => {
+          row.forEach((cell, x) => {
+            const div = document.createElement("div");
+            div.className = "cell";
+
+            if (cell === 1) div.classList.add("wall");
+            if (cell === 2) div.classList.add("star");
+            if (cell === 3) div.classList.add("exit");
+            if (cell === 4) div.classList.add("player");
+
+            mazeElement.appendChild(div);
+          });
+        });
+      }
+
+      // Move player
+      function movePlayer(dx, dy) {
+        const newX = playerPos.x + dx;
+        const newY = playerPos.y + dy;
+
+        // Check if move is valid
+        if (
+          newX >= 0 &&
+          newX < 8 &&
+          newY >= 0 &&
+          newY < 5 &&
+          maze[newY][newX] !== 1
+        ) {
+          // Collect star if present
+          if (maze[newY][newX] === 2) {
+            starsCollected++;
+          }
+
+          // Check win condition
+          if (maze[newY][newX] === 3 && starsCollected === 3) {
+            alert("You win! All stars collected!");
+            return;
+          }
+
+          // Update maze array
+          maze[playerPos.y][playerPos.x] = 0;
+          maze[newY][newX] = 4;
+          playerPos = { x: newX, y: newY };
+
+          // Update display
+          renderMaze();
+        }
+      }
+
+      // Set up controls
+      const controls = {
+        ArrowUp: () => movePlayer(0, -1),
+        ArrowDown: () => movePlayer(0, 1),
+        ArrowLeft: () => movePlayer(-1, 0),
+        ArrowRight: () => movePlayer(1, 0),
+      };
+
+      // Event listeners
+      document.addEventListener("keydown", (e) => {
+        if (controls[e.key]) {
+          controls[e.key]();
+        }
+      });
+
+      document.getElementById("up-btn").onclick = () => movePlayer(0, -1);
+      document.getElementById("down-btn").onclick = () => movePlayer(0, 1);
+      document.getElementById("left-btn").onclick = () => movePlayer(-1, 0);
+      document.getElementById("right-btn").onclick = () => movePlayer(1, 0);
+
+      // Start game
+      renderMaze();
+    </script>
+  </body>
+</html>
