@@ -1,0 +1,253 @@
+body {
+  background-color: rgb(233, 248, 255);
+  display: flex;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.outer {
+  width: 400px;
+  min-height: 200px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.theme {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: -50px;
+  z-index: 4;
+}
+
+.theme-label {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 17px;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 4px;
+  width: 300px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  z-index: 4;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.journal-container {
+  position: relative;
+  width: 1000px;
+  height: 800px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.journal-background {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.drop-area {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: dashed 2px transparent;
+  cursor: move;
+  pointer-events: none;
+}
+
+.sticker {
+  width: 90px;
+  height: 90px;
+  position: relative; /* Keep relative by default */
+  cursor: grab;
+  z-index: 3;
+  user-select: none;
+  pointer-events: all; /* Ensure stickers are interactable */
+}
+
+.polaroid {
+  max-width: 150px;
+  max-height: 200px;
+  position: relative; /* Also start with relative for polaroids */
+  cursor: grab;
+  z-index: 2;
+  user-select: none;
+}
+
+.sticker:active,
+.polaroid:active {
+  cursor: grabbing;
+}
+
+.decorations {
+  position: relative;
+  top: 0;
+  left: 0;
+  justify-content: space-around;
+}
+
+.decorations2 {
+  position: relative;
+  top: 0;
+  left: 0;
+  justify-content: space-around;
+}
+
+.draggable {
+  position: absolute;
+  cursor: move;
+  transition: 0.2s;
+  pointer-events: all;
+}
+
+#polaroid1 {
+  position: absolute;
+  top: -10%;
+  left: -40%;
+  transform: rotate(-10deg);
+}
+
+#polaroid2 {
+  position: absolute;
+  top: 30%;
+  left: 170%;
+  transform: rotate(10deg);
+}
+
+#polaroid3 {
+  position: absolute;
+  top: -20%;
+  left: 280%;
+  transform: rotate(30deg);
+}
+
+#polaroid4 {
+  position: absolute;
+  top: 80%;
+  left: 10%;
+  transform: rotate(-30deg);
+}
+
+#polaroid5 {
+  position: absolute;
+  top: 80%;
+  left: -1550%;
+  transform: rotate(30deg);
+}
+
+#polaroid6 {
+  position: absolute;
+  top: 40%;
+  left: -1400%;
+  transform: rotate(-20deg);
+}
+
+#polaroid7 {
+  position: absolute;
+  top: -10%;
+  left: -1540%;
+  transform: rotate(40deg);
+}
+
+#polaroid8 {
+  position: absolute;
+  top: 3%;
+  left: -1350%;
+  transform: rotate(20deg);
+}
+
+#sticker1 {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  transform: rotate(20deg);
+}
+
+#sticker2 {
+  position: absolute;
+  top: 300px;
+  right: 10px;
+  transform: rotate(-20deg);
+}
+
+#sticker3 {
+  position: absolute;
+  top: 30px;
+  right: 70px;
+  transform: rotate(-20deg);
+}
+
+#sticker4 {
+  position: absolute;
+  top: 100px;
+  right: 80px;
+  transform: rotate(20deg);
+}
+
+#sticker5 {
+  position: relative;
+  margin-top: 10%;
+  right: -200%;
+  transform: rotate(20deg);
+}
+
+#sticker6 {
+  position: relative;
+  margin-top: 90%;
+  right: 1500%;
+  transform: rotate(20deg);
+}
+
+#sticker7 {
+  position: relative;
+  margin-top: 90%;
+  right: 1250%;
+  transform: rotate(60deg);
+}
+
+#sticker8 {
+  position: relative;
+  margin-top: 50%;
+  right: 1500%;
+  transform: rotate(-20deg);
+}
+
+#sticker9 {
+  position: relative;
+  margin-top: 90%;
+  right: 1300%;
+  transform: rotate(20deg);
+}

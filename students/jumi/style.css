@@ -1,0 +1,57 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  background-color: #928989; /* Light background color */
+}
+
+header {
+  background: #4caf50; /* Header color */
+  color: white;
+  padding: 60px 0;
+  text-align: center;
+}
+
+h2 {
+  margin-left: 44%;
+}
+
+main {
+  padding: 80px;
+  max-width: 1200px; /* Max width for main content */
+  margin: auto; /* Center align */
+}
+
+.gallery {
+  display: grid; /* Use CSS Grid for layout */
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  grid-template-rows: repeat(5, 200px); /* 5 rows, each 200px high */
+  gap: 90px; /* Space between images */
+  margin-left: 14%;
+  margin-right: 10%;
+}
+
+.gallery img {
+  width: 80%; /* Make images responsive */
+  height: 120%; /* Fill the grid cell */
+  object-fit: cover; /* Maintain aspect ratio while covering the cell */
+  border-radius: 20px; /* Slightly rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s; /* Animation effect */
+}
+
+.gallery img:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+footer {
+  text-align: center;
+  padding: 10px 0;
+  background: #333; /* Footer color */
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: 20px; /* Space above footer */
+}
