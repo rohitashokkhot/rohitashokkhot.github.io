@@ -1,0 +1,207 @@
+body {
+  background-color: rgb(237, 224, 200);
+}
+
+/* Setting images to form together */
+/* Initial blank photo */
+#default-eyes,
+#default-hair,
+#default-hat,
+#default-skin,
+#default-piercings,
+#default-shirt {
+  width: 50%;
+
+  position: absolute;
+  left: 670px;
+}
+
+/* Original blocking used for position */
+/* #blocking {
+  border: 1px solid;
+  width: 50%;
+
+  position: absolute;
+  left: 670px;
+} */
+
+/* Buttons - colouring (initial colours commented are for reference */
+#button-skin {
+  background-color: pink;
+  width: 100px;
+  height: 60px;
+}
+
+#button-eyes {
+  background-color: purple;
+  width: 100px;
+  height: 60px;
+}
+
+#button-hat {
+  background-color: red;
+  width: 100px;
+  height: 60px;
+}
+
+#button-hair {
+  background-color: teal;
+  width: 100px;
+  height: 60px;
+}
+
+#button-shirt {
+  background-color: blue;
+  width: 100px;
+  height: 60px;
+}
+
+#button-piercings {
+  background-color: green;
+  width: 100px;
+  height: 60px;
+}
+
+/* Initialising buttons to be blank orignially */
+/* Eyes */
+#eye-colour-1,
+#eye-colour-2,
+#eye-colour-3,
+#eye-colour-4,
+#eye-colour-5,
+#reset-button-eyes {
+  background-color: purple;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* hair */
+#hair-colour-1,
+#hair-colour-2,
+#hair-colour-3,
+#hair-colour-4,
+#hair-colour-5,
+#reset-button-hair {
+  background-color: teal;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* Skin */
+#skin-colour-1,
+#skin-colour-2,
+#skin-colour-3,
+#skin-colour-4,
+#skin-colour-5,
+#reset-button-skin {
+  background-color: pink;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* Hat */
+#hat-colour-1,
+#hat-colour-2,
+#hat-colour-3,
+#hat-colour-4,
+#hat-colour-5,
+#reset-button-hat {
+  background-color: red;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* piercings */
+#piercings-colour-1,
+#piercings-colour-2,
+#reset-button-piercings {
+  background-color: green;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* shirt */
+#shirt-colour-1,
+#shirt-colour-2,
+#shirt-colour-3,
+#shirt-colour-4,
+#shirt-colour-5,
+#reset-button-shirt {
+  background-color: blue;
+  width: 100px;
+  height: 60px;
+  display: none;
+}
+
+/* Images - declaring as invisible to start */
+#eyes_blue,
+#eyes_brown,
+#eyes_green,
+#eyes_grey,
+#eyes_pastelblue,
+#blonde-hair,
+#brown-hair,
+#green-hair,
+#purple-hair,
+#red-hair,
+#blue-hat,
+#green-hat,
+#pink-hat,
+#red-hat,
+#tan-hat,
+#dark-skin,
+#darktan-skin,
+#pale-skin,
+#tan-skin,
+#verypale-skin,
+#gold-piercings,
+#silver-piercings,
+#blue-shirt,
+#cream-shirt,
+#green-shirt,
+#red-shirt,
+#tan-shirt {
+  width: 50%;
+  position: absolute;
+  left: 670px;
+  display: none;
+}
+
+/* specifics - eyes  */
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#eye-colour-1 {
+  width: 100px;
+  height: 60px;
+  background-color: #569ca1;
+}
+
+#eye-colour-2 {
+  width: 100px;
+  height: 60px;
+  background-color: #7d4240;
+}
+#eye-colour-3 {
+  width: 100px;
+  height: 60px;
+  background-color: #d2fdd2;
+}
+#eye-colour-4 {
+  width: 100px;
+  height: 60px;
+  background-color: #a0a4ab;
+}
+#eye-colour-5 {
+  width: 100px;
+  height: 60px;
+  background-color: #abdcfb;
+}
