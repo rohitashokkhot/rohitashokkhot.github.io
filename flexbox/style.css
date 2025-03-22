@@ -19,7 +19,7 @@ body {
 
 .outer {
   width: 400px;
-  border: 1px dashed white;
+  border: 2px dashed #e5e5cb56;
   min-height: 100px;
   display: flex;
   /* flex-direction: column; */
