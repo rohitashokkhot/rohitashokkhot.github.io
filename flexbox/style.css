@@ -46,3 +46,7 @@ body {
   color: #3c2a21;
   padding: 10px;
 }
+
+/* .outer > * {
+  flex: 1;
+} */
