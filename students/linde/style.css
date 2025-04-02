@@ -1,0 +1,183 @@
+body {
+  background-color: #ffa441;
+  display: flex;
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+.rammetto-one-regular {
+  font-family: "Rammetto One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* .newsreader-<uniquifier > {
+  font-family: "Newsreader", serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+} */
+
+.lekton-regular {
+  font-family: "Lekton", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lekton-bold {
+  font-family: "Lekton", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lekton-regular-italic {
+  font-family: "Lekton", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.grid-container {
+  border: 2px dashed red;
+  width: 100%;
+  min-height: 500px;
+  padding: 10px;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 0.3fr);
+
+  /* grid-template-areas:
+    ".h1 .h1 .h1 .h1 .h1"
+    ".h2 .h2 .h2 .h2 .h2"
+    "q1 q1 a1 a1 a1"
+    "q1 q1 a1 a1 a1"
+    "q2 q2 q2 .. .."
+    ".. .. a2 a2 a2"
+    "q3 q3 q3 .. .."
+    ".. .. a3 a3 a3"
+    "q4 q4 a4 a4 a4"
+    "q4 q4 a4 a4 a4"
+    "q5 q5 q5 q5 q5"
+    "a5 a5 a5 . . "
+    ". . . a6 a6"
+    "a7 a7 a7 q7 q7"
+    "q8 . . . . "
+    "a8 a8 a8 a8 a8"
+    "q9 q9 a9 a9 a9"
+    "q10 q10 q11 q11 q11"
+    "a10 a10 a11 a11 a11"
+    ". . . q12 12"
+    "a12 a12 a12 a12 a12"
+    "q13 13 . q13 13"
+    ". a13 a13 a13 ."; */
+}
+
+.grid-container > * {
+  flex: 1;
+}
+
+.h1 {
+  background-color: lime;
+  font-family: "Rammetto One", sans-serif;
+  font-size: 3rem;
+  /* grid-area: h1; */
+}
+.h2 {
+  /* grid-area: h2; */
+  background-color: blue;
+  font-family: "Rammetto One", sans-serif;
+  font-size: 3rem;
+  /* grid-row: 1/6; */
+}
+
+.q1 {
+  /* grid-area: q1; */
+  background-color: aquamarine;
+}
+.a1 {
+  /* grid-area: a1; */
+  background-color: pink;
+}
+.q2 {
+  /* grid-area: q2; */
+  background-color: aquamarine;
+}
+.a2 {
+  /* grid-area: a2; */
+  background-color: pink;
+}
+.q3 {
+  /* grid-area: q3; */
+  background-color: aquamarine;
+}
+.a3 {
+  /* grid-area: a3; */
+  background-color: pink;
+}
+.q4 {
+  /* grid-area: q4; */
+  background-color: aquamarine;
+}
+.a4 {
+  /* grid-area: a4; */
+  background-color: pink;
+}
+.q5 {
+  /* grid-area: q5; */
+  background-color: aquamarine;
+}
+.a5 {
+  /* grid-area: a5; */
+}
+.q6 {
+  /* grid-area: q6; */
+}
+.a6 {
+  /* grid-area: a6; */
+}
+
+.q7 {
+  /* grid-area: q7; */
+}
+.a7 {
+  /* grid-area: a7; */
+}
+.q8 {
+  /* grid-area: q8; */
+}
+.a8 {
+  /* grid-area: a8; */
+}
+.q9 {
+  /* grid-area: q9; */
+}
+.a9 {
+  /* grid-area: a9; */
+}
+.q10 {
+  /* grid-area: q10; */
+}
+.a10 {
+  /* grid-area: a10; */
+}
+.q11 {
+  /* grid-area: q11; */
+}
+.a11 {
+  /* grid-area: a11; */
+}
+
+.q12 {
+  /* grid-area: q12; */
+}
+.a12 {
+  /* grid-area: a12; */
+}
+.q13 {
+  /* grid-area: q13; */
+}
+.a13 {
+  /* grid-area: a13; */
+}
