@@ -1,0 +1,12 @@
+h1 {
+  font-size: 2rem;
+  padding: 20px 0;
+}
+
+p {
+  padding: 10px 0;
+}
+
+.redBorder {
+  border: 1px solid red;
+}
