@@ -10,3 +10,19 @@ p {
 .redBorder {
   border: 1px solid red;
 }
+
+img {
+  display: block;
+  width: 300px;
+  height: 300px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+button {
+  padding: 10px 20px;
+}
+
+.round {
+  border-radius: 50%;
+}
