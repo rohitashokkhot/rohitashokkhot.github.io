@@ -1,0 +1,84 @@
+body {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+video {
+  width: 800px;
+  height: 100%;
+  border-radius: 12px;
+}
+
+h1 {
+  font-size: 2.3rem;
+  font-weight: bold;
+}
+.main-screen,
+.controls {
+  display: flex;
+  /* gap: 10px; */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.main-screen {
+  /* background-color: antiquewhite; */
+}
+
+.controls {
+  gap: 10px;
+}
+
+.playlist {
+  display: flex;
+  /* background-color: brown; */
+  /* margin: 0 auto; */
+  flex-direction: column;
+  justify-content: flex-end;
+  /* align-items: center; */
+  gap: 20px;
+  height: 100%;
+  padding: 10px;
+}
+
+#progress-bar-container {
+  width: 100%;
+  height: 10px;
+  background-color: gray;
+}
+#progress-bar {
+  width: 0%;
+  display: block;
+  background-color: coral;
+  height: 100%;
+  transition: width 0.2s ease;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1.4rem;
+  color: black;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background-color: rgba(250, 235, 215, 0.588);
+}
+
+button:hover {
+  scale: 0.9;
+  background-color: rgba(250, 235, 215, 0.25);
+}
+
+#likes {
+  font-size: 2.2rem;
+  color: rgb(168, 55, 55);
+}
+
+footer {
+  /* bottom: 0; */
+}
