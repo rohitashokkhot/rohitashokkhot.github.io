@@ -31,6 +31,14 @@ body {
   width: 100vw;
 }
 
+#cover {
+  /* flex: 1; */
+}
+
+main {
+  flex-wrap: wrap;
+}
+
 #rain-gif {
   height: 100vh;
 }
@@ -52,6 +60,7 @@ body {
 
 input {
   width: 3rem;
+  padding: 0 5px;
 }
 
 button {
