@@ -1,0 +1,89 @@
+body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-items: flex-start; */
+  align-items: center;
+  gap: 10px;
+  font-family: "VT323", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.4rem;
+  overflow: hidden;
+  background: linear-gradient(
+    #221d17 4.4%,
+    /* #558f9c 6.5%, */ #7ab4c2 5%,
+    #7ab4c2 32%,
+    #5b929f 54%,
+    #558f9c 60%,
+    /* #56919d 61%, */ #306c79 61%,
+    #004956 65%,
+    #00313c 67%,
+    #4e312f 68.5%,
+    #332220 73%,
+    #121a1c 80%
+  );
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
+#rain-gif {
+  height: 100vh;
+}
+
+#setup {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  border-top: 1px groove white;
+  border-bottom: 1px groove white;
+  padding: 10px 0;
+}
+
+#setup.fade-out {
+  opacity: 0;
+  pointer-events: none; /* prevent interaction after fading */
+}
+
+input {
+  width: 3rem;
+}
+
+button {
+  cursor: pointer;
+  padding: 2px 10px;
+  /* border-radius: 12px; */
+}
+.controls {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+#timer {
+  font-size: 3rem;
+}
+
+#quote {
+  border-top: 1px groove white;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  border-bottom: 1px groove white;
+  padding: 10px 0;
+}
+
+#quote.show {
+  opacity: 1;
+}
+
+#status {
+  margin-bottom: 5px;
+}
