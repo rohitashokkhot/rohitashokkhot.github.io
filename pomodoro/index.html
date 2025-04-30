@@ -3,65 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Media player</title>
+    <title>Rainy Reflections | A Mindful Timer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <script src="pomodoro.js" defer></script>
   </head>
   <body>
     <div id="cover">
-      <img src="rain.gif" alt="" id="rain-gif" />
+      <img src="rain.gif" alt="Rain falling outside a window" id="rain-gif" />
     </div>
 
-    <main class="double-border">
-      <div class="main-screen">
-        <div id="para1">
-          It has been raining since evening! Things have been a bit chaotic!
-        </div>
-        <!-- <div id="status" class="typewriter">Things have been a bit chaotic</div> -->
-        <h1 id="quote">But I need to focus! One task at a time.</h1>
-        <div id="setup">
-          <label
-            >But I need to focus! Focus for atleast
-            <input type="number" id="focusInput" value="25" min="1" /> minutes.
-          </label>
-          <label
-            >Then I could take a well deserved
-            <input type="number" id="breakInput" value="5" min="1" /> minutes
-            break!</label
-          >
-        </div>
-      </div>
-      <div class="playlist">
-        <h1 id="timer">00:00</h1>
-      </div>
-      <div class="controls">
-        <button id="start">Start</button>
-        <button id="pause" disabled>Pause</button>
-        <button id="reset">Reset</button>
-      </div>
+    <main class="journal-container">
+      <p>It has been raining since evening. Things have been a bit chaotic.</p>
+      <p>
+        I will focus for
+        <input
+          type="number"
+          class="journal-input"
+          value="25"
+          min="5"
+          max="90"
+        />
+        minutes, then treat myself to a
+        <input type="number" class="journal-input" value="5" min="1" max="30" />
+        minute break.
+      </p>
+      <p>Let's begin when I feel ready.</p>
+      <p style="margin-top: 20px">
+        <button class="start-button">Begin</button>
+      </p>
     </main>
+
+    <!-- Audio elements -->
     <audio id="rain-sound" src="rain.wav" loop></audio>
-    <!-- <footer>
-      <span
-        >Game Raining GIF by
+
+    <!-- Hidden audio for notifications -->
+    <audio id="notification-sound" src="notification.mp3"></audio>
+
+    <!-- Sound toggle -->
+    <div id="sound-toggle">Sound: On</div>
+
+    <!-- Hidden attribution that can be toggled -->
+    <div
+      id="attribution"
+      style="
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+      "
+    >
+      info
+    </div>
+
+    <div
+      id="attribution-panel"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 40px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        max-width: 300px;
+        font-size: 0.8rem;
+        color: white;
+      "
+    >
+      <p>
+        Game Raining GIF by
         <a
           href="https://giphy.com/gifs/pixel-illustration-retro-VFHa3Kg39gFLVbinN1"
-          >LuigiPixelArt</a
-        ></span
-      >
-      <span
-        >Rain sound by
-        <a href="https://freesound.org/people/idomusics/sounds/518863/">
-          idomusics</a
-        ></span
-      >
-    </footer> -->
+          style="color: #7ab4c2"
+        >
+          LuigiPixelArt
+        </a>
+      </p>
+      <p>
+        Rain sound by
+        <a
+          href="https://freesound.org/people/idomusics/sounds/518863/"
+          style="color: #7ab4c2"
+        >
+          idomusics
+        </a>
+      </p>
+    </div>
+
+    <script>
+      // Toggle attribution panel
+      document
+        .getElementById("attribution")
+        .addEventListener("click", function () {
+          const panel = document.getElementById("attribution-panel");
+          if (panel.style.display === "none") {
+            panel.style.display = "block";
+          } else {
+            panel.style.display = "none";
+          }
+        });
+
+      // Sound toggle handler
+      document
+        .getElementById("sound-toggle")
+        .addEventListener("click", function () {
+          const soundElement = document.getElementById("rain-sound");
+          if (soundElement.paused) {
+            soundElement.play();
+            this.textContent = "Sound: On";
+          } else {
+            soundElement.pause();
+            this.textContent = "Sound: Off";
+          }
+        });
+    </script>
   </body>
 </html>
