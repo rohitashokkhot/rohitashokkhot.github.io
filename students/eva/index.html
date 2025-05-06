@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Melowdy Meadow | Mellow Scenery</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- The video -->
+    <!-- SCREENSHOT FOR MELLOW SCENERY PAGE showing flowers and blossom trees-->
+    <!-- When the home button is clicked it will take the user to the homepage showing both music options -->
+    <!-- When the morning dew button is clicked it will play the rain video on Morning Dew page -->
+    <video id="my-video1">
+      <source
+        src="https://www.dropbox.com/scl/fi/c4nwslntq12tqb8y3p5rg/Sweet-Honeycomb-Done.mp4?rlkey=qxb1v84yc9sso9s6u1d14te20&st=ny2yh0t2&dl=1"
+        type="video/mp4"
+      />
+    </video>
+
+    <div class="title-heading">
+      <h1>Welcome to Mellow Scenery</h1>
+      <h2>Press one of the music options to start listening!</h2>
+    </div>
+
+    <!-- https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
+    <!-- Corresponding video will be played when user clicks a button, for changing between music-->
+    <!-- I couldn't work out why the link appeared with an underline, 
+      it is not suitable to put the a href link in a button as it overlaps I noticed two borders-->
+    <!-- button tags for this page are not suitable for links  -->
+    <section class="video-list">
+      <a href="index.html" class="page-link">Home</a>
+      <button id="first-video-btn">Sweet Honeycomb</button>
+      <button id="second-video-btn">Serene Cherry</button>
+      <!-- ROHIT: You forgot to add the following button so there was error in JS -->
+      <!-- ROHIT: Also for consistency it should be names as third-video-btn -->
+      <button id="third-video-btn">Morning Dew</button>
+    </section>
+
+    <div class="custom-controls">
+      <button id="play-pause-button1" onclick="togglePlayPause()">
+        <img
+          id="play-pause-img"
+          src="https://img.icons8.com/fluency-systems-filled/48/fdafc9/play.png"
+          alt="Play Button"
+          width="24"
+          height="24"
+        />
+      </button>
+
+      <div class="progress-bar">
+        <span id="progress-bar-fill"></span>
+      </div>
+    </div>
+    <div class="video-title">
+      <!-- in this section, we display the name of the video and current playtime -->
+      <h3>Now Playing: <span id="video-name"></span></h3>
+      <h4><span id="video-time"></span></h4>
+    </div>
+
+    <!-- Other way to code a play/pause button -->
+    <!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_fullscreen_video -->
+    <!-- <div class="content"> -->
+    <!-- Use a button to pause/play the video with JavaScript -->
+    <!-- <button id="play-pause-button1" onclick="myFunction()">Play</button>
+    </div> -->
+    <!-- --------------------------------------------------------------------------------- -->
+
+    <!-- <br />
+    <h2>
+      Site In Development. Browser-based Interactive Experiments: Demonstrate
+      your expertise as a full-stack UX lead. For this assignment, your primary
+      responsibility is to revamp the website's design and customize the
+      existing media player code based on one of the specified contexts below.
+      Context of choice: Music for Relaxation/Study Website.
+    </h2>
+    <br />
+    <h3>Dango by Chillpeach</h3> -->
+    <!-- Main Content Section -->
+    <!-- <main class="container"> -->
+    <!-- Media Player Section -->
+    <!-- <div class="media-player"> -->
+
+    <!-- DROPBOX LINK -->
+    <!-- <audio
+      src="https://www.dropbox.com/scl/fi/xskmf3jferw0ouza172gn/Dango-by-Chillpeach.mp3?rlkey=ubwkzc4lrqy4e34bhn6vefujf&st=nuu5ngh2&dl=1"
+      controls
+      id="dango-audio"
+    ></audio> -->
+  </body>
+</html>

@@ -1,0 +1,210 @@
+/* Colour palette is cosy and peaceful, soft pastel colours are used to , 
+tones of green, pink and cream. 
+Vivid and striking colours are not suitable */
+/* Colours: B6EBAC DBF1C8 FFF7E4 FED3D7 FDAFC9 */
+
+/* Style the video: 100% width and height to cover the entire window */
+@font-face {
+  font-family: "MyFont";
+  src: url("fonts/Minecraft.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "MyFont2";
+  src: url("fonts/Minecraft-Bold.otf") format("opentype");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Minecraft.otf";
+  font-size: 17px;
+}
+/* code for the controls of the site, play/pause, progress bar */
+.custom-controls {
+  position: fixed;
+  bottom: 0;
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.title-heading {
+  background-color: transparent;
+  position: relative;
+  bottom: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-family: "MyFont";
+  margin-top: 25px;
+  margin-left: 20px;
+  font-size: 26px;
+  padding: 10px;
+  color: #fff;
+}
+
+h2 {
+  font-family: "MyFont";
+  margin-left: 20px;
+  font-size: 13px;
+  padding: 10px;
+  color: #fff;
+}
+
+.video-list {
+  font-family: "MyFont2";
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  flex: 1;
+}
+
+.video-list button {
+  background-color: #ff91b6ce;
+  margin-left: 50px;
+  font-size: 12px;
+  padding: 10px;
+  color: #fff;
+  border: solid;
+  cursor: pointer;
+}
+
+.page-link {
+  background-color: #ff91b6ce;
+  margin-left: 50px;
+  font-size: 12px;
+  padding: 10px;
+  color: #fff;
+  border: solid;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  background-color: #8cfa9e;
+  color: rgb(255, 255, 255);
+}
+
+/* .video-list a {
+  padding: 10px;
+  font-size: 12px;
+  color: #fff;
+  border: solid;
+  cursor: pointer;
+  text-decoration: none;
+} */
+
+.video-list button:hover {
+  background-color: #8cfa9e;
+  color: rgb(255, 255, 255);
+}
+
+.video-title h3 {
+  position: fixed;
+  font-family: "MyFont";
+  margin-bottom: 50px;
+  margin-left: 25px;
+  font-size: 15px;
+  padding: 10px;
+  color: #fff;
+  font-size: 1.2rem;
+  bottom: 0;
+}
+
+/* minutes:seconds */
+.video-title h4 {
+  position: fixed;
+  font-family: "MyFont";
+  margin-bottom: 19px;
+  margin-left: 1.6cm;
+  font-size: 15px;
+  padding: 10px;
+  color: #fff;
+  font-size: 1.2rem;
+  bottom: 0;
+}
+
+/* Play/pause button */
+.custom-controls button {
+  background-color: transparent;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+#my-video1 {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+#my-img1 {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Add some content at the bottom of the video/page */
+
+.progress-bar {
+  width: 30%;
+  height: 9px;
+  background-color: #ddd;
+  margin-top: 3px;
+  overflow: hidden;
+  margin-left: 1.3cm;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background-color: #fdafc9;
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+footer {
+  width: 20px;
+  padding: 2px;
+  text-align: center;
+  width: 98%;
+  position: relative;
+  margin-top: 11.4cm;
+}
+
+footer h1 {
+  font-size: 0.8rem;
+  color: white;
+}
+/* Style the button used to pause/play the video */
+
+/* body {
+  background-color: #ffede1;
+}
+
+h1,
+h2 {
+  color: black;
+} */
+
+/* 
+h2 {
+  font-size: 1.1rem;
+  : black;
+} */
