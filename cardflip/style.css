@@ -30,11 +30,6 @@ body {
   /* this is important the flip wont work without preserve-3d */
 }
 
-.is-flipped,
-.card-back {
-  rotate: y 180deg;
-}
-
 .card-face {
   position: absolute;
   width: 100%;
@@ -50,4 +45,8 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.flip {
+  rotate: y 180deg;
 }

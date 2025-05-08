@@ -1,11 +1,12 @@
 const card = document.querySelector(".card");
-card.addEventListener("mouseenter", flip);
-card.addEventListener("mouseleave", revert);
-function flip() {
-  card.classList.add("is-flipped");
+console.log(card);
+card.addEventListener("mouseenter", flipMe);
+card.addEventListener("mouseleave", revertBack);
+function flipMe() {
+  card.classList.add("flip");
 }
-function revert() {
-  card.classList.remove("is-flipped");
+function revertBack() {
+  card.classList.remove("flip");
 }
 
 // if we are using more than one cards then we need to use queryselectorAll
@@ -16,18 +17,18 @@ console.log(cards);
 
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener("mouseenter", function () {
-    flip(i);
+    flipMe(i);
   });
   cards[i].addEventListener("mouseleave", function () {
-    revert(i);
+    revertBack(i);
   });
 }
 
-function flip(i) {
-  cards[i].classList.add("is-flipped");
+function flipMe(i) {
+  cards[i].classList.add("flip");
 }
-function revert(i) {
-  cards[i].classList.remove("is-flipped");
+function revertBack(i) {
+  cards[i].classList.remove("flip");
 }
 
 */
