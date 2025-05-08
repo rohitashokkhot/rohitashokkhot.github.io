@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Smooth Card Flip</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #1c1c1c;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+      }
+
+      .card-container {
+        perspective: 1000px;
+      }
+
+      .card {
+        width: 150px;
+        height: 220px;
+        position: relative;
+        transition: transform 0.8s ease;
+        transform-style: preserve-3d;
+      }
+
+      .card.is-flipped {
+        transform: rotateY(180deg);
+      }
+
+      .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .card-front,
+      .card-back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card-face img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .card-back {
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-container">
+      <div class="card" id="card">
+        <div class="card-face card-front">
+          <img src="cloud.png" alt="Card Back" />
+        </div>
+        <div class="card-face card-back">
+          <img src="queen.png" alt="Queen of Hearts" />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const card = document.getElementById("card");
+      card.addEventListener("mouseenter", () =>
+        card.classList.add("is-flipped")
+      );
+      card.addEventListener("mouseleave", () =>
+        card.classList.remove("is-flipped")
+      );
+    </script>
+    <!-- https://www.tekeye.uk/playing_cards/svg-playing-cards -->
+  </body>
+</html>

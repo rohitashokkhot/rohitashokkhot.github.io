@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // window.location.href = "temp.html";
   // DOM Elements
   const startButton = document.querySelector(".start-button");
   const rainSound = document.getElementById("rain-sound");
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startSession() {
     // Play rain sound if enabled
+
     if (isSoundOn) {
       rainSound.volume = 0.4;
       rainSound.play();
