@@ -1,0 +1,150 @@
+body {
+  background-color: #710014; /* 
+  Deep red background enhances the vintage vinyl theme — inspired by retro bar interiors and classic turntable aesthetics.
+*/
+  /* color pallete: https://i.pinimg.com/736x/c3/f7/1d/c3f71d000e88aa12d9e073c4f4ad9256.jpg */
+}
+@font-face {
+  font-family: "Arastin";
+  src: url("Arastin\ Pro.ttf") format("truetype");
+}
+.container1 {
+  width: 45vw;
+  height: 100vh;
+  position: relative;
+  /* overflow: hidden; */
+  left: 50%; /* Offsets the visual side to create a split layout: left = visuals, right = content */
+}
+.vinyl {
+  scale: 0.8;
+  position: absolute;
+  right: 9%;
+  top: 3%;
+  display: flex;
+}
+.tonearm {
+  scale: 0.4;
+  position: absolute;
+  left: 35%;
+  top: -55%;
+  display: flex;
+}
+
+.container2 {
+  width: 45vw;
+  height: fit-content;
+  position: absolute;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: flex-end; */
+  /* overflow: hidden; */
+  background-color: limegreen;
+}
+h1 {
+  font-family: "Arastin", "serif";
+  font-size: 5rem;
+  position: relative;
+  text-align: center;
+  color: #f2f1ed;
+}
+.blank {
+  height: 10vh;
+}
+h2 {
+  font-family: "EB Garamond", serif;
+  font-size: 2.5rem;
+  position: relative;
+  left: 0%;
+  text-align: center;
+  color: #f2f1ed;
+}
+.title {
+  display: flex;
+  text-align: center;
+  position: relative;
+  left: 10%;
+}
+h3 {
+  font-family: "EB Garamond", serif;
+  font-size: 1.2rem;
+  color: #f2f1ed;
+}
+
+.music-controls {
+  /* align-items: center; */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+
+.progress-bar {
+  /* Progress bar with interactive click-to-seek function */
+  width: 50%;
+  height: 3px;
+  background-color: #f2f1ed;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+  left: 10%;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  background-color: #161616;
+  width: 0;
+  transition: width 0.3s ease;
+  position: relative;
+  left: 0%;
+  border-radius: 3px;
+}
+.music-controls button {
+  background-color: transparent;
+  border: none;
+  color: #f2f1ed;
+  cursor: pointer;
+  position: relative;
+  left: 10%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.music-controls button:hover {
+  /* Visual response on hover provides tactile cue without relying on sound or vibration */
+  scale: 0.9;
+}
+
+#music-name {
+  display: none;
+  color: #f2f1ed;
+}
+
+.vinyl {
+  transition: transform 0.3s ease;
+  animation: spin 3s linear infinite;
+  animation-play-state: paused; /* Only spins when track is playing – reinforces feedback loop */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tonearm {
+  transition: transform 0.3s ease; /* Subtle movement of tonearm on play/pause creates satisfying micro-interaction */
+}
+.back {
+  scale: 0.85;
+  position: relative;
+  right: 9%;
+  top: 3%;
+  box-shadow: 10px 10px 5px #161616;
+}

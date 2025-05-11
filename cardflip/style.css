@@ -27,6 +27,7 @@ body {
   position: relative;
   transition: rotate 0.8s ease;
   transform-style: preserve-3d;
+  cursor: pointer;
   /* this is important the flip wont work without preserve-3d */
 }
 

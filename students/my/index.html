@@ -1,0 +1,78 @@
+
+<!-- 
+  This page uses a vinyl record theme to evoke nostalgia and tactility in the media player experience.
+  The use of high-contrast imagery alongside dynamic animation was chosen to bridge retro and digital aesthetics. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <!-- EB Garamond was chosen for elegance and readability -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="script.js" defer></script>
+    <title>Assignment2</title>
+  </head>
+  <body>
+  
+    <div class="container1">
+      <img class="back" src="back.png">
+      <img class="vinyl" src="vinyl record.png" /> <!-- I use vinyl mockup -->
+      <img class="tonearm" src="tone arm.png" /> 
+    </div>
+    <audio id="audioPlayer"></audio> <!-- Hidden audio element – all control handled by JS for clean UX -->
+    <div class="container2">
+      <h1>Tracklist</h1>
+      <div class="blank"></div>
+      <h2 class="playlist-item" data-src="p-hase_Hes.mp3">Hes</h2>
+      <h2 class="playlist-item"  data-src="p-hase_Dry-Down-feat-Ben-Snaath.mp3">Dry Down</h2>
+      <h2 class="playlist-item"  data-src="p-hase_Leapt.mp3">Leapt</h2>
+      <h2 class="playlist-item"  data-src="p-hase_Water-Feature.mp3">Water Feature</h2>
+      <div class="blank">
+    </div>
+    <section class="title"> <!-- Display currently playing song. Initially hidden to reduce visual noise until playback begins. -->
+      <h3>Now playing: <span id="music-name"></span></h3>
+    </section>
+    <section class="music-controls"> <!-- Controls designed with consistent spacing and intuitive icons to prioritize usability and recognizability. -->
+        <div class="progress-bar">
+          <span id="progress-bar-fill"></span>
+        </div>
+        <button id="repeat-btn">
+          <img id="repeat-img" src="icons8-repeat-40.png" alt="Repeat Button" />
+      </button>
+      <button id="previous-btn">
+        <img
+          id="previous-img"
+          src="icons8-skip-to-start-40.png"
+          alt="Previous Button"
+        />
+      </button>
+      <button id="play-pause-btn">
+        <img
+          id="play-pause-img"
+          src="icons8-play-40.png"
+          alt="Play Button"
+        />
+      </button>
+      <button id="next-btn">
+        <img
+          id="next-img"
+          src="icons8-end-40.png"
+          alt="Next Button"
+        />
+      </button>
+      <button id="mute-unmute-btn">
+        <img
+          id="mute-unmute-img"
+          src="icons8-audio-40.png"
+          alt="Mute Button"
+        />
+      </button>
+    </section>
+  </body>
+</html>
