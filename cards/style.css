@@ -14,10 +14,23 @@ body {
   color: #e5e5cb;
   /* color: #3c2a21; */
   font-size: 1.1rem;
-  flex-direction: column;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  /* overflow: hidden; */
 }
 
-main {
+#welcome-screen,
+#game-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+section {
   min-width: 98vw;
   display: flex;
   justify-content: space-around;
@@ -25,9 +38,13 @@ main {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
+h2 {
+  font-size: 1.4rem;
+  margin-top: 10px;
+}
 button {
   background-color: #e5e5cb;
   padding: 10px 20px;
@@ -52,7 +69,6 @@ button:hover {
 .card-container {
   width: 250px;
   height: 350px;
-  /* border: 1px dashed #e5e5cb50; */
   text-align: center;
   display: flex;
   justify-content: center;
@@ -63,7 +79,6 @@ button:hover {
 }
 
 .dropbox {
-  /* border: 1px dashed #e5e5cb50; */
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.623);
 }
 

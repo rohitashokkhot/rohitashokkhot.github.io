@@ -15,24 +15,41 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Find the queen!</h1>
-    </header>
-    <main>
-      <div class="deck">
-        <!-- <div class="card-container">
-          <div class="card" draggable="true">
-            <div class="card-face"><img src="cloud.png" alt="Back" /></div>
-            <div class="card-face flip">
-              <img src="queen.png" alt="Queen" />
-            </div>
-          </div>
-        </div> -->
+    <div id="welcome-screen">
+      <h1>Gambit’s Queen!</h1>
+      <img src="cover.png" alt="cover" />
+      <div class="info">
+        <p>
+          Three cards, one hidden queen.
+          <br />
+          Your mission? <br />
+          Drag the card you believe hides the queen into the drop box. <br />
+          Then, click to reveal your fate.
+        </p>
+        <h2>Can you spot the queen, or will she slip away?</h2>
       </div>
-      <div class="dropbox card-container"></div>
-    </main>
-    <div class="controls">
-      <button id="reset-button">Try again</button>
+      <button id="start-button">Start Game</button>
+    </div>
+    <div id="game-screen">
+      <header>
+        <h1 id="result-header">Find the queen!</h1>
+      </header>
+      <section>
+        <div class="deck">
+          <!-- <div class="card-container">
+              <div class="card" draggable="true">
+                <div class="card-face"><img src="cloud.png" alt="Back" /></div>
+                <div class="card-face flip">
+                  <img src="queen.png" alt="Queen" />
+                </div>
+              </div>
+            </div> -->
+        </div>
+        <div class="dropbox card-container"></div>
+      </section>
+      <footer>
+        <button id="reset-button">Reset game</button>
+      </footer>
     </div>
   </body>
 </html>
