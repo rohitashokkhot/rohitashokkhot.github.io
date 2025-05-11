@@ -48,6 +48,9 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.623);
+  /* width: 400px; */
+  padding: 30px;
 }
 
 a {
