@@ -12,15 +12,17 @@
     />
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script src="flip.js" defer></script>
   </head>
   <body>
-    <div id="button-container">
-      <button id="hoverclick-button">Hover & Click</button>
-      <button id="dragdrop-button">Drag & Drop</button>
-      <button id="multidragdrop-button">Multi Drag Drap</button>
-      <button id="findqueen-button">Find queen</button>
-      <button id="completegame-button">Complete Game</button>
+    <!-- Topic 1: Learn about hover effect -->
+    <div class="card-container">
+      <div class="card" draggable="true">
+        <div class="card-face"><img src="cloud.png" alt="Back" /></div>
+        <div class="card-face flip">
+          <img src="queen.png" alt="Queen" />
+        </div>
+      </div>
     </div>
   </body>
 </html>

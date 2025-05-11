@@ -1,3 +1,4 @@
+/* ------- Basic setup --------------*/
 body {
   background-color: #1a120b;
   display: flex;
@@ -19,26 +20,8 @@ body {
   /* overflow: hidden; */
 }
 
-#welcome-screen,
-#game-screen {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  min-width: 100vw;
-  height: 100vh;
-  scroll-behavior: smooth;
-}
-
-section {
-  min-width: 98vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
 h1 {
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 h2 {
@@ -59,6 +42,41 @@ button {
 button:hover {
   scale: 0.9;
   background-color: #e5e5cb9c;
+}
+
+#button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+a {
+  font-size: 0.7rem;
+}
+/* ------------------------------------------------- */
+
+#welcome-screen,
+#game-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.info {
+  background-color: rgba(0, 0, 0, 0.623);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+section {
+  min-width: 98vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .deck {
