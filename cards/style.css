@@ -137,3 +137,12 @@ section {
 .flip {
   rotate: y 180deg;
 }
+
+#cover {
+  cursor: pointer;
+  transition: scale 0.4s ease;
+}
+
+#cover:hover {
+  scale: 1.1;
+}
