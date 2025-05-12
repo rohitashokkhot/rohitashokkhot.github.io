@@ -100,7 +100,8 @@ section {
 }
 
 .dropbox {
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.623);
+  border: 1px dashed #e5e5cb30;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.856);
 }
 
 .card {
