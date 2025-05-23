@@ -21,6 +21,14 @@ body {
   align-items: center;
 }
 
+.pole {
+  width: 20px;
+  background-color: black;
+  height: 200px;
+  position: absolute;
+  top: 0;
+}
+
 /* using preserve-3d is important here */
 .horse {
   width: 120px;
