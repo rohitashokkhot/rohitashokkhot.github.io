@@ -1,0 +1,75 @@
+body {
+  /* background-color: #1a120b; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+/* we sping the carousel using the spin animation not the horses */
+.carousel {
+  position: relative;
+  width: 600px;
+  height: 200px;
+  animation: spin 10s linear infinite;
+  transform-style: preserve-3d;
+  /* background-color: wheat; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* using preserve-3d is important here */
+.horse {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  transform-style: preserve-3d;
+  /* background-color: blueviolet; */
+}
+
+/* all horse bounce slightly up */
+.horse img {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+/* if carousel is our center then we create a circle of radius 250px */
+/* so each horse is placed on its diameter using translateZ */
+/* since we do not want all four horses at the same place */
+/* we rotate their position so first is 12 o clock second at 3 clock (90deg) */
+/* third at 6 0 clock (180deg) and fourth at 9 o clock (270deg) */
+/* doing this will allow all four horses to rotate around the circle */
+/* and create the merry go around illusion */
+.horse1 {
+  transform: rotateY(0deg) translateZ(-250px);
+}
+.horse2 {
+  transform: rotateY(90deg) translateZ(-250px);
+}
+.horse3 {
+  transform: rotateY(180deg) translateZ(-250px);
+}
+.horse4 {
+  transform: rotateY(270deg) translateZ(-250px);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
