@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM handling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="game">
+      <div class="slot">
+        <div class="dragon" id="dragon1">1</div>
+        <button onclick="whack(1)">Whack</button>
+      </div>
+      <div class="slot">
+        <div class="dragon" id="dragon2">2</div>
+        <button onclick="whack(2)">Whack</button>
+      </div>
+      <div class="slot">
+        <div class="dragon" id="dragon3">3</div>
+        <button onclick="whack(3)">Whack</button>
+      </div>
+      <div class="slot">
+        <div class="dragon" id="dragon4">4</div>
+        <button onclick="whack(4)">Whack</button>
+      </div>
+    </div>
+  </body>
+</html>

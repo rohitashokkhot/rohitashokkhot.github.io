@@ -1,0 +1,46 @@
+body {
+  background-color: #1a120b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.game {
+  display: flex;
+  gap: 1rem;
+}
+
+.slot {
+  position: relative;
+  width: 100px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dragon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 0;
+  background-color: wheat;
+  text-align: center;
+  font-weight: bold;
+  opacity: 0;
+  transition: height 3s ease, opacity 0.4s ease;
+  z-index: 4;
+}
+
+button {
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+  position: relative;
+  cursor: pointer;
+}
