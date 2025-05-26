@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hair Salon Game</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      #hair-container {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        background-image: url("https://i.imgur.com/x8Zl6UI.png"); /* base head image */
+        background-size: cover;
+        margin-bottom: 20px;
+      }
+      .hair-strand {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: brown;
+        border-radius: 50%;
+        opacity: 1;
+        transition: opacity 0.2s;
+      }
+      .cut {
+        opacity: 0;
+      }
+      #hairstyle-selector {
+        display: flex;
+        gap: 10px;
+      }
+      .style-thumb {
+        width: 50px;
+        height: 50px;
+        background-color: lightgray;
+        border: 2px solid transparent;
+        cursor: pointer;
+      }
+      .style-thumb.selected {
+        border-color: blue;
+      }
+      #check-btn {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hair Salon Game</h1>
+    <div id="hair-container"></div>
+    <div id="hairstyle-selector">
+      <div class="style-thumb" data-style="short"></div>
+    </div>
+    <button id="check-btn">Check</button>
+    <p id="result"></p>
+
+    <script>
+      const hairContainer = document.getElementById("hair-container");
+      const selectedStyleThumb = document.querySelector(
+        ".style-thumb[data-style='short']"
+      );
+      const resultText = document.getElementById("result");
+      let selectedStyle = "short";
+
+      const strands = [];
+      const strandMap = {};
+      const gridCols = 10;
+      const gridRows = 15;
+      const strandSize = 20;
+
+      // Generate hair strands
+      for (let y = 0; y < gridRows; y++) {
+        for (let x = 0; x < gridCols; x++) {
+          const strand = document.createElement("div");
+          strand.className = "hair-strand";
+          strand.style.left = `${x * strandSize}px`;
+          strand.style.top = `${y * strandSize}px`;
+          strand.dataset.id = `${x}-${y}`;
+          hairContainer.appendChild(strand);
+          strands.push(strand);
+          strandMap[`${x}-${y}`] = strand;
+        }
+      }
+
+      // Define short style (remove bottom 5 rows)
+      const targetStyle = {
+        short: strands
+          .map((strand) => strand.dataset.id)
+          .filter((id) => parseInt(id.split("-")[1]) >= gridRows - 5),
+      };
+
+      // Handle cutting
+      hairContainer.addEventListener("click", (e) => {
+        const rect = hairContainer.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left) / strandSize);
+        const y = Math.floor((e.clientY - rect.top) / strandSize);
+        const id = `${x}-${y}`;
+        const strand = strandMap[id];
+        if (strand) {
+          strand.classList.add("cut");
+        }
+      });
+
+      // Style selector (single option for now)
+      selectedStyleThumb.classList.add("selected");
+
+      // Check button logic
+      document.getElementById("check-btn").addEventListener("click", () => {
+        const cutIds = strands
+          .filter((s) => s.classList.contains("cut"))
+          .map((s) => s.dataset.id);
+        const correctCuts = targetStyle[selectedStyle];
+        const matched = correctCuts.filter((id) => cutIds.includes(id)).length;
+        const accuracy = Math.round((matched / correctCuts.length) * 100);
+        resultText.textContent = `Match accuracy: ${accuracy}%`;
+      });
+    </script>
+  </body>
+</html>

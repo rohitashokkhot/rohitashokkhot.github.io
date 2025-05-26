@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Sandwich Builder</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        perspective: 1200px;
+      }
+
+      .sandwich-container {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+      }
+
+      .sandwich-container:hover {
+        transform: rotateY(10deg) rotateX(5deg);
+      }
+
+      .ingredient {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+
+      .ingredient svg {
+        width: 250px;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .ingredient:hover svg {
+        transform: scale(1.05);
+      }
+
+      /* Stacked positions */
+      .top-bun {
+        transform: translate(-50%, -50%) translateZ(100px) translateY(-120px);
+      }
+      .cheese {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-80px);
+      }
+      .tomato {
+        transform: translate(-50%, -50%) translateZ(60px) translateY(-40px);
+      }
+      .patty {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(0px);
+      }
+      .onion {
+        transform: translate(-50%, -50%) translateZ(20px) translateY(40px);
+      }
+      .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(80px);
+      }
+      .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-20px) translateY(120px);
+      }
+
+      /* Separated positions on hover */
+      .sandwich-container:hover .top-bun {
+        transform: translate(-50%, -50%) translateZ(200px) translateY(-200px);
+      }
+      .sandwich-container:hover .cheese {
+        transform: translate(-50%, -50%) translateZ(160px) translateY(-140px);
+      }
+      .sandwich-container:hover .tomato {
+        transform: translate(-50%, -50%) translateZ(120px) translateY(-80px);
+      }
+      .sandwich-container:hover .patty {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-20px);
+      }
+      .sandwich-container:hover .onion {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(40px);
+      }
+      .sandwich-container:hover .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(100px);
+      }
+      .sandwich-container:hover .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-40px) translateY(160px);
+      }
+
+      .title {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 2.5em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      .instructions {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      /* Ingredient showcase styles */
+      .ingredient.showcased {
+        transform: translate(250px, -50%) rotateX(0deg) rotateY(0deg)
+          translateZ(0px) scale(2.5) !important;
+        z-index: 500;
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3)) !important;
+      }
+
+      .ingredient.showcased svg {
+        opacity: 0.15;
+        transform: scale(1) !important;
+      }
+
+      .ingredient-info {
+        position: absolute;
+        right: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 400px;
+        padding: 30px;
+        opacity: 0;
+        transition: opacity 0.6s ease-in-out;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .ingredient-info.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .ingredient-info h2 {
+        color: #fff;
+        margin: 0 0 20px 0;
+        font-size: 2.2em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        border-bottom: 3px solid #fff;
+        padding-bottom: 10px;
+      }
+
+      .ingredient-info p {
+        color: #f8f9fa;
+        line-height: 1.7;
+        margin: 0 0 20px 0;
+        font-size: 1.1em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid #fff;
+      }
+
+      .ingredient-info .history {
+        background: rgba(0, 0, 0, 0.3);
+        color: #e8f4fd;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #74b9ff;
+        margin-top: 20px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        line-height: 1.6;
+      }
+
+      .ingredient-info .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(231, 76, 60, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        font-size: 1.4em;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .ingredient-info .close-btn:hover {
+        background: rgba(192, 57, 43, 1);
+        transform: scale(1.1);
+      }
+
+      .sandwich-container.showcasing {
+        transform: translateX(-150px) rotateY(20deg) rotateX(10deg);
+        filter: brightness(0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">3D Sandwich Builder</div>
+
+    <div class="sandwich-container" id="sandwich">
+      <!-- Top Bun -->
+      <div class="ingredient top-bun">
+        <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="hatch1"
+              patternUnits="userSpaceOnUse"
+              width="8"
+              height="8"
+            >
+              <path
+                d="M0,8 L8,0"
+                stroke="#d68910"
+                stroke-width="1"
+                opacity="0.6"
+              />
+            </pattern>
+          </defs>
+          <!-- Main bun outline -->
+          <ellipse
+            cx="100"
+            cy="30"
+            rx="90"
+            ry="25"
+            fill="none"
+            stroke="#f4d03f"
+            stroke-width="3"
+          />
+          <ellipse
+            cx="100"
+            cy="25"
+            rx="85"
+            ry="20"
+            fill="none"
+            stroke="#f7dc6f"
+            stroke-width="2"
+            stroke-dasharray="5,3"
+          />
+          <!-- Cross-hatch pattern -->
+          <ellipse
+            cx="100"
+            cy="30"
+            rx="85"
+            ry="22"
+            fill="url(#hatch1)"
+            opacity="0.3"
+          />
+          <!-- Sesame seeds as small circles -->
+          <circle
+            cx="70"
+            cy="20"
+            r="2"
+            fill="none"
+            stroke="#f8c471"
+            stroke-width="2"
+          />
+          <circle
+            cx="85"
+            cy="15"
+            r="2"
+            fill="none"
+            stroke="#f8c471"
+            stroke-width="2"
+          />
+          <circle
+            cx="115"
+            cy="18"
+            r="2"
+            fill="none"
+            stroke="#f8c471"
+            stroke-width="2"
+          />
+          <circle
+            cx="130"
+            cy="22"
+            r="2"
+            fill="none"
+            stroke="#f8c471"
+            stroke-width="2"
+          />
+          <!-- Construction lines -->
+          <line
+            x1="20"
+            y1="30"
+            x2="180"
+            y2="30"
+            stroke="#d68910"
+            stroke-width="1"
+            opacity="0.4"
+          />
+          <line
+            x1="100"
+            y1="5"
+            x2="100"
+            y2="55"
+            stroke="#d68910"
+            stroke-width="1"
+            opacity="0.4"
+          />
+        </svg>
+      </div>
+
+      <!-- Cheese -->
+      <div class="ingredient cheese">
+        <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="dots"
+              patternUnits="userSpaceOnUse"
+              width="10"
+              height="10"
+            >
+              <circle cx="5" cy="5" r="1" fill="#f1c40f" opacity="0.4" />
+            </pattern>
+          </defs>
+          <!-- Melted cheese outline -->
+          <path
+            d="M20 10 Q50 5 100 10 Q150 15 180 10 L180 15 Q150 20 100 15 Q50 10 20 15 Z"
+            fill="url(#dots)"
+            stroke="#f4d03f"
+            stroke-width="2"
+          />
+          <path
+            d="M20 10 Q50 5 100 10 Q150 15 180 10"
+            fill="none"
+            stroke="#f1c40f"
+            stroke-width="3"
+          />
+          <!-- Drip lines -->
+          <path
+            d="M60 15 Q65 18 60 20"
+            fill="none"
+            stroke="#f4d03f"
+            stroke-width="2"
+          />
+          <path
+            d="M140 15 Q145 18 140 20"
+            fill="none"
+            stroke="#f4d03f"
+            stroke-width="2"
+          />
+        </svg>
+      </div>
+
+      <!-- Tomato -->
+      <div class="ingredient tomato">
+        <svg viewBox="0 0 200 25" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="radial"
+              patternUnits="userSpaceOnUse"
+              width="20"
+              height="20"
+            >
+              <circle
+                cx="10"
+                cy="10"
+                r="8"
+                fill="none"
+                stroke="#e74c3c"
+                stroke-width="1"
+                opacity="0.3"
+              />
+              <circle
+                cx="10"
+                cy="10"
+                r="4"
+                fill="none"
+                stroke="#ff6b6b"
+                stroke-width="1"
+                opacity="0.5"
+              />
+            </pattern>
+          </defs>
+          <!-- Tomato slices -->
+          <ellipse
+            cx="60"
+            cy="12"
+            rx="35"
+            ry="8"
+            fill="url(#radial)"
+            stroke="#e74c3c"
+            stroke-width="2"
+          />
+          <ellipse
+            cx="100"
+            cy="15"
+            rx="40"
+            ry="10"
+            fill="url(#radial)"
+            stroke="#e74c3c"
+            stroke-width="2"
+          />
+          <ellipse
+            cx="140"
+            cy="12"
+            rx="35"
+            ry="8"
+            fill="url(#radial)"
+            stroke="#e74c3c"
+            stroke-width="2"
+          />
+          <!-- Seeds as small crosses -->
+          <path
+            d="M93,13 L97,17 M97,13 L93,17"
+            stroke="#fff"
+            stroke-width="2"
+          />
+          <path
+            d="M103,11 L107,15 M107,11 L103,15"
+            stroke="#fff"
+            stroke-width="2"
+          />
+          <!-- Section lines -->
+          <path
+            d="M60,4 L60,20"
+            stroke="#c0392b"
+            stroke-width="1"
+            opacity="0.6"
+          />
+          <path
+            d="M100,5 L100,25"
+            stroke="#c0392b"
+            stroke-width="1"
+            opacity="0.6"
+          />
+          <path
+            d="M140,4 L140,20"
+            stroke="#c0392b"
+            stroke-width="1"
+            opacity="0.6"
+          />
+        </svg>
+      </div>
+
+      <!-- Patty -->
+      <div class="ingredient patty">
+        <svg viewBox="0 0 200 30" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="meat"
+              patternUnits="userSpaceOnUse"
+              width="12"
+              height="12"
+            >
+              <path
+                d="M0,6 L12,6 M6,0 L6,12"
+                stroke="#8b4513"
+                stroke-width="0.5"
+                opacity="0.4"
+              />
+            </pattern>
+          </defs>
+          <!-- Main patty outline -->
+          <ellipse
+            cx="100"
+            cy="15"
+            rx="85"
+            ry="12"
+            fill="url(#meat)"
+            stroke="#5d2f0a"
+            stroke-width="3"
+          />
+          <ellipse
+            cx="100"
+            cy="12"
+            rx="80"
+            ry="10"
+            fill="none"
+            stroke="#a0522d"
+            stroke-width="2"
+            stroke-dasharray="8,4"
+          />
+          <!-- Grill marks as zigzag lines -->
+          <path
+            d="M30 8 L50 12 L70 8 L90 12 L110 8 L130 12 L150 8 L170 12"
+            stroke="#2c1810"
+            stroke-width="3"
+            fill="none"
+          />
+          <path
+            d="M35 18 L55 14 L75 18 L95 14 L115 18 L135 14 L155 18 L175 14"
+            stroke="#2c1810"
+            stroke-width="3"
+            fill="none"
+          />
+          <!-- Center construction line -->
+          <line
+            x1="15"
+            y1="15"
+            x2="185"
+            y2="15"
+            stroke="#3e1a00"
+            stroke-width="1"
+            opacity="0.5"
+          />
+        </svg>
+      </div>
+
+      <!-- Onion -->
+      <div class="ingredient onion">
+        <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
+          <!-- Onion rings as concentric circles -->
+          <ellipse
+            cx="70"
+            cy="10"
+            rx="25"
+            ry="6"
+            fill="none"
+            stroke="#e9ecef"
+            stroke-width="3"
+          />
+          <ellipse
+            cx="70"
+            cy="10"
+            rx="18"
+            ry="4"
+            fill="none"
+            stroke="#f8f9fa"
+            stroke-width="2"
+          />
+          <ellipse
+            cx="70"
+            cy="10"
+            rx="12"
+            ry="3"
+            fill="none"
+            stroke="#e9ecef"
+            stroke-width="1"
+          />
+
+          <ellipse
+            cx="130"
+            cy="12"
+            rx="30"
+            ry="7"
+            fill="none"
+            stroke="#e9ecef"
+            stroke-width="3"
+          />
+          <ellipse
+            cx="130"
+            cy="12"
+            rx="22"
+            ry="5"
+            fill="none"
+            stroke="#f8f9fa"
+            stroke-width="2"
+          />
+          <ellipse
+            cx="130"
+            cy="12"
+            rx="15"
+            ry="3"
+            fill="none"
+            stroke="#e9ecef"
+            stroke-width="1"
+          />
+
+          <!-- Broken ring -->
+          <path
+            d="M40 8 Q45 5 55 8 Q60 10 55 12 Q45 15 40 12"
+            fill="none"
+            stroke="#e9ecef"
+            stroke-width="3"
+          />
+          <path
+            d="M165 10 Q170 7 175 10 Q180 12 175 14"
+            fill="none"
+            stroke="#f8f9fa"
+            stroke-width="2"
+          />
+
+          <!-- Construction lines -->
+          <line
+            x1="70"
+            y1="4"
+            x2="70"
+            y2="16"
+            stroke="#dee2e6"
+            stroke-width="1"
+            opacity="0.5"
+          />
+          <line
+            x1="130"
+            y1="5"
+            x2="130"
+            y2="19"
+            stroke="#dee2e6"
+            stroke-width="1"
+            opacity="0.5"
+          />
+        </svg>
+      </div>
+
+      <!-- Lettuce -->
+      <div class="ingredient lettuce">
+        <svg viewBox="0 0 200 25" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="leaf"
+              patternUnits="userSpaceOnUse"
+              width="15"
+              height="15"
+            >
+              <path
+                d="M7.5,0 Q15,7.5 7.5,15 Q0,7.5 7.5,0"
+                fill="none"
+                stroke="#27ae60"
+                stroke-width="1"
+                opacity="0.3"
+              />
+            </pattern>
+          </defs>
+          <!-- Lettuce leaves as wavy lines -->
+          <path
+            d="M20 15 Q40 5 60 12 Q80 8 100 15 Q120 8 140 12 Q160 5 180 15"
+            fill="none"
+            stroke="#58d68d"
+            stroke-width="4"
+          />
+          <path
+            d="M25 18 Q45 8 65 15 Q85 11 105 18 Q125 11 145 15 Q165 8 185 18"
+            fill="none"
+            stroke="#27ae60"
+            stroke-width="3"
+          />
+          <path
+            d="M15 12 Q35 2 55 9 Q75 5 95 12 Q115 5 135 9 Q155 2 175 12"
+            fill="none"
+            stroke="#2ecc71"
+            stroke-width="2"
+          />
+
+          <!-- Leaf texture -->
+          <path
+            d="M20 15 Q30 8 40 15 Q50 8 60 15 Q70 8 80 15 Q90 8 100 15 Q110 8 120 15 Q130 8 140 15 Q150 8 160 15 Q170 8 180 15 Q170 22 160 18 Q150 22 140 18 Q130 22 120 18 Q110 22 100 18 Q90 22 80 18 Q70 22 60 18 Q50 22 40 18 Q30 22 20 18"
+            fill="url(#leaf)"
+            stroke="#229954"
+            stroke-width="2"
+            opacity="0.6"
+          />
+
+          <!-- Vein lines -->
+          <path d="M60 12 Q65 15 70 18" stroke="#1e8449" stroke-width="1" />
+          <path d="M100 15 Q105 18 110 21" stroke="#1e8449" stroke-width="1" />
+          <path d="M140 12 Q145 15 150 18" stroke="#1e8449" stroke-width="1" />
+        </svg>
+      </div>
+
+      <!-- Bottom Bun -->
+      <div class="ingredient bottom-bun">
+        <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern
+              id="hatch2"
+              patternUnits="userSpaceOnUse"
+              width="10"
+              height="10"
+            >
+              <path
+                d="M0,0 L10,10 M0,10 L10,0"
+                stroke="#d68910"
+                stroke-width="1"
+                opacity="0.4"
+              />
+            </pattern>
+          </defs>
+          <!-- Bottom bun outline -->
+          <ellipse
+            cx="100"
+            cy="20"
+            rx="90"
+            ry="18"
+            fill="none"
+            stroke="#f4d03f"
+            stroke-width="3"
+          />
+          <ellipse
+            cx="100"
+            cy="25"
+            rx="85"
+            ry="15"
+            fill="url(#hatch2)"
+            stroke="#f7dc6f"
+            stroke-width="2"
+          />
+          <!-- Base line -->
+          <line
+            x1="10"
+            y1="35"
+            x2="190"
+            y2="35"
+            stroke="#b7950b"
+            stroke-width="2"
+          />
+          <!-- Construction grid -->
+          <line
+            x1="100"
+            y1="2"
+            x2="100"
+            y2="38"
+            stroke="#d68910"
+            stroke-width="1"
+            opacity="0.4"
+          />
+          <line
+            x1="50"
+            y1="10"
+            x2="150"
+            y2="30"
+            stroke="#d68910"
+            stroke-width="1"
+            opacity="0.3"
+          />
+          <line
+            x1="150"
+            y1="10"
+            x2="50"
+            y2="30"
+            stroke="#d68910"
+            stroke-width="1"
+            opacity="0.3"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <div class="instructions">
+      Hover over the sandwich to see the layers separate!<br />
+      Click on any ingredient to learn about its history.
+    </div>
+
+    <!-- Ingredient Information Panel -->
+    <div class="ingredient-info" id="ingredientInfo">
+      <button class="close-btn" onclick="closeIngredientInfo()">×</button>
+      <h2 id="ingredientTitle"></h2>
+      <p id="ingredientDescription"></p>
+      <div class="history" id="ingredientHistory"></div>
+    </div>
+
+    <script>
+      const sandwich = document.getElementById("sandwich");
+      const ingredients = document.querySelectorAll(".ingredient");
+      const ingredientInfo = document.getElementById("ingredientInfo");
+      const ingredientTitle = document.getElementById("ingredientTitle");
+      const ingredientDescription = document.getElementById(
+        "ingredientDescription"
+      );
+      const ingredientHistory = document.getElementById("ingredientHistory");
+
+      let currentShowcased = null;
+
+      // Ingredient data
+      const ingredientData = {
+        "top-bun": {
+          title: "Sesame Seed Bun (Top)",
+          description:
+            "The crown of any great burger, this golden-brown bun is topped with sesame seeds for extra flavor and texture.",
+          history:
+            "The hamburger bun was invented in the 1880s by the Menches Brothers in Ohio. Sesame seeds were added to buns in the early 1900s, inspired by Middle Eastern breads. The seeds not only add a nutty flavor but also help the bun hold together and provide visual appeal.",
+        },
+        cheese: {
+          title: "American Cheese",
+          description:
+            "A creamy, mild processed cheese that melts perfectly over the patty, creating that classic burger taste.",
+          history:
+            'American cheese was developed in the 1910s by James Lewis Kraft. Originally called "process cheese," it was designed to have a longer shelf life than natural cheese. The addition of cheese to hamburgers became popular in the 1920s, creating the "cheeseburger" - a term first used in 1928.',
+        },
+        tomato: {
+          title: "Fresh Tomato Slices",
+          description:
+            "Juicy, ripe tomato slices that add freshness, acidity, and vibrant color to balance the rich flavors.",
+          history:
+            "Tomatoes were brought to Europe from the Americas in the 16th century. Initially feared as poisonous by Europeans, they became popular by the 18th century. Fresh tomatoes on burgers became standard in American diners during the 1940s, adding essential moisture and flavor contrast.",
+        },
+        patty: {
+          title: "Beef Patty",
+          description:
+            "A perfectly seasoned and grilled beef patty, the heart and soul of any great burger.",
+          history:
+            'The hamburger patty traces back to Hamburg, Germany, where "Hamburg steak" was popular in the 19th century. German immigrants brought this concept to America, where it evolved into the modern hamburger patty around 1885. The Menches Brothers and Charlie Nagreen are both credited with creating the first hamburger.',
+        },
+        onion: {
+          title: "White Onion Rings",
+          description:
+            "Crisp, sweet onion rings that provide a sharp bite and aromatic punch to complement the meat.",
+          history:
+            "Onions have been cultivated for over 5,000 years. Raw onions on burgers became popular in American cuisine in the early 1900s. White onions, with their sharp flavor that mellows when cooked, became the preferred choice for burgers because they provide the perfect balance of bite and sweetness.",
+        },
+        lettuce: {
+          title: "Iceberg Lettuce",
+          description:
+            "Crisp, refreshing lettuce leaves that add crunch and help keep the burger cool and fresh.",
+          history:
+            "Iceberg lettuce was developed in the 1890s and became widely available due to refrigerated railroad cars. It gained popularity on burgers in the 1950s during the fast-food boom. Its crisp texture and mild flavor made it ideal for burgers, providing freshness without overpowering other ingredients.",
+        },
+        "bottom-bun": {
+          title: "Bottom Bun",
+          description:
+            "The sturdy foundation that holds everything together, designed to absorb juices while maintaining structure.",
+          history:
+            "The bottom bun is the unsung hero of the burger world. Traditionally made slightly thicker than the top to absorb meat juices and condiments, it prevents the burger from falling apart. This engineering was perfected by White Castle in the 1920s, setting the standard for modern burger construction.",
+        },
+      };
+
+      function showIngredientInfo(ingredientClass) {
+        if (currentShowcased) {
+          closeIngredientInfo();
+          return;
+        }
+
+        const ingredient = document.querySelector(`.${ingredientClass}`);
+        const data = ingredientData[ingredientClass];
+
+        // Add showcase effect to ingredient
+        ingredient.classList.add("showcased");
+        sandwich.classList.add("showcasing");
+
+        // Update info panel
+        ingredientTitle.textContent = data.title;
+        ingredientDescription.textContent = data.description;
+        ingredientHistory.textContent = data.history;
+
+        // Show info panel with fade effect
+        setTimeout(() => {
+          ingredientInfo.classList.add("show");
+        }, 300);
+
+        currentShowcased = ingredientClass;
+      }
+
+      function closeIngredientInfo() {
+        if (!currentShowcased) return;
+
+        // Hide info panel
+        ingredientInfo.classList.remove("show");
+
+        // Remove showcase effect
+        setTimeout(() => {
+          const ingredient = document.querySelector(`.${currentShowcased}`);
+          ingredient.classList.remove("showcased");
+          sandwich.classList.remove("showcasing");
+          currentShowcased = null;
+        }, 300);
+      }
+
+      // Add click functionality to individual ingredients
+      ingredients.forEach((ingredient) => {
+        ingredient.addEventListener("click", function (e) {
+          e.stopPropagation();
+
+          // Get ingredient class (excluding 'ingredient')
+          const ingredientClass = Array.from(this.classList).find(
+            (cls) => cls !== "ingredient"
+          );
+
+          if (currentShowcased === ingredientClass) {
+            closeIngredientInfo();
+          } else {
+            showIngredientInfo(ingredientClass);
+          }
+        });
+
+        // Add hover effect for better UX
+        ingredient.addEventListener("mouseenter", function () {
+          if (!currentShowcased) {
+            this.style.cursor = "pointer";
+            this.style.filter =
+              "drop-shadow(0 6px 12px rgba(0,0,0,0.3)) brightness(1.1)";
+          }
+        });
+
+        ingredient.addEventListener("mouseleave", function () {
+          if (!currentShowcased) {
+            this.style.filter = "drop-shadow(0 4px 8px rgba(0,0,0,0.2))";
+          }
+        });
+      });
+
+      // Close info when clicking outside
+      document.addEventListener("click", function (e) {
+        if (
+          currentShowcased &&
+          !ingredientInfo.contains(e.target) &&
+          !e.target.closest(".ingredient")
+        ) {
+          closeIngredientInfo();
+        }
+      });
+
+      // Add some subtle floating animation
+      setInterval(() => {
+        if (!currentShowcased) {
+          sandwich.style.transform +=
+            " translateY(" + Math.sin(Date.now() * 0.001) * 2 + "px)";
+          setTimeout(() => {
+            if (!currentShowcased) {
+              sandwich.style.transform = sandwich.style.transform.replace(
+                / translateY\([^)]+\)/g,
+                ""
+              );
+            }
+          }, 50);
+        }
+      }, 50);
+    </script>
+  </body>
+</html>
