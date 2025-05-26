@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindEat!</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        /* perspective: 1200px; */
+      }
+
+      .sandwich-container {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+      }
+
+      .sandwich-container:hover {
+        transform: rotateY(10deg) rotateX(5deg);
+      }
+
+      .ingredient {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+
+      .ingredient img {
+        width: 250px;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .ingredient:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Stacked positions */
+      .top-bun {
+        transform: translate(-50%, -50%) translateZ(100px) translateY(-120px);
+      }
+      .cheese {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-80px);
+      }
+      .tomato {
+        transform: translate(-50%, -50%) translateZ(60px) translateY(-40px);
+      }
+      .patty {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(0px);
+      }
+      .onion {
+        transform: translate(-50%, -50%) translateZ(20px) translateY(40px);
+      }
+      .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(80px);
+      }
+      .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-20px) translateY(120px);
+      }
+
+      /* Separated positions on hover */
+      .sandwich-container:hover .top-bun {
+        transform: translate(-50%, -50%) translateZ(200px) translateY(-200px);
+      }
+      .sandwich-container:hover .cheese {
+        transform: translate(-50%, -50%) translateZ(160px) translateY(-140px);
+      }
+      .sandwich-container:hover .tomato {
+        transform: translate(-50%, -50%) translateZ(120px) translateY(-80px);
+      }
+      .sandwich-container:hover .patty {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-20px);
+      }
+      .sandwich-container:hover .onion {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(40px);
+      }
+      .sandwich-container:hover .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(100px);
+      }
+      .sandwich-container:hover .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-40px) translateY(160px);
+      }
+
+      .title {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 2.5em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      .instructions {
+        position: absolute;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      }
+
+      /* Ingredient showcase styles */
+      .ingredient.showcased {
+        transform: translate(150px, -50%) rotateX(150deg) rotateY(0deg)
+          translateZ(50px) !important;
+        z-index: 1000;
+      }
+
+      .ingredient-info {
+        position: absolute;
+        right: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 350px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .ingredient-info.show {
+        opacity: 1;
+      }
+
+      .ingredient-info h2 {
+        color: #2c3e50;
+        margin: 0 0 15px 0;
+        font-size: 1.8em;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 8px;
+      }
+
+      .ingredient-info p {
+        color: #34495e;
+        line-height: 1.6;
+        margin: 0 0 15px 0;
+        font-size: 1em;
+      }
+
+      .ingredient-info .history {
+        background: rgba(52, 152, 219, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #3498db;
+        margin-top: 15px;
+      }
+
+      .ingredient-info .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background 0.3s ease;
+      }
+
+      .ingredient-info .close-btn:hover {
+        background: #c0392b;
+      }
+
+      .sandwich-container.showcasing {
+        transform: translateX(-100px) rotateY(15deg) rotateX(5deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">MindEat!</div>
+
+    <div class="sandwich-container" id="sandwich">
+      <!-- Top Bun -->
+      <div class="ingredient top-bun">
+        <img src="bread.png" alt="" />
+      </div>
+
+      <!-- Cheese -->
+      <div class="ingredient cheese">
+        <img src="cheese.png" alt="" />
+      </div>
+
+      <!-- Tomato -->
+      <div class="ingredient tomato">
+        <img src="tomato.png" alt="" />
+      </div>
+
+      <!-- Patty -->
+      <div class="ingredient patty">
+        <img src="patty.png" alt="" />
+      </div>
+
+      <!-- Onion -->
+      <div class="ingredient onion">
+        <img src="onion.png" alt="" />
+      </div>
+
+      <!-- Lettuce -->
+      <div class="ingredient lettuce">
+        <img src="lettuce.png" alt="" />
+      </div>
+
+      <!-- Bottom Bun -->
+      <div class="ingredient bottom-bun">
+        <img src="bread.png" alt="" />
+      </div>
+    </div>
+
+    <div class="instructions">
+      Hover over the sandwich to see the layers separate!<br />
+      Click on any ingredient to learn about the specific principle.
+    </div>
+
+    <!-- Ingredient Information Panel -->
+    <div class="ingredient-info" id="ingredientInfo">
+      <button class="close-btn" onclick="closeIngredientInfo()">×</button>
+      <h2 id="ingredientTitle"></h2>
+      <p id="ingredientDescription"></p>
+      <div class="history" id="ingredientHistory"></div>
+    </div>
+
+    <script>
+      const sandwich = document.getElementById("sandwich");
+      const ingredients = document.querySelectorAll(".ingredient");
+      const ingredientInfo = document.getElementById("ingredientInfo");
+      const ingredientTitle = document.getElementById("ingredientTitle");
+      const ingredientDescription = document.getElementById(
+        "ingredientDescription"
+      );
+      const ingredientHistory = document.getElementById("ingredientHistory");
+
+      let currentShowcased = null;
+
+      // Ingredient data
+      const ingredientData = {
+        "top-bun": {
+          title: "Sesame Seed Bun (Top)",
+          description:
+            "The crown of any great burger, this golden-brown bun is topped with sesame seeds for extra flavor and texture.",
+          history:
+            "The hamburger bun was invented in the 1880s by the Menches Brothers in Ohio. Sesame seeds were added to buns in the early 1900s, inspired by Middle Eastern breads. The seeds not only add a nutty flavor but also help the bun hold together and provide visual appeal.",
+        },
+        cheese: {
+          title: "American Cheese",
+          description:
+            "A creamy, mild processed cheese that melts perfectly over the patty, creating that classic burger taste.",
+          history:
+            'American cheese was developed in the 1910s by James Lewis Kraft. Originally called "process cheese," it was designed to have a longer shelf life than natural cheese. The addition of cheese to hamburgers became popular in the 1920s, creating the "cheeseburger" - a term first used in 1928.',
+        },
+        tomato: {
+          title: "Fresh Tomato Slices",
+          description:
+            "Juicy, ripe tomato slices that add freshness, acidity, and vibrant color to balance the rich flavors.",
+          history:
+            "Tomatoes were brought to Europe from the Americas in the 16th century. Initially feared as poisonous by Europeans, they became popular by the 18th century. Fresh tomatoes on burgers became standard in American diners during the 1940s, adding essential moisture and flavor contrast.",
+        },
+        patty: {
+          title: "Beef Patty",
+          description:
+            "A perfectly seasoned and grilled beef patty, the heart and soul of any great burger.",
+          history:
+            'The hamburger patty traces back to Hamburg, Germany, where "Hamburg steak" was popular in the 19th century. German immigrants brought this concept to America, where it evolved into the modern hamburger patty around 1885. The Menches Brothers and Charlie Nagreen are both credited with creating the first hamburger.',
+        },
+        onion: {
+          title: "White Onion Rings",
+          description:
+            "Crisp, sweet onion rings that provide a sharp bite and aromatic punch to complement the meat.",
+          history:
+            "Onions have been cultivated for over 5,000 years. Raw onions on burgers became popular in American cuisine in the early 1900s. White onions, with their sharp flavor that mellows when cooked, became the preferred choice for burgers because they provide the perfect balance of bite and sweetness.",
+        },
+        lettuce: {
+          title: "Iceberg Lettuce",
+          description:
+            "Crisp, refreshing lettuce leaves that add crunch and help keep the burger cool and fresh.",
+          history:
+            "Iceberg lettuce was developed in the 1890s and became widely available due to refrigerated railroad cars. It gained popularity on burgers in the 1950s during the fast-food boom. Its crisp texture and mild flavor made it ideal for burgers, providing freshness without overpowering other ingredients.",
+        },
+        "bottom-bun": {
+          title: "Bottom Bun",
+          description:
+            "The sturdy foundation that holds everything together, designed to absorb juices while maintaining structure.",
+          history:
+            "The bottom bun is the unsung hero of the burger world. Traditionally made slightly thicker than the top to absorb meat juices and condiments, it prevents the burger from falling apart. This engineering was perfected by White Castle in the 1920s, setting the standard for modern burger construction.",
+        },
+      };
+
+      function showIngredientInfo(ingredientClass) {
+        if (currentShowcased) {
+          closeIngredientInfo();
+          return;
+        }
+
+        const ingredient = document.querySelector(`.${ingredientClass}`);
+        const data = ingredientData[ingredientClass];
+
+        // Add showcase effect to ingredient
+        ingredient.classList.add("showcased");
+        sandwich.classList.add("showcasing");
+
+        // Update info panel
+        ingredientTitle.textContent = data.title;
+        ingredientDescription.textContent = data.description;
+        ingredientHistory.textContent = data.history;
+
+        // Show info panel with fade effect
+        setTimeout(() => {
+          ingredientInfo.classList.add("show");
+        }, 300);
+
+        currentShowcased = ingredientClass;
+      }
+
+      function closeIngredientInfo() {
+        if (!currentShowcased) return;
+
+        // Hide info panel
+        ingredientInfo.classList.remove("show");
+
+        // Remove showcase effect
+        setTimeout(() => {
+          const ingredient = document.querySelector(`.${currentShowcased}`);
+          ingredient.classList.remove("showcased");
+          sandwich.classList.remove("showcasing");
+          currentShowcased = null;
+        }, 300);
+      }
+
+      // Add click functionality to individual ingredients
+      ingredients.forEach((ingredient) => {
+        ingredient.addEventListener("click", function (e) {
+          e.stopPropagation();
+
+          // Get ingredient class (excluding 'ingredient')
+          const ingredientClass = Array.from(this.classList).find(
+            (cls) => cls !== "ingredient"
+          );
+
+          if (currentShowcased === ingredientClass) {
+            closeIngredientInfo();
+          } else {
+            showIngredientInfo(ingredientClass);
+          }
+        });
+
+        // Add hover effect for better UX
+        ingredient.addEventListener("mouseenter", function () {
+          if (!currentShowcased) {
+            this.style.cursor = "pointer";
+            this.style.filter =
+              "drop-shadow(0 6px 12px rgba(0,0,0,0.3)) brightness(1.1)";
+          }
+        });
+
+        ingredient.addEventListener("mouseleave", function () {
+          if (!currentShowcased) {
+            this.style.filter = "drop-shadow(0 4px 8px rgba(0,0,0,0.2))";
+          }
+        });
+      });
+
+      // Close info when clicking outside
+      document.addEventListener("click", function (e) {
+        if (
+          currentShowcased &&
+          !ingredientInfo.contains(e.target) &&
+          !e.target.closest(".ingredient")
+        ) {
+          closeIngredientInfo();
+        }
+      });
+
+      // Add some subtle floating animation
+      setInterval(() => {
+        if (!currentShowcased) {
+          sandwich.style.transform +=
+            " translateY(" + Math.sin(Date.now() * 0.001) * 2 + "px)";
+          setTimeout(() => {
+            if (!currentShowcased) {
+              sandwich.style.transform = sandwich.style.transform.replace(
+                / translateY\([^)]+\)/g,
+                ""
+              );
+            }
+          }, 50);
+        }
+      }, 50);
+    </script>
+  </body>
+</html>
