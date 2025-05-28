@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced 3D Sandwich Visualizer</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: "Arial", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated background elements for visual interest */
+      .bg-decoration {
+        position: fixed;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+        z-index: -1;
+      }
+
+      .bg-decoration:nth-child(1) {
+        top: 10%;
+        right: 10%;
+        animation-delay: 0s;
+      }
+
+      .bg-decoration:nth-child(2) {
+        bottom: 20%;
+        right: 20%;
+        animation-delay: 2s;
+        width: 150px;
+        height: 150px;
+      }
+
+      .bg-decoration:nth-child(3) {
+        top: 60%;
+        left: 10%;
+        animation-delay: 4s;
+        width: 100px;
+        height: 100px;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      .main-container {
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        padding: 20px;
+        gap: 50px;
+      }
+
+      .sandwich-section {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1200px;
+        max-width: 500px;
+      }
+
+      .info-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 600px;
+      }
+
+      .title {
+        color: white;
+        font-size: 3em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-bottom: 20px;
+        text-align: center;
+        background: linear-gradient(45deg, #fff, #f0f8ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .sandwich-container {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+      }
+
+      .sandwich-container:hover:not(.showcasing) {
+        transform: rotateY(10deg) rotateX(5deg);
+      }
+
+      .ingredient {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      }
+
+      .ingredient img {
+        width: 250px;
+        height: auto;
+        transition: transform 0.3s ease;
+      }
+
+      .ingredient:hover:not(.showcased) img {
+        transform: scale(1.05);
+      }
+
+      /* Default stacked positions */
+      .top-bun {
+        transform: translate(-50%, -50%) translateZ(100px) translateY(-120px);
+      }
+      .cheese {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-80px);
+      }
+      .tomato {
+        transform: translate(-50%, -50%) translateZ(60px) translateY(-40px);
+      }
+      .patty {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(0px);
+      }
+      .onion {
+        transform: translate(-50%, -50%) translateZ(20px) translateY(40px);
+      }
+      .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(80px);
+      }
+      .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-20px) translateY(120px);
+      }
+
+      /* Separated positions on hover */
+      .sandwich-container:hover:not(.showcasing) .top-bun {
+        transform: translate(-50%, -50%) translateZ(200px) translateY(-200px);
+      }
+      .sandwich-container:hover:not(.showcasing) .cheese {
+        transform: translate(-50%, -50%) translateZ(160px) translateY(-140px);
+      }
+      .sandwich-container:hover:not(.showcasing) .tomato {
+        transform: translate(-50%, -50%) translateZ(120px) translateY(-80px);
+      }
+      .sandwich-container:hover:not(.showcasing) .patty {
+        transform: translate(-50%, -50%) translateZ(80px) translateY(-20px);
+      }
+      .sandwich-container:hover:not(.showcasing) .onion {
+        transform: translate(-50%, -50%) translateZ(40px) translateY(40px);
+      }
+      .sandwich-container:hover:not(.showcasing) .lettuce {
+        transform: translate(-50%, -50%) translateZ(0px) translateY(100px);
+      }
+      .sandwich-container:hover:not(.showcasing) .bottom-bun {
+        transform: translate(-50%, -50%) translateZ(-40px) translateY(160px);
+      }
+
+      /* Showcased ingredient moves to info section */
+      .ingredient.showcased {
+        position: fixed;
+        left: 60%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(1.8) !important;
+        z-index: 1000;
+        filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.3)) brightness(1.1);
+      }
+
+      /* Text overlay on the ingredient image */
+      .ingredient-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.7),
+          rgba(0, 0, 0, 0.4)
+        );
+        border-radius: 15px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        text-align: center;
+        backdrop-filter: blur(2px);
+      }
+
+      .ingredient.showcased .ingredient-overlay {
+        opacity: 1;
+      }
+
+      .ingredient-overlay h2 {
+        color: white;
+        font-size: 1.5em;
+        margin: 0 0 10px 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        font-weight: bold;
+      }
+
+      .ingredient-overlay p {
+        color: #f0f0f0;
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin: 0 0 10px 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+      }
+
+      .ingredient-overlay .history {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        border-radius: 8px;
+        border-left: 3px solid #3498db;
+        font-size: 0.8em;
+        color: #f8f8f8;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        max-width: 200px;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(231, 76, 60, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+        z-index: 1001;
+      }
+
+      .close-btn:hover {
+        background: rgba(192, 57, 43, 1);
+        transform: scale(1.1);
+      }
+
+      .instructions {
+        color: white;
+        text-align: center;
+        font-size: 1.2em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* Fun facts panel */
+      .fun-facts {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 30px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .fun-facts:hover {
+        transform: translateY(-5px);
+      }
+
+      .fun-facts h3 {
+        color: white;
+        font-size: 1.5em;
+        margin: 0 0 15px 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      .fun-facts ul {
+        color: #f0f0f0;
+        line-height: 1.6;
+        padding-left: 20px;
+      }
+
+      .fun-facts li {
+        margin-bottom: 8px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Ingredient counter */
+      .ingredient-counter {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px 20px;
+        border-radius: 25px;
+        color: white;
+        font-weight: bold;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        z-index: 500;
+      }
+
+      /* Assembly animation button */
+      .assembly-btn {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+      }
+
+      .assembly-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 20px rgba(52, 152, 219, 0.6);
+      }
+
+      /* Responsive design */
+      @media (max-width: 1200px) {
+        .main-container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .sandwich-section {
+          max-width: none;
+        }
+
+        .ingredient.showcased {
+          left: 50%;
+          top: 30%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .title {
+          font-size: 2em;
+        }
+
+        .sandwich-container {
+          width: 250px;
+          height: 350px;
+        }
+
+        .ingredient img {
+          width: 200px;
+        }
+
+        .ingredient.showcased {
+          transform: translate(-50%, -50%) scale(1.4) !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background decorations -->
+    <div class="bg-decoration"></div>
+    <div class="bg-decoration"></div>
+    <div class="bg-decoration"></div>
+
+    <!-- Ingredient counter -->
+    <div class="ingredient-counter" id="ingredientCounter">
+      Ingredients Explored: <span id="exploredCount">0</span>/7
+    </div>
+
+    <div class="main-container">
+      <!-- Left side: Sandwich -->
+      <div class="sandwich-section">
+        <div>
+          <div class="title">3D Sandwich Explorer!</div>
+
+          <div class="sandwich-container" id="sandwich">
+            <!-- Top Bun -->
+            <div class="ingredient top-bun" data-ingredient="top-bun">
+              <svg width="250" height="80" viewBox="0 0 250 80">
+                <ellipse
+                  cx="125"
+                  cy="40"
+                  rx="120"
+                  ry="35"
+                  fill="#D4A574"
+                  stroke="#B8956A"
+                  stroke-width="2"
+                />
+                <circle cx="100" cy="25" r="3" fill="#8B4513" />
+                <circle cx="130" cy="30" r="3" fill="#8B4513" />
+                <circle cx="150" cy="20" r="3" fill="#8B4513" />
+                <circle cx="110" cy="40" r="3" fill="#8B4513" />
+                <circle cx="140" cy="45" r="3" fill="#8B4513" />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>Sesame Seed Bun (Top)</h2>
+                <p>
+                  The crown of any great burger, topped with sesame seeds for
+                  extra flavor and texture.
+                </p>
+                <div class="history">
+                  The hamburger bun was invented in the 1880s by the Menches
+                  Brothers in Ohio. Sesame seeds were added in the early 1900s,
+                  inspired by Middle Eastern breads.
+                </div>
+              </div>
+            </div>
+
+            <!-- Cheese -->
+            <div class="ingredient cheese" data-ingredient="cheese">
+              <svg width="250" height="60" viewBox="0 0 250 60">
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="115"
+                  ry="25"
+                  fill="#FFD700"
+                  stroke="#FFC107"
+                  stroke-width="2"
+                />
+                <circle cx="90" cy="20" r="4" fill="#FFB300" opacity="0.7" />
+                <circle cx="140" cy="25" r="5" fill="#FFB300" opacity="0.7" />
+                <circle cx="160" cy="35" r="3" fill="#FFB300" opacity="0.7" />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>American Cheese</h2>
+                <p>
+                  A creamy, mild processed cheese that melts perfectly over the
+                  patty.
+                </p>
+                <div class="history">
+                  American cheese was developed in the 1910s by James Lewis
+                  Kraft. The "cheeseburger" term was first used in 1928.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tomato -->
+            <div class="ingredient tomato" data-ingredient="tomato">
+              <svg width="250" height="70" viewBox="0 0 250 70">
+                <ellipse
+                  cx="125"
+                  cy="35"
+                  rx="110"
+                  ry="30"
+                  fill="#FF6347"
+                  stroke="#FF4500"
+                  stroke-width="2"
+                />
+                <ellipse
+                  cx="125"
+                  cy="35"
+                  rx="100"
+                  ry="25"
+                  fill="#FF7F7F"
+                  opacity="0.6"
+                />
+                <circle cx="115" cy="25" r="8" fill="#FFB6C1" opacity="0.8" />
+                <circle cx="135" cy="30" r="6" fill="#FFB6C1" opacity="0.8" />
+                <circle cx="105" cy="40" r="5" fill="#FFB6C1" opacity="0.8" />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>Fresh Tomato Slices</h2>
+                <p>
+                  Juicy, ripe tomato slices that add freshness and vibrant
+                  color.
+                </p>
+                <div class="history">
+                  Tomatoes became popular on burgers in American diners during
+                  the 1940s, adding essential moisture and flavor contrast.
+                </div>
+              </div>
+            </div>
+
+            <!-- Patty -->
+            <div class="ingredient patty" data-ingredient="patty">
+              <svg width="250" height="50" viewBox="0 0 250 50">
+                <ellipse
+                  cx="125"
+                  cy="25"
+                  rx="120"
+                  ry="20"
+                  fill="#8B4513"
+                  stroke="#654321"
+                  stroke-width="2"
+                />
+                <ellipse
+                  cx="125"
+                  cy="20"
+                  rx="115"
+                  ry="15"
+                  fill="#A0522D"
+                  opacity="0.8"
+                />
+                <circle cx="100" cy="20" r="3" fill="#654321" />
+                <circle cx="130" cy="25" r="2" fill="#654321" />
+                <circle cx="150" cy="18" r="2" fill="#654321" />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>Beef Patty</h2>
+                <p>
+                  A perfectly seasoned and grilled beef patty, the heart and
+                  soul of any great burger.
+                </p>
+                <div class="history">
+                  The hamburger patty traces back to Hamburg, Germany. German
+                  immigrants brought this concept to America around 1885.
+                </div>
+              </div>
+            </div>
+
+            <!-- Onion -->
+            <div class="ingredient onion" data-ingredient="onion">
+              <svg width="250" height="60" viewBox="0 0 250 60">
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="100"
+                  ry="25"
+                  fill="#F5F5DC"
+                  stroke="#DDD"
+                  stroke-width="2"
+                />
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="80"
+                  ry="20"
+                  fill="#FFFFFF"
+                  opacity="0.7"
+                />
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="60"
+                  ry="15"
+                  fill="#F5F5DC"
+                  opacity="0.5"
+                />
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="40"
+                  ry="10"
+                  fill="#FFFFFF"
+                  opacity="0.8"
+                />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>White Onion Rings</h2>
+                <p>
+                  Crisp, sweet onion rings that provide a sharp bite and
+                  aromatic punch.
+                </p>
+                <div class="history">
+                  Raw onions on burgers became popular in the early 1900s. White
+                  onions provide the perfect balance of bite and sweetness.
+                </div>
+              </div>
+            </div>
+
+            <!-- Lettuce -->
+            <div class="ingredient lettuce" data-ingredient="lettuce">
+              <svg width="250" height="70" viewBox="0 0 250 70">
+                <path
+                  d="M25 50 Q50 20 80 40 Q110 15 140 35 Q170 10 200 30 Q230 25 225 50 Q200 60 170 55 Q140 65 110 50 Q80 60 50 55 Q25 65 25 50 Z"
+                  fill="#90EE90"
+                  stroke="#228B22"
+                  stroke-width="2"
+                />
+                <path
+                  d="M40 45 Q65 25 85 40 Q105 20 125 35 Q145 18 165 30 Q185 25 200 40"
+                  fill="#98FB98"
+                  opacity="0.8"
+                />
+                <path
+                  d="M50 40 Q70 30 90 38 Q110 25 130 32 Q150 22 170 28"
+                  fill="#ADFF2F"
+                  opacity="0.6"
+                />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>Iceberg Lettuce</h2>
+                <p>
+                  Crisp, refreshing lettuce leaves that add crunch and keep the
+                  burger fresh.
+                </p>
+                <div class="history">
+                  Iceberg lettuce gained popularity on burgers in the 1950s
+                  during the fast-food boom, providing freshness without
+                  overpowering flavors.
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Bun -->
+            <div class="ingredient bottom-bun" data-ingredient="bottom-bun">
+              <svg width="250" height="60" viewBox="0 0 250 60">
+                <ellipse
+                  cx="125"
+                  cy="30"
+                  rx="120"
+                  ry="25"
+                  fill="#DEB887"
+                  stroke="#CD853F"
+                  stroke-width="2"
+                />
+                <ellipse
+                  cx="125"
+                  cy="25"
+                  rx="115"
+                  ry="20"
+                  fill="#F5DEB3"
+                  opacity="0.7"
+                />
+              </svg>
+              <div class="ingredient-overlay">
+                <button class="close-btn" onclick="closeIngredientInfo()">
+                  ×
+                </button>
+                <h2>Bottom Bun</h2>
+                <p>
+                  The sturdy foundation that holds everything together and
+                  absorbs juices.
+                </p>
+                <div class="history">
+                  The bottom bun is made thicker than the top to absorb meat
+                  juices. This engineering was perfected by White Castle in the
+                  1920s.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="assembly-btn" onclick="playAssemblyAnimation()">
+            🎬 Watch Assembly Animation
+          </button>
+        </div>
+      </div>
+
+      <!-- Right side: Instructions and Info -->
+      <div class="info-section">
+        <div class="instructions">
+          <strong>🎯 How to Explore:</strong><br />
+          • Hover over the sandwich to see layers separate<br />
+          • Click any ingredient to learn its fascinating history<br />
+          • Watch the assembly animation for a fun show!
+        </div>
+
+        <div class="fun-facts">
+          <h3>🍔 Did You Know?</h3>
+          <ul>
+            <li>Americans consume about 50 billion burgers per year!</li>
+            <li>The largest burger ever made weighed 2,014 pounds</li>
+            <li>McDonald's sells 75 hamburgers every second</li>
+            <li>The term "hamburger" has nothing to do with ham</li>
+            <li>California invented the cheeseburger in 1926</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const sandwich = document.getElementById("sandwich");
+      const ingredients = document.querySelectorAll(".ingredient");
+      const exploredCount = document.getElementById("exploredCount");
+
+      let currentShowcased = null;
+      let exploredIngredients = new Set();
+      let isAnimating = false;
+
+      // Enhanced click functionality with smooth transitions
+      ingredients.forEach((ingredient) => {
+        ingredient.addEventListener("click", function (e) {
+          e.stopPropagation();
+
+          if (isAnimating) return;
+
+          const ingredientClass = this.dataset.ingredient;
+
+          if (currentShowcased === ingredientClass) {
+            closeIngredientInfo();
+          } else {
+            showIngredientInfo(ingredientClass);
+          }
+        });
+
+        // Enhanced hover effects
+        ingredient.addEventListener("mouseenter", function () {
+          if (!currentShowcased && !isAnimating) {
+            this.style.cursor = "pointer";
+            this.style.filter =
+              "drop-shadow(0 8px 16px rgba(0,0,0,0.4)) brightness(1.15)";
+            this.style.transform += " scale(1.02)";
+          }
+        });
+
+        ingredient.addEventListener("mouseleave", function () {
+          if (!currentShowcased && !isAnimating) {
+            this.style.filter = "drop-shadow(0 4px 8px rgba(0,0,0,0.2))";
+            // Reset transform by removing the scale
+            this.style.transform = this.style.transform.replace(
+              / scale\([^)]+\)/g,
+              ""
+            );
+          }
+        });
+      });
+
+      function showIngredientInfo(ingredientClass) {
+        if (currentShowcased) {
+          closeIngredientInfo();
+          setTimeout(() => showIngredientInfo(ingredientClass), 300);
+          return;
+        }
+
+        const ingredient = document.querySelector(
+          `[data-ingredient="${ingredientClass}"]`
+        );
+
+        // Add to explored set and update counter
+        if (!exploredIngredients.has(ingredientClass)) {
+          exploredIngredients.add(ingredientClass);
+          exploredCount.textContent = exploredIngredients.size;
+
+          // Celebration effect for first-time exploration
+          createCelebrationEffect();
+        }
+
+        // Add showcase effect
+        ingredient.classList.add("showcased");
+        sandwich.classList.add("showcasing");
+
+        currentShowcased = ingredientClass;
+      }
+
+      function closeIngredientInfo() {
+        if (!currentShowcased) return;
+
+        const ingredient = document.querySelector(
+          `[data-ingredient="${currentShowcased}"]`
+        );
+
+        // Remove showcase effect with smooth transition
+        ingredient.classList.remove("showcased");
+        sandwich.classList.remove("showcasing");
+
+        currentShowcased = null;
+      }
+
+      function createCelebrationEffect() {
+        // Create floating "+1" effect
+        const celebration = document.createElement("div");
+        celebration.textContent = "+1 🎉";
+        celebration.style.cssText = `
+          position: fixed;
+          top: 60px;
+          right: 120px;
+          color: #FFD700;
+          font-size: 1.5em;
+          font-weight: bold;
+          pointer-events: none;
+          z-index: 1000;
+          animation: celebrationFloat 2s ease-out forwards;
+        `;
+
+        // Add keyframe animation
+        if (!document.querySelector("#celebration-style")) {
+          const style = document.createElement("style");
+          style.id = "celebration-style";
+          style.textContent = `
+            @keyframes celebrationFloat {
+              0% { opacity: 1; transform: translateY(0px) scale(1); }
+              100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+
+        document.body.appendChild(celebration);
+        setTimeout(() => celebration.remove(), 2000);
+      }
+
+      function playAssemblyAnimation() {
+        if (isAnimating) return;
+
+        isAnimating = true;
+        const btn = document.querySelector(".assembly-btn");
+        btn.textContent = "🎬 Playing Animation...";
+        btn.disabled = true;
+
+        // First, separate all ingredients
+        ingredients.forEach((ingredient, index) => {
+          setTimeout(() => {
+            ingredient.style.transform += ` translateY(-${
+              (ingredients.length - index) * 100
+            }px) rotateZ(${Math.random() * 360}deg)`;
+          }, index * 100);
+        });
+
+        // Then, assemble them back with a satisfying drop effect
+        setTimeout(() => {
+          ingredients.forEach((ingredient, index) => {
+            setTimeout(() => {
+              ingredient.style.transform = ingredient.style.transform.replace(
+                / translateY\([^)]+\) rotateZ\([^)]+\)/g,
+                ""
+              );
+              ingredient.style.transform += " translateY(10px)";
+
+              setTimeout(() => {
+                ingredient.style.transform = ingredient.style.transform.replace(
+                  / translateY\([^)]+\)/g,
+                  ""
+                );
+              }, 200);
+            }, (ingredients.length - index - 1) * 150);
+          });
+        }, 2000);
+
+        // Reset button
+        setTimeout(() => {
+          btn.textContent = "🎬 Watch Assembly Animation";
+          btn.disabled = false;
+          isAnimating = false;
+        }, 4000);
+      }
+
+      // Close info when clicking outside
+      document.addEventListener("click", function (e) {
+        if (
+          currentShowcased &&
+          !e.target.closest(".ingredient") &&
+          !e.target.closest(".ingredient-overlay")
+        ) {
+          closeIngredientInfo();
+        }
+      });
+
+      // Enhanced floating animation with rotation
+      let floatTime = 0;
+      function animateFloat() {
+        if (!currentShowcased && !isAnimating) {
+          floatTime += 0.02;
+          const floatY = Math.sin(floatTime) * 3;
+          const floatRotation = Math.sin(floatTime * 0.5) * 1;
+          sandwich.style.transform = `translateY(${floatY}px) rotateY(${floatRotation}deg)`;
+        }
+        requestAnimationFrame(animateFloat);
+      }
+      animateFloat();
+
+      // Keyboard shortcuts for better accessibility
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && currentShowcased) {
+          closeIngredientInfo();
+        }
+        if (e.key === " " && !currentShowcased) {
+          e.preventDefault();
+          playAssemblyAnimation();
+        }
+      });
+
+      // Achievement system
+      function checkAchievements() {
+        if (exploredIngredients.size === 7) {
+          setTimeout(() => {
+            alert(
+              "🏆 Achievement Unlocked: Sandwich Master! You've explored every ingredient!"
+            );
+          }, 500);
+        }
+      }
+
+      // Monitor achievements
+      setInterval(checkAchievements, 1000);
+    </script>
+  </body>
+</html>
