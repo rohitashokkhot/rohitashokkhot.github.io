@@ -1,0 +1,86 @@
+<!-- For this assignment I chose to use CSS animations to create a visual replication of folding origami. With a clear step by step guide a user will be able to follow each step at their own pace. 
+ To approach making this tutorial I made clicking the primary action, to click to a next step, previous step and to flip the paper. In my approach to making the website I build it step by step.
+ Starting with a square as a piece of paper. Giving it a front and back. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="reset.css" />
+    <script src="script.js" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Smooch+Sans:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Assignment 3</title>
+  </head>
+  <body>
+    <main class="container">
+      <header>Origami Tutorial</header>
+      <div class="information">
+        In this tutorial you will learn how to creata a heart in just 6 steps!
+        To create a heart with a diameter of 5 cm you will need a paper square
+        of 6.7 by 6.7 cm. Start by clicking on the circle with 1 to start the
+        turotial.
+      </div>
+
+      <div class="origami">
+        <div class="paper" draggable="true">
+          <!-- <div class="front square">voorkant papier</div>
+          <div class="back square flip">achterkant papier</div> -->
+
+          <!-- <div class="fold fold1" id="fold1"></div> -->
+
+          <svg viewBox="0 0 1600 738" class="svg-1" id="origami-svg">
+            <path
+              id="fold-path"
+              d="M 437.19999980926514 676.7750015258789 L 995.1999998092651 665.7750015258789 L 972.1999998092651 150.7750015258789 L 452.19999980926514 148.77499771118164 L 435.19999980926514 675.7750015258789 Z"
+              fill="none"
+              stroke="#ff0000"
+              stroke-width="2"
+            />
+          </svg>
+
+          <!-- different circles for each step -->
+
+          <div
+            class="click-circle"
+            id="circle1"
+            data-phase="1"
+            onclick="toggleFold('fold1')"
+          >
+            1
+          </div>
+          <div class="click-circle hidden" id="circle2" data-phase="2">2</div>
+          <div class="click-circle hidden" id="circle3" data-phase="3">3</div>
+          <div class="click-circle hidden" id="circle4" data-phase="4">4</div>
+          <div class="click-circle hidden" id="circle5" data-phase="5">5</div>
+          <div class="click-circle hidden" id="circle6" data-phase="6">6</div>
+          <div class="click-circle hidden" id="circle7" data-phase="7">7</div>
+
+          <!-- use this to test the positions of the circles -->
+          <!-- <div class="click-circle" id="circle1">1</div>
+          <div class="click-circle" id="circle2">2</div>
+          <div class="click-circle" id="circle3">3</div>
+          <div class="click-circle" id="circle4">4</div>
+          <div class="click-circle" id="circle5">5</div>
+          <div class="click-circle" id="circle6">6</div>
+          <div class="click-circle" id="circle7">7</div> -->
+        </div>
+      </div>
+
+      <footer class="player">
+        <button class="control" id="previous" disabled></button>
+        <button class="control" id="next"></button>
+        <button class="control" id="reset">Reset</button>
+      </footer>
+    </main>
+
+    <section class="sidebar">this is the sidebar</section>
+  </body>
+</html>

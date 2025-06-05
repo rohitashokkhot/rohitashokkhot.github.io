@@ -1,0 +1,333 @@
+/* Fonts used in the website, main font is a handrwitten vibe, for the instructions I also use a more sharp font, since origami is also about
+sharp edges */
+
+/* https://css-tricks.com/svg-path-syntax-illustrated-guide/ */
+
+/* <weight>: Use a value from 100 to 900 */
+/* <uniquifier>: Use a unique and descriptive class name */
+
+.smooch-sans {
+  font-family: "Smooch Sans", sans-serif;
+  font-optical-sizing: auto;
+  /* try different weights out */
+  font-weight: 100;
+  font-style: normal;
+}
+
+.mali-extralight {
+  font-family: "Mali", cursive;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.mali-light {
+  font-family: "Mali", cursive;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.mali-regular {
+  font-family: "Mali", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.mali-medium {
+  font-family: "Mali", cursive;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.mali-semibold {
+  font-family: "Mali", cursive;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.mali-bold {
+  font-family: "Mali", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.mali-extralight-italic {
+  font-family: "Mali", cursive;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.mali-light-italic {
+  font-family: "Mali", cursive;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.mali-regular-italic {
+  font-family: "Mali", cursive;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.mali-medium-italic {
+  font-family: "Mali", cursive;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.mali-semibold-italic {
+  font-family: "Mali", cursive;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.mali-bold-italic {
+  font-family: "Mali", cursive;
+  font-weight: 700;
+  font-style: italic;
+}
+
+:root {
+  --primary-bg-color: #e0e0e2;
+  --text-color: #0a090c;
+  --main-detail-color: #6a66a3;
+  --front-paper-color: #a62639;
+  --back-paper-color: #ff784f;
+  --circle-color: #c62e65;
+  --circle-color2: #8093f1;
+}
+
+body {
+  font-family: "Mali", cursive;
+  font-weight: 300;
+  font-style: normal;
+  background-color: var(--primary-bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-start; */
+  align-items: center;
+  margin: 0 auto;
+  flex: 1;
+  /* max-width: 85%; */
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  background-color: var(--main-detail-color);
+  width: 100%;
+  color: var(--primary-bg-color);
+  padding: 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.information {
+  padding: 20px;
+  font-weight: 400;
+  font-size: 1.05rem;
+}
+
+.sidebar {
+  /* flex-direction: row; */
+  width: 15%;
+  height: 100vh;
+  border-left: 5px solid var(--text-color);
+  position: relative;
+  padding-left: 10px;
+  background-color: var(--main-detail-color);
+}
+
+.origami {
+  width: auto;
+  height: auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.paper {
+  width: 350px;
+  height: 350px;
+  position: relative;
+  /* cursor: pointer; */
+  transition: rotate 0.8s ease;
+  transform-style: preserve-3d;
+}
+
+.square {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cursor: pointer; */
+  /* even uitzetten zodat de focus komt op de stappen en niet het flippen van het papier */
+}
+
+.square:click {
+  rotate: 30deg;
+}
+
+.square.front {
+  position: absolute;
+  background-color: var(--front-paper-color);
+  backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.square.back {
+  position: absolute;
+  background-color: var(--back-paper-color);
+  backface-visibility: hidden;
+}
+
+.flip {
+  rotate: y 180deg;
+}
+
+/* uitzoeken hoe ik ruimte krijg tussen de buttons */
+.player {
+  padding-top: 20px;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  /* flex-direction: row; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.control {
+  padding: 15px;
+  background-color: var(--main-detail-color);
+  border: none;
+  margin-right: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.control:hover {
+  scale: 1.2;
+  transition: scale 0.4s ease;
+  cursor: pointer;
+  /* background-color: #c6c4e5; */
+  background-color: var(--circle-color2);
+  color: #0a090c;
+}
+
+/* i am using position absolute to easily identify where in the square box I need each step to start */
+
+.click-circle {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background-color: var(--primary-bg-color);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  font-weight: 600;
+  font-family: "Smooch Sans", sans-serif;
+  columns: var(--main-detail-color);
+  transition: 0.4s ease;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.click-circle:hover {
+  background-color: var(--circle-color2);
+  border: none;
+  scale: 1.2;
+}
+
+.click-circle.completed {
+  background-color: var(--main-detail-color);
+  color: var(--primary-bg-color);
+}
+
+.click-circle.hidden {
+  display: none;
+}
+
+#circle1 {
+  top: 20px;
+  right: 20px;
+}
+
+#circle2 {
+  bottom: 20px;
+  left: 20px;
+}
+
+#circle3 {
+  bottom: 80px;
+  left: 50px;
+}
+
+#circle4 {
+  left: 100px;
+  bottom: 200px;
+}
+
+#circle5 {
+  top: 200px;
+  right: 150px;
+}
+
+#circle6 {
+  right: 70px;
+  bottom: 100px;
+}
+
+#circle7 {
+  top: 20px;
+  left: 20px;
+}
+
+.fold {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ffeac1;
+  transform-origin: bottom right;
+  transform: rotateX(0deg);
+  transition: transform 1s ease, z-index 0s linear 1s;
+  z-index: 1;
+}
+
+.fold1 {
+  clip-path: polygon(0% 66%, 100% 33%, 100% 100%, 0% 100%);
+  transform-origin: top left;
+}
+
+.fold.folded {
+  transform: rotateX(-180deg);
+  z-index: 0;
+  transition: transform 1s ease, z-index 0s linear 0s;
+}
+
+#origami-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* zodat het klikken op circles nog werkt */
+  z-index: 2; /* boven het papier, maar onder knoppen */
+}
