@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hidden Digital Impacts Quiz</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .quiz-container {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quiz-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .title {
+        font-size: 2.5em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1em;
+        margin-bottom: 20px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #ecf0f1;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4ecdc4, #45b7d1);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+
+      .question-card {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-left: 5px solid #4ecdc4;
+      }
+
+      .question-number {
+        color: #4ecdc4;
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+
+      .question-text {
+        font-size: 1.3em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        line-height: 1.4;
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option {
+        background: white;
+        border: 2px solid #e1e8ed;
+        border-radius: 10px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .option:hover {
+        border-color: #4ecdc4;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+      }
+
+      .option.selected {
+        border-color: #4ecdc4;
+        background: #e8f8f5;
+      }
+
+      .option.correct {
+        border-color: #27ae60;
+        background: #d5f4e6;
+      }
+
+      .option.incorrect {
+        border-color: #e74c3c;
+        background: #fadbd8;
+      }
+
+      .option-letter {
+        background: #4ecdc4;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .option.correct .option-letter {
+        background: #27ae60;
+      }
+
+      .option.incorrect .option-letter {
+        background: #e74c3c;
+      }
+
+      .explanation {
+        margin-top: 20px;
+        padding: 20px;
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        border-radius: 8px;
+        display: none;
+      }
+
+      .explanation.show {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .explanation h4 {
+        color: #856404;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
+
+      .explanation p {
+        color: #664d03;
+        line-height: 1.5;
+      }
+
+      .next-btn {
+        background: linear-gradient(135deg, #4ecdc4, #45b7d1);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+        display: none;
+      }
+
+      .next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+      }
+
+      .next-btn.show {
+        display: inline-block;
+      }
+
+      .results {
+        text-align: center;
+        display: none;
+      }
+
+      .results.show {
+        display: block;
+      }
+
+      .score {
+        font-size: 3em;
+        font-weight: bold;
+        color: #4ecdc4;
+        margin-bottom: 20px;
+      }
+
+      .score-message {
+        font-size: 1.3em;
+        color: #2c3e50;
+        margin-bottom: 30px;
+      }
+
+      .restart-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .restart-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fun-fact {
+        background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        color: #2c3e50;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 15px;
+        font-style: italic;
+      }
+
+      .emoji {
+        font-size: 1.5em;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="quiz-container">
+      <div class="header">
+        <h1 class="title">🌍 Hidden Digital Impacts Quiz</h1>
+        <p class="subtitle">
+          Discover the surprising environmental costs of our digital lives
+        </p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div id="quizContent">
+        <!-- Questions will be dynamically loaded here -->
+      </div>
+
+      <div class="results" id="results">
+        <div class="score" id="finalScore">8/10</div>
+        <div class="score-message" id="scoreMessage">
+          Excellent work! You're a digital sustainability champion!
+        </div>
+        <button class="restart-btn" onclick="restartQuiz()">
+          Take Quiz Again
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        // Level 1: Super Simple - Everyday Digital Actions
+        {
+          question:
+            "💡 When you charge your phone overnight, you're using about the same energy as:",
+          options: [
+            "Running a LED light bulb for 2 hours",
+            "Boiling a kettle once",
+            "Running a dishwasher cycle",
+            "Watching TV for 3 hours",
+          ],
+          correct: 0,
+          explanation:
+            "Charging your phone uses about 5-10 watt-hours, similar to running a LED bulb for 2 hours. It's actually one of the most energy-efficient things we do daily!",
+          funFact:
+            "🔋 Your phone uses less energy in a year than your fridge uses in a week!",
+        },
+        {
+          question: "📱 Which activity uses MORE energy on your phone:",
+          options: [
+            "Texting for 30 minutes",
+            "Calling someone for 30 minutes",
+            "Scrolling Instagram for 30 minutes",
+            "Using calculator for 30 minutes",
+          ],
+          correct: 2,
+          explanation:
+            "Social media scrolling uses much more energy because it constantly loads images, videos, and data. Your screen stays bright and your processor works harder to render all that content.",
+          funFact:
+            "📊 Instagram uses 50x more energy than sending text messages!",
+        },
+        {
+          question:
+            "🎧 Listening to music for 1 hour uses less energy when you:",
+          options: [
+            "Stream from Spotify",
+            "Play downloaded songs",
+            "Listen on YouTube",
+            "Use Apple Music",
+          ],
+          correct: 1,
+          explanation:
+            "Downloaded songs use way less energy because there's no data transmission needed. Streaming constantly sends data from servers to your device, while local files just use your device's storage.",
+          funFact:
+            "🎵 Downloaded music uses 100x less energy than streaming the same song!",
+        },
+
+        // Level 2: Simple - Common Digital Habits
+        {
+          question: "🔍 Every Google search produces approximately:",
+          options: ["0.2g of CO2", "2g of CO2", "20g of CO2", "200g of CO2"],
+          correct: 0,
+          explanation:
+            "Each Google search produces about 0.2g of CO2. With billions of searches daily, it adds up! Google has been carbon-neutral since 2007 and aims to run on 24/7 renewable energy by 2030.",
+          funFact:
+            "🔎 The average person does 3-4 searches per day - that's about 0.8g CO2 annually from searching!",
+        },
+        {
+          question:
+            "📺 Which device uses the LEAST energy when streaming the same content?",
+          options: ["75-inch smart TV", "Laptop", "Tablet", "Smartphone"],
+          correct: 3,
+          explanation:
+            "Smartphones use about 100 times less energy than TVs for streaming! Your device choice makes a huge difference - yet 70% of Netflix content is watched on TVs because we want that cinematic experience.",
+          funFact:
+            "📱 Watching on mobile isn't just better for the planet - it's also easier on your electricity bill!",
+        },
+        {
+          question:
+            "📧 Sending 65 emails produces the same carbon footprint as:",
+          options: [
+            "Boiling water for one cup of tea",
+            "Driving 1 kilometer in a car",
+            "Leaving a LED light on for 2 hours",
+            "All of the above",
+          ],
+          correct: 1,
+          explanation:
+            "Each email produces about 4g of CO2, so 65 emails = 260g CO2, equivalent to driving 1km. Those 'Reply All' chains and unnecessary CCs add up! Email with attachments can be 10x worse.",
+          funFact:
+            "📮 Delete those old emails! Stored emails in your inbox continue consuming energy.",
+        },
+
+        // Level 3: Moderate - Entertainment & Social Media
+        {
+          question:
+            "🎬 Binge-watching your favorite series on Netflix for 3 hours is equivalent to:",
+          options: [
+            "Driving 300 meters in a car",
+            "Charging your phone for a week",
+            "Boiling a kettle once",
+            "Running a fridge for an hour",
+          ],
+          correct: 0,
+          explanation:
+            "Streaming a 30-minute show on Netflix releases about 28-57 grams of CO2, so 3 hours equals roughly 336-684 grams. That's like driving about 300 meters! The good news? Netflix now matches 100% of its electricity with renewable energy.",
+          funFact:
+            "🎭 Plot twist: Watching on your phone uses 100 times less energy than on your TV!",
+        },
+        {
+          question: "🎮 Gaming online for an hour produces approximately:",
+          options: [
+            "The same CO2 as making a cup of coffee",
+            "The same CO2 as driving 2km",
+            "The same CO2 as watching Netflix for 10 hours",
+            "The same CO2 as charging your phone 50 times",
+          ],
+          correct: 1,
+          explanation:
+            "Online gaming typically produces 40-80g of CO2 per hour, similar to driving about 2km. Console gaming uses even more energy than streaming because your device works harder to render graphics in real-time.",
+          funFact:
+            "🎯 Pro tip: Gaming on newer consoles is more energy-efficient than older ones!",
+        },
+        {
+          question:
+            "📱 Which social media platform has the HIGHEST carbon footprint per minute of use?",
+          options: ["Facebook", "Instagram", "TikTok", "Twitter/X"],
+          correct: 2,
+          explanation:
+            "TikTok generates 2.9g of CO2 per minute - the highest among social platforms! This is because it continuously streams videos and preloads content. The average user generates about 48kg CO2 annually from TikTok alone.",
+          funFact:
+            "📹 TikTok's carbon footprint is bigger than entire countries like Greece!",
+        },
+
+        // Level 4: Moderate-Hard - Digital Infrastructure
+        {
+          question:
+            "🌐 What percentage of global electricity do data centers and networks currently consume?",
+          options: ["0.5%", "1.5%", "2-3%", "5%"],
+          correct: 2,
+          explanation:
+            "Data centers and networks consume 2-3% of global electricity, driving 0.6% of total greenhouse gas emissions. That's more than some entire countries use, but still only half of what transport uses worldwide.",
+          funFact: "⚡ That's more electricity than Argentina uses in a year!",
+        },
+        {
+          question:
+            "📱 Storing 1TB of data in the cloud for a year uses about the same energy as:",
+          options: [
+            "A laptop running for 10 hours",
+            "5% of a typical household's annual energy consumption",
+            "Charging an electric car once",
+            "Running a washing machine for a month",
+          ],
+          correct: 1,
+          explanation:
+            "A 2-person household using 1TB of cloud storage consumes about 100 kWh annually - that's 5% of their total energy use! Imagine if you're a photographer storing hundreds of GBs of photos and videos.",
+          funFact:
+            "📸 Professional photographers can easily store 10TB+ per year - that's like running an extra fridge!",
+        },
+        {
+          question:
+            "🇦🇺 Australia's data centers are projected to consume what percentage of our total emissions by 2030?",
+          options: ["0.5%", "2%", "5%", "10%"],
+          correct: 1,
+          explanation:
+            "Data centers in Australia are expected to reach 2% of total emissions, which equals 40% of our annual carbon credit production! Australia was the second-largest data center investment destination in 2024 with $6.7 billion.",
+          funFact:
+            "🏗️ Fun fact: Australia's data center capacity is growing at over 20% annually!",
+        },
+
+        // Level 5: Hard - Device Lifecycle & Manufacturing
+        {
+          question:
+            "📱 The biggest environmental impact of your smartphone comes from:",
+          options: [
+            "Daily charging and usage",
+            "Manufacturing and production",
+            "Data transmission when using apps",
+            "End-of-life recycling",
+          ],
+          correct: 1,
+          explanation:
+            "Manufacturing accounts for 85% of a smartphone's total carbon footprint! The mining of metals, shipping, and production create about 70kg of CO2 per phone. Using it for 3 years only adds about 19kg more.",
+          funFact:
+            "⚖️ Making your phone creates 4x more CO2 than using it for its entire lifetime!",
+        },
+        {
+          question:
+            "🌍 All smartphones worldwide create a carbon footprint equivalent to:",
+          options: [
+            "The aviation industry",
+            "The country of Australia",
+            "Global shipping industry",
+            "The country of Germany",
+          ],
+          correct: 0,
+          explanation:
+            "Mobile phones create about 580 million tonnes of CO2 annually - roughly 1% of global emissions, similar to the aviation industry! This massive footprint comes from 6.8 billion phones in use worldwide.",
+          funFact:
+            "✈️ Your phone's annual impact equals flying from Sydney to Melbourne 4 times!",
+        },
+        {
+          question:
+            "♻️ Buying a refurbished phone instead of new reduces carbon footprint by approximately:",
+          options: ["10%", "25%", "50%", "75%"],
+          correct: 3,
+          explanation:
+            "Choosing refurbished reduces carbon impact by about 75% because you're avoiding most of the manufacturing emissions. Since manufacturing is 85% of a phone's footprint, refurbished phones are one of the most impactful choices you can make.",
+          funFact:
+            "📱 Keeping your phone for 4 years instead of 2 halves its annual carbon footprint!",
+        },
+
+        // Level 6: Expert - System-Level Impacts
+        {
+          question:
+            "☁️ The biggest contributor to streaming's carbon footprint is:",
+          options: [
+            "Data centers storing content",
+            "Internet networks transmitting data",
+            "Your device (TV, phone, laptop)",
+            "Content creation and production",
+          ],
+          correct: 2,
+          explanation:
+            "Consumer devices account for over 50% of streaming's carbon footprint! Data centers are only about 15-20%. So choosing an energy-efficient device and using renewable energy at home has the biggest impact.",
+          funFact:
+            "🏠 Using renewable energy at home can cut your streaming footprint in half!",
+        },
+        {
+          question:
+            "🚗 The annual carbon footprint of the average Australian's digital activities is roughly equivalent to:",
+          options: [
+            "Driving 50km",
+            "Driving 200km",
+            "Driving 500km",
+            "Driving 1000km",
+          ],
+          correct: 2,
+          explanation:
+            "The average person's digital carbon footprint is about 300-500kg CO2 annually - equivalent to driving about 500km! This includes streaming, cloud storage, social media, emails, and all our connected devices.",
+          funFact:
+            "📊 That's roughly 1.5% of the average Australian's total carbon footprint!",
+        },
+        {
+          question:
+            "🌐 If the internet were a country, it would rank as the world's _____ largest energy consumer:",
+          options: ["3rd", "6th", "10th", "15th"],
+          correct: 1,
+          explanation:
+            "The internet would rank as the 6th largest energy consumer globally, using about 3.7% of global electricity. It's growing rapidly - digital energy consumption increases by 4% annually, much faster than renewable energy adoption.",
+          funFact:
+            "🌍 The internet uses more energy than the entire United Kingdom!",
+        },
+        {
+          question:
+            "💻 By 2030, the ICT sector (including all digital devices and infrastructure) is projected to account for what percentage of global electricity consumption?",
+          options: ["5%", "8%", "12%", "20%"],
+          correct: 2,
+          explanation:
+            "The ICT sector is projected to consume 12% of global electricity by 2030, up from about 4% today. This rapid growth is driven by AI, streaming, cloud computing, and the proliferation of connected devices.",
+          funFact:
+            "📈 Digital energy consumption is growing 3x faster than renewable energy deployment!",
+        },
+      ];
+
+      let currentQuestion = 0;
+      let score = 0;
+      let answered = false;
+
+      function loadQuestion() {
+        const question = questions[currentQuestion];
+        const quizContent = document.getElementById("quizContent");
+
+        quizContent.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">Question ${
+                      currentQuestion + 1
+                    } of ${questions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+                        ${question.options
+                          .map(
+                            (option, index) => `
+                            <div class="option" onclick="selectOption(${index})">
+                                <div class="option-letter">${String.fromCharCode(
+                                  65 + index
+                                )}</div>
+                                <div>${option}</div>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                    <div class="explanation" id="explanation">
+                        <h4>💡 Explanation:</h4>
+                        <p>${question.explanation}</p>
+                        <div class="fun-fact">
+                            <span class="emoji">🎉</span>
+                            ${question.funFact}
+                        </div>
+                    </div>
+                    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+                        ${
+                          currentQuestion === questions.length - 1
+                            ? "See Results"
+                            : "Next Question"
+                        }
+                    </button>
+                </div>
+            `;
+
+        updateProgress();
+        answered = false;
+      }
+
+      function selectOption(selectedIndex) {
+        if (answered) return;
+
+        const options = document.querySelectorAll(".option");
+        const question = questions[currentQuestion];
+
+        options.forEach((option, index) => {
+          option.style.pointerEvents = "none";
+          if (index === question.correct) {
+            option.classList.add("correct");
+          } else if (index === selectedIndex) {
+            option.classList.add("incorrect");
+          }
+        });
+
+        if (selectedIndex === question.correct) {
+          score++;
+        }
+
+        document.getElementById("explanation").classList.add("show");
+        document.getElementById("nextBtn").classList.add("show");
+        answered = true;
+      }
+
+      function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      function updateProgress() {
+        const progress = ((currentQuestion + 1) / questions.length) * 100;
+        document.getElementById("progressFill").style.width = progress + "%";
+      }
+
+      function showResults() {
+        document.getElementById("quizContent").style.display = "none";
+        document.getElementById("results").classList.add("show");
+        document.getElementById(
+          "finalScore"
+        ).textContent = `${score}/${questions.length}`;
+
+        let message;
+        const percentage = (score / questions.length) * 100;
+
+        if (percentage >= 80) {
+          message = "🌟 Excellent! You're a digital sustainability champion!";
+        } else if (percentage >= 60) {
+          message =
+            "💚 Great job! You're well on your way to digital consciousness!";
+        } else if (percentage >= 40) {
+          message =
+            "🌱 Good start! There's still more to learn about digital impacts.";
+        } else {
+          message =
+            "🔍 Time to explore more! Our digital choices matter more than we think.";
+        }
+
+        document.getElementById("scoreMessage").textContent = message;
+      }
+
+      function restartQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        answered = false;
+        document.getElementById("quizContent").style.display = "block";
+        document.getElementById("results").classList.remove("show");
+        loadQuestion();
+      }
+
+      // Initialize quiz
+      loadQuestion();
+    </script>
+  </body>
+</html>

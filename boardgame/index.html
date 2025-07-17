@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regenerative Design Game Tiles</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c5530;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #666;
+        font-size: 1.2em;
+        margin-bottom: 40px;
+      }
+
+      .tile-section {
+        margin-bottom: 50px;
+      }
+
+      .section-title {
+        font-size: 1.8em;
+        color: #2c5530;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #4a7c59;
+        padding-bottom: 10px;
+      }
+
+      .tile-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+
+      .tile {
+        border: 3px solid #333;
+        border-radius: 15px;
+        padding: 20px;
+        height: 320px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .tile:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .degenerated {
+        background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        color: white;
+      }
+
+      .ecology {
+        background: linear-gradient(135deg, #26de81, #20bf6b);
+        color: white;
+      }
+
+      .technology {
+        background: linear-gradient(135deg, #4834d4, #686de0);
+        color: white;
+      }
+
+      .community {
+        background: linear-gradient(135deg, #fd9644, #f39c12);
+        color: white;
+      }
+
+      .tile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .tile-title {
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+
+      .level-badge {
+        background: rgba(255, 255, 255, 0.3);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: bold;
+      }
+
+      .icon-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+      }
+
+      .icon {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 8px;
+        font-size: 1.5em;
+        backdrop-filter: blur(10px);
+      }
+
+      .description {
+        font-size: 0.95em;
+        line-height: 1.4;
+        margin-bottom: 15px;
+      }
+
+      .connections {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+      }
+
+      .connection-title {
+        font-size: 0.85em;
+        font-weight: bold;
+        margin-bottom: 8px;
+        opacity: 0.9;
+      }
+
+      .connection-items {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .connection-tag {
+        background: rgba(255, 255, 255, 0.25);
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        backdrop-filter: blur(5px);
+      }
+
+      .synergy-strength {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+
+      .synergy-label {
+        font-size: 0.8em;
+        margin-right: 8px;
+      }
+
+      .synergy-dots {
+        display: flex;
+        gap: 3px;
+      }
+
+      .synergy-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      .synergy-dot.active {
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .design-notes {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 25px;
+        margin-top: 40px;
+        border-left: 5px solid #4a7c59;
+      }
+
+      .design-notes h3 {
+        color: #2c5530;
+        margin-bottom: 15px;
+      }
+
+      .production-tips {
+        background: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+      }
+
+      .production-tips h4 {
+        color: #856404;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌱 Regenerative Design Game Tiles</h1>
+      <p class="subtitle">Visual Design Concepts for Educational Board Game</p>
+
+      <div class="tile-section">
+        <h2 class="section-title">Problem Tiles (Degenerated State)</h2>
+        <div class="tile-grid">
+          <div class="tile degenerated">
+            <div class="tile-header">
+              <div class="tile-title">Urban Heat Island</div>
+              <div class="level-badge">Level 1</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🏢</div>
+              <div class="icon">🌡️</div>
+              <div class="icon">🚗</div>
+              <div class="icon">⚡</div>
+            </div>
+            <div class="description">
+              Excessive concrete and asphalt trap heat. Limited green space.
+              High energy costs for cooling. Poor air quality affecting
+              community health.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Problems to Address:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Heat Absorption</div>
+                <div class="connection-tag">Air Quality</div>
+                <div class="connection-tag">Energy Use</div>
+                <div class="connection-tag">Community Health</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile degenerated">
+            <div class="tile-header">
+              <div class="tile-title">Contaminated Soil</div>
+              <div class="level-badge">Level 1</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🏭</div>
+              <div class="icon">☠️</div>
+              <div class="icon">🌱</div>
+              <div class="icon">💧</div>
+            </div>
+            <div class="description">
+              Industrial pollutants prevent plant growth. Toxic runoff threatens
+              water systems. Community cannot safely use this space.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Problems to Address:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Heavy Metals</div>
+                <div class="connection-tag">Water Pollution</div>
+                <div class="connection-tag">Plant Health</div>
+                <div class="connection-tag">Safe Access</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile-section">
+        <h2 class="section-title">Ecology Solutions</h2>
+        <div class="tile-grid">
+          <div class="tile ecology">
+            <div class="tile-header">
+              <div class="tile-title">Native Tree Canopy</div>
+              <div class="level-badge">Level 4</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🌳</div>
+              <div class="icon">🐦</div>
+              <div class="icon">❄️</div>
+              <div class="icon">💨</div>
+            </div>
+            <div class="description">
+              Local species provide cooling shade, habitat for wildlife, and
+              improve air quality. Deep roots prevent erosion and manage
+              stormwater.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Rain Gardens</div>
+                <div class="connection-tag">Community Spaces</div>
+                <div class="connection-tag">Green Roofs</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile ecology">
+            <div class="tile-header">
+              <div class="tile-title">Phytoremediation Plants</div>
+              <div class="level-badge">Level 5</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🌻</div>
+              <div class="icon">🧬</div>
+              <div class="icon">🔬</div>
+              <div class="icon">⏰</div>
+            </div>
+            <div class="description">
+              Sunflowers and willows absorb heavy metals through roots. Slowly
+              cleans contaminated soil naturally. Creates beautiful, productive
+              landscape.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Soil Testing</div>
+                <div class="connection-tag">Community Education</div>
+                <div class="connection-tag">Composting</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile-section">
+        <h2 class="section-title">Technology Solutions</h2>
+        <div class="tile-grid">
+          <div class="tile technology">
+            <div class="tile-header">
+              <div class="tile-title">Permeable Paving</div>
+              <div class="level-badge">Level 3</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🧱</div>
+              <div class="icon">💧</div>
+              <div class="icon">🌊</div>
+              <div class="icon">🔧</div>
+            </div>
+            <div class="description">
+              Special pavement allows rainwater to soak through, reducing
+              flooding. Filters pollutants naturally. Reduces heat compared to
+              standard concrete.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Native Plants</div>
+                <div class="connection-tag">Workshop Spaces</div>
+                <div class="connection-tag">Rain Collection</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot"></div>
+                  <div class="synergy-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile technology">
+            <div class="tile-header">
+              <div class="tile-title">Solar Workshop Power</div>
+              <div class="level-badge">Level 4</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">☀️</div>
+              <div class="icon">🔌</div>
+              <div class="icon">🔋</div>
+              <div class="icon">🏗️</div>
+            </div>
+            <div class="description">
+              Clean energy powers community activities and learning spaces.
+              Reduces dependence on fossil fuels. Demonstrates renewable
+              technology to neighbors.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Community Learning</div>
+                <div class="connection-tag">Local Skills</div>
+                <div class="connection-tag">Green Building</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tile-section">
+        <h2 class="section-title">Community Solutions</h2>
+        <div class="tile-grid">
+          <div class="tile community">
+            <div class="tile-header">
+              <div class="tile-title">Neighborhood Workshops</div>
+              <div class="level-badge">Level 4</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">👥</div>
+              <div class="icon">🔨</div>
+              <div class="icon">📚</div>
+              <div class="icon">🏠</div>
+            </div>
+            <div class="description">
+              Residents learn to build and maintain green infrastructure.
+              Creates local jobs and expertise. Strengthens community
+              connections and pride.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Green Building</div>
+                <div class="connection-tag">Skill Sharing</div>
+                <div class="connection-tag">Local Economy</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile community">
+            <div class="tile-header">
+              <div class="tile-title">Community Food Forest</div>
+              <div class="level-badge">Level 6</div>
+            </div>
+            <div class="icon-section">
+              <div class="icon">🍎</div>
+              <div class="icon">🥕</div>
+              <div class="icon">👨‍👩‍👧‍👦</div>
+              <div class="icon">🌿</div>
+            </div>
+            <div class="description">
+              Multi-layer food system mimics natural forest. Provides fresh
+              food, education, and gathering space. Builds food security and
+              ecological knowledge.
+            </div>
+            <div class="connections">
+              <div class="connection-title">Connects Well With:</div>
+              <div class="connection-items">
+                <div class="connection-tag">Native Species</div>
+                <div class="connection-tag">Soil Health</div>
+                <div class="connection-tag">Education</div>
+              </div>
+              <div class="synergy-strength">
+                <div class="synergy-label">Synergy:</div>
+                <div class="synergy-dots">
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                  <div class="synergy-dot active"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-notes">
+        <h3>🎨 Design Philosophy</h3>
+        <p>
+          <strong>Visual Hierarchy:</strong> Problem tiles use urgent red
+          gradients to convey degradation, while solution tiles use
+          nature-inspired colors that correspond to their domain (green for
+          ecology, blue for technology, orange for community).
+        </p>
+
+        <p>
+          <strong>Icon Language:</strong> Each tile uses 4 clear icons that
+          immediately communicate key concepts. Icons progress from problem
+          indicators on degenerated tiles to solution benefits on regenerative
+          tiles.
+        </p>
+
+        <p>
+          <strong>Connection System:</strong> The bottom section of each tile
+          shows which other solutions it connects with, plus synergy strength
+          dots. This replaces complex magnetic systems with clear visual
+          information.
+        </p>
+
+        <p>
+          <strong>Level Progression:</strong> Badge system shows regenerative
+          impact from Level 1 (degenerated) through Level 6 (fully
+          regenerative), helping players understand the progression toward true
+          regeneration.
+        </p>
+
+        <div class="production-tips">
+          <h4>📋 Production Considerations</h4>
+          <p>
+            <strong>Size:</strong> Recommend 3.5" x 5" tiles for comfortable
+            handling and clear text readability
+          </p>
+          <p>
+            <strong>Materials:</strong> Heavy cardstock (300gsm) with matte
+            finish to reduce glare and provide durability
+          </p>
+          <p>
+            <strong>Weights:</strong> Embed metal washers in sealed compartments
+            within tile backing for balance scale functionality
+          </p>
+          <p>
+            <strong>Colors:</strong> Use high-contrast color schemes to ensure
+            accessibility for colorblind players
+          </p>
+          <p>
+            <strong>Text:</strong> Minimum 10pt font size for descriptions, with
+            clear sans-serif typeface
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
