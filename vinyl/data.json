@@ -1,0 +1,38 @@
+{
+  "full_name": "<your name>",
+  "email": "<your work email>",
+  "profile_pic": "<link to image on onedrive>",
+  "hero_image": "<link to image on onedrive>",
+  "primary_specialization": "<mention your primary_specialization>",
+  "secondary_skills": [
+    "<secondary specialization 1>",
+    "<secondary specialization 2>"
+  ],
+  "graduation_year": "2025",
+  "website": "<link to your website>",
+  "linkedin": "<link to your linkedin profile>",
+  "instagram": "<link to your work instagram if you have one. do you link to personal instagram page>",
+
+  "professional_bio": "<(150-200 words) Write a compelling professional summary that showcases your creative approach, key skills, and what makes you unique. Think LinkedIn About section>",
+  "career_goals": "<write your career goals>",
+  "key_projects": [
+    {
+      "title": "<title>",
+      "description": "<short_description>",
+      "type": "<audio/video/ux>",
+      "link": "<Youtube link or link to media on onedrive subfolder>"
+    },
+    {
+      "title": "<title>",
+      "description": "<short_description>",
+      "type": "<audio/video/ux>",
+      "link": "<Youtube link or link to media on onedrive subfolder>"
+    },
+    {
+      "title": "<title>",
+      "description": "<short_description>",
+      "type": "<audio/video/ux>",
+      "link": "<Youtube link or link to media on onedrive subfolder>"
+    }
+  ]
+}
