@@ -1,0 +1,280 @@
+/* I want to create a design that goes well with the vibe of the whole album, which is kind of a ambient sound wave. Therefore, I decided to choose dark grey for the background color, some sections are highlighted with lighter grey. I think the almost-monochrome palette matches the atmosphere of all the songs perfectly. I have also created an albumm cover with the similar aim but I made it in blue so that it's the most eye-catching element in the whole layout. I have come to this decision after looking into Apple Music and Spotify web player's design approach.*/
+
+body {
+  margin: 0px auto;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(40, 40, 40);
+  font-family: "Alan Sans", sans-serif;
+}
+#about-artist {
+  background-color: #28282800;
+  border: none;
+}
+button:hover {
+  cursor: pointer;
+}
+button {
+  background-color: #28282800;
+  border: none;
+}
+.navigation {
+  color: rgb(255, 255, 255);
+  background-color: rgb(46, 46, 46);
+  border-right: 0.05rem whitesmoke solid;
+  height: 100vh;
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* .logo{
+    /* padding-left: 0.5rem; */
+
+.under {
+  /* padding-left: 1rem;*/
+  font-size: 2rem;
+}
+.home {
+  padding: 1rem;
+  padding-top: 3rem;
+}
+.about {
+  padding: 1rem;
+}
+.music {
+  padding: 1rem;
+}
+.shop {
+  padding: 1rem;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 10%;
+  width: 100%;
+  background-color: rgb(77, 77, 77);
+  color: rgb(255, 255, 255);
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* justify-content: flex-start; */
+  /* justify-content: center; */
+}
+.controller {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-around;
+  margin-left: 3rem;
+  /* border: white solid 0.1rem; */
+  width: 7rem;
+}
+#previous-song-button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-radius: 3px;
+}
+#play-pause-button {
+  background-color: rgba(90, 90, 90, 0);
+  border: none;
+  border-radius: 3px;
+}
+#next-song-button {
+  background-color: rgba(90, 90, 90, 0);
+  border: none;
+  border-radius: 3px;
+}
+#middle-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: rgb(91, 91, 91);
+  height: max-content;
+  border-radius: 2px;
+}
+/* #cover-img{
+    padding-top: 1rem;
+} */
+#info-progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 0.01rem;
+}
+#info-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#progress-bar-container {
+  width: 20rem;
+  height: 0.25rem;
+  background-color: #ffffff;
+  overflow: hidden;
+  border-bottom-right-radius: 2px;
+}
+/* For the progress bar, I chose this aqua color so that it matches the color of the album cover. */
+#progress-bar-fill {
+  display: block;
+  height: 0.5rem;
+  background-color: rgb(0, 255, 255);
+  width: 0;
+  border-bottom-right-radius: 2px;
+  transition: width 0.3 ease;
+}
+.volume-lyric {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  justify-content: center;
+  margin-right: 5rem;
+  /* align-items: center; */
+  /* border: 1px white solid; */
+  width: 10rem;
+  gap: 1rem;
+}
+.container {
+  display: flex;
+  height: 100vh;
+  width: 85vw;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+}
+
+.main {
+  background-color: rgb(46, 46, 46);
+  height: 90%;
+  width: 100%;
+  /* padding-top: 5rem; */
+  /* padding-left: 1rem; */
+  justify-content: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  border: none;
+  color: whitesmoke;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  height: 100%;
+  border: none;
+  font-family: "Alan Sans", sans-serif;
+}
+.title {
+  display: flex;
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+  padding-left: 3rem;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+#album-cover-img {
+  border: 0.05rem whitesmoke solid;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+  font-family: "Alan Sans", sans-serif;
+}
+.album-name {
+  font-size: 4rem;
+  font-weight: 500;
+}
+.artist-name {
+  font-size: 1.5rem;
+  padding-top: 1rem;
+}
+/* For the right side of the main section, I decided to add some highlight by changing background color slightly when the text appears.  */
+.right {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: none;
+  width: 25%;
+  height: 100%;
+  /* background-color: rgb(50, 50, 50); */
+  font-family: "Alan Sans", sans-serif;
+}
+#info-artist {
+  display: none;
+}
+#title-name {
+  font-size: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.about-artist {
+  font-size: 1.25rem;
+  padding: 1rem;
+  line-height: 2rem;
+}
+.lyric {
+  padding: 1rem;
+}
+.playlist {
+  display: flex;
+  flex-direction: column;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+/* For the playlist section I want to add some highlight among the tracks so I divided them into odd and even section */
+.track-odd {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  /* padding-bottom: 2rem; */
+  padding: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 7px;
+}
+.track-even {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem;
+  /* padding-top: 1rem; */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 0.75rem;
+  background-color: rgb(61, 61, 61);
+  border-radius: 7px;
+}
+.info-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.track-info {
+  padding-left: 1rem;
+}
+.track-name {
+  font-size: 1.5rem;
+  padding-bottom: 0.1rem;
+}
+.feature {
+  font-size: 1rem;
+  padding-left: 1.5rem;
+}
+#lyric-container {
+  display: block;
+  height: 0.5rem;
+  background-color: rgb(0, 255, 255);
+  width: 0;
+  border-bottom-right-radius: 2px;
+  transition: width 0.3 ease;
+}

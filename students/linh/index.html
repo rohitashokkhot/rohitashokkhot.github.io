@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUBMISSION</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Coiny&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jersey+15&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+
+<body>
+    <div class="navigation">
+        <div class="logo"><img src="logo2.png" alt="P-HASE" style="width: 10rem;height: 8rem;"></div>
+        <!-- The logo is blurry on purpose -->
+        <!-- <section class="search-bar">s3arch bar</section> -->
+        <div class="under">
+            <div class="home">Home</div>
+            <div class="about"><button id="about-artist">About artist</button></div>
+            <div class="music">Music</div>
+            <div class="shop">Shop</div>
+        </div>
+
+    </div>
+    <div>
+        <main class="container">
+            <header class="header">
+                <div class="controller">
+                    <div>
+                        <button id="previous-song-button">
+                            <img src="https://img.icons8.com/sf-black-filled/64/FFFFFF/rewind.png"
+                                alt="previous-song-button" style="width: 2rem;height: 2rem;">
+                        </button>
+                    </div>
+                    <div>
+                        <button id="play-pause-button">
+                            <img src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/play.png" alt=""
+                                style="width: 2rem;height: 2rem;" id="play-pause-img">
+                        </button>
+                    </div>
+                    <div>
+                        <button id="next-song-button">
+                            <img src="https://img.icons8.com/sf-black-filled/64/FFFFFF/fast-forward.png"
+                                alt="next-song-button" style="width: 2rem;height: 2rem;">
+                        </button>
+                    </div>
+                </div>
+                <div id="middle-section">
+                    <div id="cover-img">
+                        <img src="TDMovieOut2.0.png" alt="album-cover"
+                            style="width: 3rem;height: 3rem;border-radius: 2px;">
+                    </div>
+                    <div id="info-progress">
+                        <div id="info-header">
+                            <audio id="my-audio">
+                                <source src="" type="audio/mp3">
+                            </audio>
+                            <h1> <span id="current-song-name"></span></h1>
+                            <h2> <span id="current-song-artist"></span></h2>
+                        </div>
+                        <div id="progress-bar-container"><span id="progress-bar-fill"></span></div>
+                    </div>
+                </div>
+                <div class="volume-lyric">
+                    <div class="volumne">
+                        <button id="volume-down-button">
+                            <img src="https://img.icons8.com/sf-black-filled/64/FFFFFF/low-volume.png" alt="mute-button"
+                                style="width: 2rem;height: 2rem;" id="volume-down-img">
+                        </button>
+                        <button id="volume-up-button">
+                            <img src="https://img.icons8.com/sf-black-filled/64/FFFFFF/high-volume.png"
+                                alt="mute-button" style="width: 2rem;height: 2rem;" id="volume-up-img">
+                        </button>
+                        <button id="mute-unmute-button">
+                            <img src="https://img.icons8.com/sf-black-filled/64/FFFFFF/high-volume.png"
+                                alt="mute-button" style="width: 2rem;height: 2rem;" id="mute-unmute-img">
+                        </button>
+                        <button id="lyric-button">
+                            <img src="https://img.icons8.com/material-rounded/24/FFFFFF/quote.png" alt="lyric-button"
+                                style="width: 1.75rem;height: 1.75rem;" id="lyric-img">
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <div class="main">
+                <div class="left">
+                    <div class="title">
+                        <img src="TDMovieOut2.0.png" alt="album-cover" id="album-cover-img"
+                            style="width: 12rem;height: 12rem;border-radius: 10px;">
+                        <div class="info">
+                            <h1 class="album-name">Water Feature</h1>
+                            <h2 class="artist-name">P - Hase, 2025</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <ol class="playlist">
+                            <li class="track-odd">
+                                <div class="info-left">
+                                    <button id="play-button-1">
+                                        <img src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/play.png"
+                                            alt="play-button-1" style="width: 1.75rem;height: 1.75rem;">
+                                    </button>
+                                    <div class="track-info">
+                                        <h1 class="track-name">1. Hes</h1>
+                                        <h2 class="feature">P - Hase</h2>
+                                    </div>
+                                </div>
+                                <div class="duration">1:51</div>
+                            </li>
+                            <li class="track-even">
+                                <div class="info-left">
+                                    <button id="play-button-2">
+                                        <img src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/play.png"
+                                            alt="play-button-1" style="width: 1.75rem;height: 1.75rem;">
+                                    </button>
+                                    <div class="track-info">
+                                        <h1 class="track-name">2. Dry Down featuring Ben Snaath</h1>
+                                        <h2 class="feature">P - Hase, Ben Snaath</h2>
+                                    </div>
+                                </div>
+                                <div class="duration">1:50</div>
+                            </li>
+                            <li class="track-odd">
+                                <div class="info-left">
+                                    <button id="play-button-3">
+                                        <img src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/play.png"
+                                            alt="play-button-3" style="width: 1.75rem;height: 1.75rem;">
+                                    </button>
+                                    <div class="track-info">
+                                        <h1 class="track-name">3. Leapt</h1>
+                                        <h2 class="feature">P - Hase</h2>
+                                    </div>
+                                </div>
+                                <div class="duration">1:36</div>
+                            </li>
+                            <li class="track-even">
+                                <div class="info-left">
+                                    <button id="play-button-4">
+                                        <img src="https://img.icons8.com/sf-regular-filled/48/FFFFFF/play.png"
+                                            alt="play-button-1" style="width: 1.75rem;height: 1.75rem;">
+                                    </button>
+                                    <div class="track-info">
+                                        <h1 class="track-name">4. Water Feature</h1>
+                                        <h2 class="feature">P - Hase</h2>
+                                    </div>
+                                </div>
+                                <div class="duration">0:55</div>
+                            </li>
+                        </ol>
+
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="lyric-container"></div>
+                    <!-- <p class="lyric">Lorem ipsum dolor sit.</p>
+                        <p class="lyric">amet consectetur adipisicing elit. Doloribus, asperiores?</p>
+                        <p class="lyric">Perspiciatis, maiores.</p>
+                        <p class="lyric">Lorem ipsum dolor sit amet.</p>
+                        <p class="lyric">Illo animi aspernatur eligendi similique culpa iste.</p>
+                        <p class="lyric">Quae non quas quis sequi enim eveniet quia cum placeat! Pariatur,
+                            reprehenderit.
+                        </p>
+                        <p class="lyric">Aspernatur nemo possimus vero quisquam tempore rem tenetur nostrum.</p> -->
+                    <div id="about-artist-container">
+                        <div id="info-artist">
+                            <p id="title-name">This is the placeholder text</p>
+                            <p class="about-artist">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed
+                                consectetur, cupiditate dolorum autem error molestiae neque provident officiis
+                                temporibus.
+                                Architecto similique nostrum illo, nobis blanditiis perspiciatis, distinctio
+                                nesciunt,
+                                dicta
+                                praesentium minus in error? Ab magnam fuga similique doloremque vero. Recusandae
+                                fuga
+                                beatae
+                                vel quaerat, laudantium veritatis aperiam ratione possimus nisi.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+</body>
+
+</html>
