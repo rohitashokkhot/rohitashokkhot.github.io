@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS-Only Parallax Scroll Effect</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: rgb(43, 43, 43);
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-family: "Georgia", serif;
+      }
+
+      .sticky {
+        position: sticky;
+        top: 0;
+      }
+
+      /* SECTION 1 - Title Section */
+      .section1 {
+        width: 100%;
+        height: 120vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      #big-title {
+        font-size: 100px;
+        color: yellow;
+        border: 1px white solid;
+        width: max-content;
+        text-align: center;
+        padding: 1rem 2rem;
+        z-index: 7;
+        animation: titleFade linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% exit 80%;
+      }
+
+      #smaller-title {
+        font-size: 50px;
+        color: yellow;
+        border: 1px white solid;
+        width: max-content;
+        text-align: center;
+        padding: 0.5rem 1.5rem;
+        margin-top: 2rem;
+        z-index: 7;
+        animation: titleFade linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% exit 90%;
+      }
+
+      @keyframes titleFade {
+        from {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+      }
+
+      /* PARALLAX-3 SECTION - Main Effect */
+      .parallax-3 {
+        position: relative;
+        width: 100%;
+        height: 400vh;
+        background-color: rgb(43, 43, 43);
+        perspective: 800px;
+      }
+
+      .sticky-inner {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .parallax-3 img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      #background {
+        z-index: 1;
+        transform: translateZ(150px) scale(1.2);
+        animation: backgroundConverge linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% cover 100%;
+      }
+
+      #midground {
+        z-index: 2;
+        transform: translateZ(-100px) scale(0.9);
+        animation: midgroundConverge linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% cover 100%;
+      }
+
+      #foreground {
+        z-index: 3;
+        transform: translateZ(300px) scale(1.4);
+        animation: foregroundConverge linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% cover 100%;
+      }
+
+      @keyframes backgroundConverge {
+        from {
+          transform: translateZ(150px) scale(1.2);
+        }
+        to {
+          transform: translateZ(0px) scale(1);
+        }
+      }
+
+      @keyframes midgroundConverge {
+        from {
+          transform: translateZ(-100px) scale(0.9);
+        }
+        to {
+          transform: translateZ(0px) scale(1);
+        }
+      }
+
+      @keyframes foregroundConverge {
+        from {
+          transform: translateZ(300px) scale(1.4);
+        }
+        to {
+          transform: translateZ(0px) scale(1);
+        }
+      }
+
+      /* STACKED REVEAL - Cards */
+      .stacked-reveal {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .cards {
+        position: absolute;
+        width: 90%;
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem 2rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .cards h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #1a1a2e;
+      }
+
+      .cards p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #2c2c2c;
+        margin-bottom: 0.8rem;
+      }
+
+      /* Card 1 Animation */
+      .cards:nth-child(1) {
+        animation: cardReveal1 linear forwards;
+        animation-timeline: view();
+        animation-range: entry 0% cover 25%;
+      }
+
+      @keyframes cardReveal1 {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        15% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        85% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+      }
+
+      /* Card 2 Animation */
+      .cards:nth-child(2) {
+        animation: cardReveal2 linear forwards;
+        animation-timeline: view();
+        animation-range: entry 25% cover 50%;
+      }
+
+      @keyframes cardReveal2 {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        15% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        85% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+      }
+
+      /* Card 3 Animation */
+      .cards:nth-child(3) {
+        animation: cardReveal3 linear forwards;
+        animation-timeline: view();
+        animation-range: entry 50% cover 75%;
+      }
+
+      @keyframes cardReveal3 {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        15% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        85% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+      }
+
+      /* Card 4 Animation */
+      .cards:nth-child(4) {
+        animation: cardReveal4 linear forwards;
+        animation-timeline: view();
+        animation-range: entry 75% cover 100%;
+      }
+
+      @keyframes cardReveal4 {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        15% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div class="section1 sticky">
+        <h1 id="big-title">Boulevard du Temple</h1>
+        <h2 id="smaller-title">The first photograph of a human</h2>
+      </div>
+
+      <div class="parallax-3">
+        <div class="sticky-inner">
+          <img src="background.png" id="background" />
+
+          <img src="midground.png" id="midground" />
+
+          <img src="foreground.png" id="foreground" />
+
+          <div class="stacked-reveal">
+            <div class="cards">
+              <h3>1837: A Moment Captured</h3>
+              <p>
+                Louis Daguerre captured this daguerreotype on the Boulevard du
+                Temple in Paris, requiring an exposure time of approximately ten
+                minutes.
+              </p>
+              <p>
+                Most moving traffic and pedestrians left no trace on the plate.
+              </p>
+            </div>
+            <div class="cards">
+              <h3>The Solitary Figure</h3>
+              <p>
+                In the lower left corner, a man having his boots polished stood
+                still long enough to be immortalized.
+              </p>
+              <p>He became the first human being ever photographed.</p>
+            </div>
+            <div class="cards">
+              <h3>A Bustling Boulevard</h3>
+              <p>
+                Though the street appears empty in the image, it was actually a
+                busy Paris thoroughfare.
+              </p>
+              <p>
+                The long exposure rendered the moving crowd invisible, creating
+                an eerie stillness.
+              </p>
+            </div>
+            <div class="cards">
+              <h3>Dawn of a New Era</h3>
+              <p>
+                This photograph marked the beginning of visual documentation of
+                human existence.
+              </p>
+              <p>
+                From this single moment, photography would go on to change how
+                we remember our world.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

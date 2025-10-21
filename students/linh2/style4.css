@@ -1,0 +1,342 @@
+body {
+  background-color: rgb(43, 43, 43);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.parallax {
+  position: relative;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120vh;
+  perspective: 800px;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+h1 {
+  font-size: 100px;
+  color: yellow;
+  top: 15rem;
+  /*right: 10rem; */
+  /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); */
+  border: 1px white solid;
+  width: max-content;
+  text-align: center;
+}
+
+h2 {
+  font-size: 50px;
+  color: yellow;
+  top: 23rem;
+  left: 34rem;
+  /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); */
+  /* left: 70%; */
+  /* left: 100%; */
+  border: 1px white solid;
+  width: max-content;
+  text-align: center;
+}
+
+/* h3{
+    font-size: 100px;
+    color: yellow;
+} */
+
+.parallax img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  height: 100vh;
+}
+
+#background {
+  z-index: 1;
+  transform: translateZ(100px);
+  animation: backgroundPositionZ linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100vh;
+}
+#midground {
+  z-index: 3;
+  transform: translateZ(-70px);
+  animation: midgroundPositionZ linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100vh;
+}
+#foreground {
+  z-index: 5;
+  transform: translateZ(200px);
+  animation: foregroundPositionZ linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100vh;
+}
+
+/* parallax image animation */
+@keyframes backgroundPositionZ {
+  from {
+    transform: translateZ(100px);
+  }
+  to {
+    transform: translateZ(0px);
+  }
+}
+@keyframes midgroundPositionZ {
+  from {
+    transform: translateZ(-70px);
+  }
+  to {
+    transform: translateZ(0px);
+  }
+}
+@keyframes foregroundPositionZ {
+  from {
+    transform: translateZ(200px);
+  }
+  to {
+    transform: translateZ(0px);
+  }
+}
+
+#big-title {
+  position: absolute;
+  left: 27rem;
+  z-index: 7;
+  transform: translateY(0px);
+  opacity: 1.5;
+  animation: Title linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% exit 80%;
+}
+#smaller-title {
+  position: absolute;
+  /* top: 23rem;
+    left: 37rem; */
+  z-index: 7;
+  transform: translateY(0px);
+  opacity: 1.5;
+  animation: Title linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% exit 99%;
+}
+/* parallax title animation */
+@keyframes Title {
+  from {
+    transform: translateY(0px);
+    opacity: 1.5;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.section1 {
+  width: 100vh;
+  height: 120vh;
+  /* perspective: 800px; */
+  /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+  /*justify-content: space-between; */
+}
+.section2 {
+  color: rgb(255, 255, 255);
+  /* position: relative; */
+  background: rgb(15, 15, 15);
+  height: 150vh;
+}
+.section3 {
+  color: rgb(255, 255, 255);
+  /* position: relative; */
+  background: rgb(15, 15, 15);
+  height: 150vh;
+}
+.section4 {
+  color: rgb(255, 255, 255);
+  /* position: relative; */
+  background: rgb(15, 15, 15);
+  height: 150vh;
+}
+
+.inner-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: 1px white solid;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+#left {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  border: 1px white solid;
+  width: max-content;
+  height: max-content;
+  padding: 2rem;
+  transform: translateY(0px);
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 50vh;
+}
+.main {
+  height: max-content;
+}
+#center-img {
+  width: 468px;
+  height: 599px;
+  animation: appear linear;
+  transform: translateY(0px);
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    transform: translateY(-20px);
+  }
+}
+
+/* first person to be photographed */
+.parallax-2 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px white solid;
+  perspective: 800px;
+}
+.parallax-2 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  height: 100vh;
+  z-index: 5;
+}
+#text {
+  position: absolute;
+  left: 50rem;
+  color: yellow;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  animation: appear both;
+  transform: translateY(0px);
+  animation-timeline: view();
+  animation-range: entry 10% cover 100vh;
+  z-index: 6;
+}
+.bigger {
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
+}
+#person-background {
+  z-index: 5;
+  transform: translateZ(-300px);
+  animation: backgroundPositionZ linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100vh;
+}
+#person-separated {
+  z-index: 6;
+  transform: translateZ(500px);
+  animation: personPositionZ linear forwards;
+  animation-timeline: view();
+  animation-range: entry 0% cover 100vh;
+}
+@keyframes personBackgroundPositionZ {
+  from {
+    transform: translateZ(-300px);
+  }
+  to {
+    transform: translateZ(0px);
+  }
+}
+@keyframes personPositionZ {
+  from {
+    transform: translateZ(500px);
+  }
+  to {
+    transform: translateZ(0px);
+  }
+}
+
+/* last section styling */
+.parallax-3 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 1);
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  border: 1px rgb(0, 34, 255) solid;
+  perspective: 800px;
+  /* bottom: 0; */
+}
+.parallax-3 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  /* height: 100vh; */
+  z-index: 5;
+}
+/* .last-img{
+    position: absolute;
+    z-index: 5;
+} */
+.stacked-reveal {
+  z-index: 6;
+  height: 250vh;
+  position: absolute;
+  /* top: 50; */
+  left: calc(50vw - 50px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* bottom: 0; */
+}
+.cards {
+  height: 100px;
+  width: 100px;
+  border: 1px yellow solid;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: calc(50vh - 50px);
+  left: calc(50vw - 50px);
+  color: white;
+}
+.sticky-inner {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  height: 100px;
+  width: 100px;
+}
