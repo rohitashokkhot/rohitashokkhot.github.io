@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
+:root {
+  --bg: #1a1a2e;
+  --surface: #16213e;
+  --surface-light: #0f3460;
+  --accent: #e94560;
+  --text: #eaeaea;
+  --text-dim: #8892a4;
+  --dot-size: 42px;
+  --gap: 6px;
+  --radius: 50%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Space Mono", monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  padding: 24px;
+}
+
+h1 {
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, var(--dot-size));
+  grid-template-rows: repeat(10, var(--dot-size));
+  gap: var(--gap);
+  background: var(--surface);
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: var(--radius);
+  background: var(--surface-light);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+  border: 2px solid transparent;
+}
+
+.dot:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.dot.active {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ── Palette ── */
+.palette {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  background-clip: padding-box;
+}
+
+.swatch:hover {
+  transform: scale(1.15);
+}
+
+.swatch.selected {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+/* ── Controls ── */
+.controls {
+  margin-top: 22px;
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--surface-light);
+  background: var(--surface);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn:hover {
+  background: var(--surface-light);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.btn.danger:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ── Eraser indicator ── */
+.mode-label {
+  margin-top: 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  min-height: 1em;
+  transition: color 0.2s;
+}
+.mode-label.eraser {
+  color: var(--accent);
+}

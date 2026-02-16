@@ -3,123 +3,181 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hair Salon Game</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-      }
-      #hair-container {
-        position: relative;
-        width: 200px;
-        height: 300px;
-        background-image: url("https://i.imgur.com/x8Zl6UI.png"); /* base head image */
-        background-size: cover;
-        margin-bottom: 20px;
-      }
-      .hair-strand {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background-color: brown;
-        border-radius: 50%;
-        opacity: 1;
-        transition: opacity 0.2s;
-      }
-      .cut {
-        opacity: 0;
-      }
-      #hairstyle-selector {
-        display: flex;
-        gap: 10px;
-      }
-      .style-thumb {
-        width: 50px;
-        height: 50px;
-        background-color: lightgray;
-        border: 2px solid transparent;
-        cursor: pointer;
-      }
-      .style-thumb.selected {
-        border-color: blue;
-      }
-      #check-btn {
-        margin-top: 10px;
-      }
-    </style>
+    <title>Pixel Dot Drawing</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <h1>Hair Salon Game</h1>
-    <div id="hair-container"></div>
-    <div id="hairstyle-selector">
-      <div class="style-thumb" data-style="short"></div>
+    <h1>✦ Stardust ✦</h1>
+    <div class="grid" id="grid"></div>
+
+    <div class="palette" id="palette"></div>
+
+    <div class="mode-label" id="modeLabel">— select a color —</div>
+
+    <div class="controls">
+      <button class="btn" id="eraserBtn">Eraser</button>
+      <button class="btn danger" id="clearBtn">Clear</button>
+      <button class="btn" id="saveBtn">Save PNG</button>
     </div>
-    <button id="check-btn">Check</button>
-    <p id="result"></p>
 
-    <script>
-      const hairContainer = document.getElementById("hair-container");
-      const selectedStyleThumb = document.querySelector(
-        ".style-thumb[data-style='short']"
-      );
-      const resultText = document.getElementById("result");
-      let selectedStyle = "short";
+    <!-- <script>
+      (function () {
+        const COLORS = [
+          "#e94560",
+          "#f5a623",
+          "#f7dc6f",
+          "#58d68d",
+          "#5dade2",
+          "#af7ac5",
+          "#f1948a",
+          "#ffffff",
+          "#1abc9c",
+          "#e67e22",
+          "#3498db",
+          "#e84393",
+        ];
 
-      const strands = [];
-      const strandMap = {};
-      const gridCols = 10;
-      const gridRows = 15;
-      const strandSize = 20;
+        const grid = document.getElementById("grid");
+        const palette = document.getElementById("palette");
+        const eraserBtn = document.getElementById("eraserBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const saveBtn = document.getElementById("saveBtn");
+        const modeLabel = document.getElementById("modeLabel");
 
-      // Generate hair strands
-      for (let y = 0; y < gridRows; y++) {
-        for (let x = 0; x < gridCols; x++) {
-          const strand = document.createElement("div");
-          strand.className = "hair-strand";
-          strand.style.left = `${x * strandSize}px`;
-          strand.style.top = `${y * strandSize}px`;
-          strand.dataset.id = `${x}-${y}`;
-          hairContainer.appendChild(strand);
-          strands.push(strand);
-          strandMap[`${x}-${y}`] = strand;
+        let selectedColor = null;
+        let erasing = false;
+        let painting = false; // for click-drag
+
+        // ── Build palette ──
+        COLORS.forEach((hex, i) => {
+          const sw = document.createElement("div");
+          sw.className = "swatch";
+          sw.style.background = hex;
+          sw.dataset.color = hex;
+          sw.addEventListener("click", () => pickColor(hex));
+          palette.appendChild(sw);
+        });
+
+        function pickColor(hex) {
+          selectedColor = hex;
+          erasing = false;
+          eraserBtn.classList.remove("selected");
+          document
+            .querySelectorAll(".swatch")
+            .forEach((s) =>
+              s.classList.toggle("selected", s.dataset.color === hex)
+            );
+          modeLabel.textContent = "— drawing —";
+          modeLabel.classList.remove("eraser");
         }
-      }
 
-      // Define short style (remove bottom 5 rows)
-      const targetStyle = {
-        short: strands
-          .map((strand) => strand.dataset.id)
-          .filter((id) => parseInt(id.split("-")[1]) >= gridRows - 5),
-      };
-
-      // Handle cutting
-      hairContainer.addEventListener("click", (e) => {
-        const rect = hairContainer.getBoundingClientRect();
-        const x = Math.floor((e.clientX - rect.left) / strandSize);
-        const y = Math.floor((e.clientY - rect.top) / strandSize);
-        const id = `${x}-${y}`;
-        const strand = strandMap[id];
-        if (strand) {
-          strand.classList.add("cut");
+        // ── Build 10×10 grid ──
+        for (let i = 0; i < 100; i++) {
+          const dot = document.createElement("div");
+          dot.className = "dot";
+          dot.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            painting = true;
+            applyDot(dot);
+          });
+          dot.addEventListener("mouseenter", () => {
+            if (painting) applyDot(dot);
+          });
+          grid.appendChild(dot);
         }
-      });
 
-      // Style selector (single option for now)
-      selectedStyleThumb.classList.add("selected");
+        document.addEventListener("mouseup", () => {
+          painting = false;
+        });
 
-      // Check button logic
-      document.getElementById("check-btn").addEventListener("click", () => {
-        const cutIds = strands
-          .filter((s) => s.classList.contains("cut"))
-          .map((s) => s.dataset.id);
-        const correctCuts = targetStyle[selectedStyle];
-        const matched = correctCuts.filter((id) => cutIds.includes(id)).length;
-        const accuracy = Math.round((matched / correctCuts.length) * 100);
-        resultText.textContent = `Match accuracy: ${accuracy}%`;
-      });
-    </script>
+        function applyDot(dot) {
+          if (erasing) {
+            dot.style.background = "";
+            dot.classList.remove("active");
+          } else if (selectedColor) {
+            dot.style.background = selectedColor;
+            dot.classList.add("active");
+          }
+        }
+
+        // ── Eraser toggle ──
+        eraserBtn.addEventListener("click", () => {
+          erasing = !erasing;
+          if (erasing) {
+            selectedColor = null;
+            eraserBtn.classList.add("selected");
+            document
+              .querySelectorAll(".swatch")
+              .forEach((s) => s.classList.remove("selected"));
+            modeLabel.textContent = "— eraser mode —";
+            modeLabel.classList.add("eraser");
+          } else {
+            modeLabel.textContent = "— select a color —";
+            modeLabel.classList.remove("eraser");
+          }
+        });
+
+        // ── Clear ──
+        clearBtn.addEventListener("click", () => {
+          document.querySelectorAll(".dot").forEach((dot) => {
+            dot.style.background = "";
+            dot.classList.remove("active");
+          });
+        });
+
+        // ── Save as PNG ──
+        saveBtn.addEventListener("click", () => {
+          const canvas = document.createElement("canvas");
+          const dotSize = 42;
+          const gap = 6;
+          const padding = 18;
+          const gridSize = 10;
+
+          // Canvas size: 10 dots × (dot size + gap) - gap + 2×padding
+          const canvasSize = gridSize * (dotSize + gap) - gap + 2 * padding;
+          canvas.width = canvasSize;
+          canvas.height = canvasSize;
+
+          const ctx = canvas.getContext("2d");
+
+          // Draw background
+          ctx.fillStyle = getComputedStyle(document.documentElement)
+            .getPropertyValue("--surface")
+            .trim();
+          ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+          // Draw each dot
+          const dots = document.querySelectorAll(".dot");
+          dots.forEach((dot, i) => {
+            const row = Math.floor(i / gridSize);
+            const col = i % gridSize;
+            const x = padding + col * (dotSize + gap) + dotSize / 2;
+            const y = padding + row * (dotSize + gap) + dotSize / 2;
+
+            const bg =
+              dot.style.background ||
+              getComputedStyle(document.documentElement)
+                .getPropertyValue("--surface-light")
+                .trim();
+
+            ctx.fillStyle = bg;
+            ctx.beginPath();
+            ctx.arc(x, y, dotSize / 2, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          // Download
+          canvas.toBlob((blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `pixel-art-${Date.now()}.png`;
+            a.click();
+            URL.revokeObjectURL(url);
+          });
+        });
+      })();
+    </script> -->
   </body>
 </html>
