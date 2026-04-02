@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Dev Feedback Generator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0f1117;
+        --surface: #171b26;
+        --surface2: #1e2330;
+        --border: #2a2f40;
+        --border-strong: #3d4459;
+        --text: #e8eaf0;
+        --text-muted: #8b91a8;
+        --text-hint: #555d78;
+        --accent: #4dffb0;
+        --accent-dim: #1a3d2e;
+        --accent-text: #00cc88;
+        --warn: #ffb84d;
+        --warn-dim: #3d2e1a;
+        --err: #ff6b6b;
+        --err-dim: #3d1a1a;
+        --tag-bg: #252b3b;
+        --mono: "Space Mono", monospace;
+        --sans: "Sora", system-ui, sans-serif;
+        --radius: 8px;
+        --radius-sm: 5px;
+      }
+
+      body {
+        font-family: var(--sans);
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        font-size: 14px;
+      }
+
+      header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .header-badge {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        background: var(--accent-dim);
+        color: var(--accent);
+        padding: 0.2rem 0.6rem;
+        border-radius: 3px;
+        letter-spacing: 0.08em;
+        border: 1px solid #2a6b4d;
+      }
+
+      header h1 {
+        font-family: var(--mono);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      header span {
+        font-size: 0.72rem;
+        color: var(--text-hint);
+        margin-left: auto;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 310px 1fr;
+        min-height: calc(100vh - 49px);
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        overflow-y: auto;
+      }
+
+      .section-head {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-hint);
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      label.field-label {
+        font-size: 0.72rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        font-family: var(--sans);
+        font-size: 0.8rem;
+        color: var(--text);
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.5rem 0.65rem;
+        outline: none;
+        transition: border-color 0.15s;
+        -webkit-appearance: none;
+      }
+
+      input[type="text"]:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--accent-text);
+      }
+
+      select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23555D78' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.65rem center;
+        padding-right: 1.75rem;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+
+      /* CHECKBOX GROUPS */
+      .check-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.3rem 0.4rem;
+        border-radius: var(--radius-sm);
+        transition: background 0.1s;
+        line-height: 1.4;
+      }
+
+      .check-item:hover {
+        background: var(--surface2);
+      }
+
+      .check-item input[type="checkbox"] {
+        width: 13px;
+        height: 13px;
+        accent-color: var(--accent-text);
+        cursor: pointer;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      .check-item input:checked + span {
+        color: var(--text);
+      }
+
+      /* CATEGORY TABS */
+      .cat-tabs {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .cat-tab {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 3px;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-hint);
+        transition: all 0.12s;
+        letter-spacing: 0.04em;
+      }
+
+      .cat-tab:hover {
+        border-color: var(--border-strong);
+        color: var(--text-muted);
+      }
+      .cat-tab.active {
+        background: var(--accent-dim);
+        border-color: #2a6b4d;
+        color: var(--accent);
+      }
+
+      .cat-panel {
+        display: none;
+      }
+      .cat-panel.active {
+        display: block;
+      }
+
+      .generate-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--accent-text);
+        color: #0a1a12;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        font-weight: 700;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition:
+          opacity 0.15s,
+          transform 0.1s;
+        letter-spacing: 0.04em;
+      }
+
+      .generate-btn:hover {
+        opacity: 0.9;
+      }
+      .generate-btn:active {
+        transform: scale(0.99);
+      }
+
+      /* MAIN OUTPUT */
+      .main {
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+        background: var(--bg);
+      }
+
+      .output-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .output-title {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--text-hint);
+      }
+
+      .output-title strong {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.4rem;
+      }
+
+      .icon-btn {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.35rem 0.7rem;
+        cursor: pointer;
+        transition: all 0.12s;
+        letter-spacing: 0.04em;
+      }
+
+      .icon-btn:hover {
+        border-color: var(--border-strong);
+        color: var(--text);
+      }
+
+      .feedback-editor {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.75rem;
+        flex: 1;
+        min-height: 500px;
+        font-family: var(--sans);
+        font-size: 0.85rem;
+        line-height: 1.8;
+        color: var(--text);
+        outline: none;
+        resize: none;
+        width: 100%;
+        transition: border-color 0.15s;
+      }
+
+      .feedback-editor:focus {
+        border-color: var(--border-strong);
+      }
+
+      .placeholder-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        gap: 1rem;
+        color: var(--text-hint);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+      }
+
+      .placeholder-icon {
+        font-family: var(--mono);
+        font-size: 1.5rem;
+        color: var(--border-strong);
+      }
+
+      .placeholder-state p {
+        font-size: 0.78rem;
+        text-align: center;
+        line-height: 1.6;
+      }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .word-count {
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        color: var(--text-hint);
+      }
+
+      .copy-toast {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        background: var(--accent-text);
+        color: #0a1a12;
+        padding: 0.55rem 1rem;
+        border-radius: var(--radius-sm);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+        z-index: 999;
+        letter-spacing: 0.04em;
+      }
+
+      .copy-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+      }
+
+      @media (max-width: 860px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>feedback_gen.html</h1>
+      <div class="header-badge">Interactive Media / Web Dev</div>
+      <span>Assignment review tool</span>
+    </header>
+
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div>
+          <div class="section-head">Student + Assignment</div>
+          <div class="field-group">
+            <div>
+              <label class="field-label">Student Name</label>
+              <input type="text" id="studentName" placeholder="e.g. Tommy" />
+            </div>
+            <div>
+              <label class="field-label">Assignment</label>
+              <select id="assignment">
+                <option value="1">Assignment 1 — Website Review</option>
+                <option value="2">Assignment 2</option>
+                <option value="3">Assignment 3</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label">Website Being Reviewed</label>
+              <input
+                type="text"
+                id="reviewedSite"
+                placeholder="e.g. Rich Brown's portfolio"
+              />
+            </div>
+            <div>
+              <label class="field-label">Overall Grade Feel</label>
+              <select id="grade">
+                <option value="good">Good / Solid start</option>
+                <option value="strong">Strong / Excellent</option>
+                <option value="hd">High distinction</option>
+                <option value="short">Incomplete / too short</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- STRENGTHS -->
+        <div>
+          <div class="section-head">Strengths</div>
+          <div class="check-grid">
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="reads-well" /><span
+                >Reads well, good answers</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="nice-design" /><span
+                >Clean / nice design</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="comments" /><span
+                >Good code comments</span
+              ></label
+            >
+            <label class="check-item"
+              ><input
+                type="checkbox"
+                class="praise"
+                value="semantic-some"
+              /><span>Some semantic tags used</span></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="images-used" /><span
+                >Good use of images</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="grid-layout" /><span
+                >Nice grid-based layout</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="typography" /><span
+                >Good typography</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="colors" /><span
+                >Pleasing color choice</span
+              ></label
+            >
+            <label class="check-item"
+              ><input
+                type="checkbox"
+                class="praise"
+                value="consistent-theme"
+              /><span>Consistent theme throughout</span></label
+            >
+            <label class="check-item"
+              ><input
+                type="checkbox"
+                class="praise"
+                value="advanced-technique"
+              /><span>Advanced technique used</span></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="reset-css" /><span
+                >reset.css included</span
+              ></label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="nav-links" /><span
+                >Functioning nav links</span
+              ></label
+            >
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- IMPROVEMENTS — TABBED BY CATEGORY -->
+        <div>
+          <div class="section-head">Improvements</div>
+          <div class="cat-tabs">
+            <button
+              class="cat-tab active"
+              onclick="switchTab(this, 'tab-content')"
+            >
+              Content
+            </button>
+            <button class="cat-tab" onclick="switchTab(this, 'tab-html')">
+              HTML
+            </button>
+            <button class="cat-tab" onclick="switchTab(this, 'tab-css')">
+              CSS
+            </button>
+            <button class="cat-tab" onclick="switchTab(this, 'tab-visual')">
+              Visual
+            </button>
+          </div>
+
+          <!-- CONTENT TAB -->
+          <div class="cat-panel active" id="tab-content">
+            <div class="check-grid">
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="expand-answers"
+                /><span
+                  >Expand short answers with detail & reasoning</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="add-screenshots"
+                /><span>Add screenshots/images to support argument</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="include-questions"
+                /><span>Include the questions (not just answers)</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="better-title"
+                /><span>Use a more descriptive page title</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="meaningful-comments"
+                /><span
+                  >Add meaningful comments explaining design choices</span
+                ></label
+              >
+            </div>
+          </div>
+
+          <!-- HTML TAB -->
+          <div class="cat-panel" id="tab-html">
+            <div class="check-grid">
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="semantic-tags"
+                /><span
+                  >Use semantic HTML tags (section, main, article, header,
+                  footer)</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="reduce-divs"
+                /><span
+                  >Reduce overuse of &lt;div&gt; — apply classes directly</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="no-content-outside-body"
+                /><span
+                  >All visible content must be inside &lt;body&gt;</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="no-br-spacing"
+                /><span
+                  >Replace &lt;br&gt; spacing with margin/padding/flexbox</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="heading-hierarchy"
+                /><span
+                  >Use heading tags in sequential order (h1→h2→h3)</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="figure-captions"
+                /><span
+                  >Center-align figure captions for consistency</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="anchor-content"
+                /><span
+                  >Avoid placing divs/buttons inside &lt;a&gt; tags</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="reset-css-order"
+                /><span>reset.css must come before style.css</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="add-reset-css"
+                /><span
+                  >Include reset.css for cross-browser consistency</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="semantic-errors"
+                /><span>Fix specific semantic errors in code</span></label
+              >
+            </div>
+          </div>
+
+          <!-- CSS TAB -->
+          <div class="cat-panel" id="tab-css">
+            <div class="check-grid">
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="no-inline-style"
+                /><span
+                  >Avoid inline styles — move all to style.css (separation of
+                  concerns)</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="consolidate-classes"
+                /><span
+                  >Consolidate repeated classes into one reusable class</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="group-selectors"
+                /><span
+                  >Group selectors that share the same properties</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="font-inheritance"
+                /><span
+                  >Set font-family on body so elements inherit
+                  automatically</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="no-unused-fonts"
+                /><span>Remove unused font imports/styles from CSS</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="use-flexbox-grid"
+                /><span
+                  >Use flexbox/grid instead of manual positioning</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="overflow-hidden"
+                /><span
+                  >Prevent horizontal scrolling with overflow: hidden</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="prefer-classes-over-ids"
+                /><span
+                  >Prefer classes over IDs for reusable styles</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="consistent-width"
+                /><span
+                  >Ensure consistent width for question/answer boxes</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="css-comment-why"
+                /><span
+                  >CSS comments should explain why, not just what</span
+                ></label
+              >
+            </div>
+          </div>
+
+          <!-- VISUAL TAB -->
+          <div class="cat-panel" id="tab-visual">
+            <div class="check-grid">
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="font-pairing"
+                /><span
+                  >Pair heading font with a complementary body font</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="readability-colors"
+                /><span
+                  >Avoid bright/vibrant colors for large text blocks — use for
+                  accents only</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="line-spacing"
+                /><span
+                  >Improve line-height/spacing for readability</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="font-sizing"
+                /><span
+                  >Balance font sizing between questions and answers</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="margins-padding"
+                /><span
+                  >Add appropriate margins and padding throughout</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="animation-caution"
+                /><span
+                  >Use animations sparingly — avoid on large text blocks</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="cursor-pointer"
+                /><span
+                  >Add cursor: pointer to interactive/hoverable elements</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="no-center-align-para"
+                /><span
+                  >Avoid center-aligning multi-line paragraphs</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="75ch-rule"
+                /><span>Limit text width to ~75ch for readability</span></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="modern-fonts"
+                /><span
+                  >Choose a modern Google Font to elevate typography</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="sticky-footer-ux"
+                /><span
+                  >Reconsider sticky footer — can obstruct reading</span
+                ></label
+              >
+              <label class="check-item"
+                ><input
+                  type="checkbox"
+                  class="improve"
+                  value="column-count"
+                /><span
+                  >Max 2–3 columns for long text — more harms readability</span
+                ></label
+              >
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div>
+          <div class="section-head">Custom Note (optional)</div>
+          <textarea
+            style="
+              width: 100%;
+              font-family: var(--sans);
+              font-size: 0.78rem;
+              background: var(--surface2);
+              border: 1px solid var(--border);
+              border-radius: var(--radius-sm);
+              padding: 0.5rem 0.65rem;
+              color: var(--text);
+              outline: none;
+              resize: vertical;
+              min-height: 65px;
+            "
+            id="customNote"
+            placeholder="Specific observation unique to this student — e.g. a specific code fix, a link to working example, a special praise…"
+          ></textarea>
+        </div>
+
+        <button class="generate-btn" onclick="generate()">
+          // generate feedback
+        </button>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main">
+        <div class="output-header">
+          <div class="output-title" id="outputTitle">// no output yet</div>
+          <div class="btn-row">
+            <button class="icon-btn" onclick="copyText()">[ copy ]</button>
+            <button class="icon-btn" onclick="clearOutput()">[ clear ]</button>
+          </div>
+        </div>
+
+        <div id="outputArea">
+          <div class="placeholder-state">
+            <div class="placeholder-icon">&lt;/&gt;</div>
+            <p>
+              Fill in student details and check the relevant boxes<br />then
+              click <strong>// generate feedback</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="meta-row">
+          <div class="word-count" id="wordCount"></div>
+        </div>
+      </main>
+    </div>
+
+    <div class="copy-toast" id="copyToast">// copied to clipboard</div>
+
+    <script>
+      function switchTab(btn, panelId) {
+        document
+          .querySelectorAll(".cat-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".cat-panel")
+          .forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(panelId).classList.add("active");
+      }
+
+      const OPENERS = {
+        good: (name, asgn) =>
+          `Well done ${name} on ${asgn}. Your assignment reads well and you offered good constructive answers to most questions.`,
+        strong: (name, asgn) =>
+          `Well done ${name} on ${asgn}. Your assignment reads really well and you offered thoughtful, detailed answers to most questions.`,
+        hd: (name, asgn) =>
+          `Excellent job, ${name}, on ${asgn}! Your assignment reads really well and you provided thoughtful answers to most questions.`,
+        short: (name, asgn) =>
+          `Thank you for submitting ${asgn}, ${name}. The assignment covers the key areas but there is room to develop it further.`,
+      };
+
+      const PRAISE_TEXT = {
+        "reads-well": null, // handled in opener
+        "nice-design": "The overall design is clean and well-presented.",
+        comments:
+          "It is great to see meaningful comments included in your code.",
+        "semantic-some":
+          "It is good to see the use of some semantic HTML tags.",
+        "images-used":
+          "The use of images to support your responses is commendable — they strengthen the argument considerably.",
+        "grid-layout":
+          "I liked the use of a grid-based layout, which gives the page a structured and polished look.",
+        typography:
+          "The typography is well chosen and contributes to a professional appearance.",
+        colors:
+          "The color palette is pleasing and creates a cohesive visual experience.",
+        "consistent-theme":
+          "I especially like how you have maintained a consistent theme throughout the assignment.",
+        "advanced-technique":
+          "It is impressive to see you experimenting with advanced techniques in your code — keep it up! :)",
+        "reset-css":
+          "Good to see reset.css included to ensure consistency across browsers.",
+        "nav-links":
+          "Good to see functioning navigation links and a well-structured multi-section layout.",
+      };
+
+      const IMPROVE_TEXT = {
+        // CONTENT
+        "expand-answers": () =>
+          `The overall answers are slightly short. Expand on them so that you are articulating your experience of browsing the website in detail and offering solid reasoning for your response.`,
+        "add-screenshots": (site) =>
+          `Consider using images or screenshots of ${site ? site + " " : "the website you are reviewing "}to support your argument and add more context. Relevant visuals can provide additional support to your points and engage your audience on a deeper level.`,
+        "include-questions": () =>
+          `You did not include the questions, so for the reader it is not always clear what each paragraph is responding to. Include the complete question before each answer to provide context.`,
+        "better-title": (site) =>
+          `Rather than a generic title like "Assignment 1" or "Interactive Media", consider something more descriptive — for example, "Review of ${site || "the website"}" makes the page's purpose immediately clear, and removes the need for a separate subheading.`,
+        "meaningful-comments": () =>
+          `Add meaningful comments to both HTML and CSS that explain your reasoning behind the layout and color choices — not just what each element is, but why you made the decision.`,
+
+        // HTML
+        "semantic-tags": () =>
+          `Consider using semantic HTML tags such as <section>, <main>, <article>, <header>, and <footer> to replace content currently structured using <div>s. Divs have no semantic meaning and should be reserved for layout purposes only. A good approach is to enclose each question and answer in a <section>, with <h3> for the question and <p> for the answer.`,
+        "reduce-divs": () =>
+          `Try to minimise the overuse of <div> elements. Where you have only a single <p> or heading inside a <div>, apply the class directly to that element instead — this results in cleaner, leaner code.`,
+        "no-content-outside-body": () =>
+          `All visible content — including the page heading — must sit inside the <body> tag. Any HTML elements placed before <body> or after </body> will cause semantic errors and unpredictable rendering.`,
+        "no-br-spacing": () =>
+          `You have relied on <br> to create spacing between sections. Instead, use CSS margin, padding, or flexbox/grid gap properties to achieve the same effect — this approach is more consistent and easier to maintain.`,
+        "heading-hierarchy": () =>
+          `Ensure heading tags are used in sequential order from <h1> through to <h5> without skipping levels. For example, avoid jumping from <h1> to <h3>.`,
+        "figure-captions": () =>
+          `Centre-align figure captions for consistency with the rest of the layout.`,
+        "anchor-content": () =>
+          `Avoid placing block-level elements like <div> or <button> inside anchor tags. If you need a clickable region, use a CSS-styled <a> or handle it with a JavaScript click event — we will cover this when we look at DOM handling in class.`,
+        "reset-css-order": () =>
+          `Make sure reset.css is linked before style.css in the <head>. This ensures your own styles always take precedence and are not accidentally overridden by the reset.`,
+        "add-reset-css": () =>
+          `Include reset.css so that the design renders consistently across different browsers. Without it, default browser styles can introduce unexpected spacing and font differences.`,
+        "semantic-errors": () =>
+          `There are a few semantic errors in the code to address — for example, check for duplicate closing tags, elements placed outside <body>, or tags that do not exist in standard HTML. A quick validation pass through the W3C validator will highlight these.`,
+
+        // CSS
+        "no-inline-style": () =>
+          `Avoid inline styling in your HTML. As we discussed in class, the principle of separation of concerns means HTML, CSS, and JavaScript should each live in their own file. Move any inline style="..." attributes into style.css instead.`,
+        "consolidate-classes": () =>
+          `If multiple elements share the same CSS properties, consolidate them under a single reusable class rather than duplicating the rules. For example, all questions could share a class like .question and all answers a class like .answer, with individual IDs only where unique overrides are needed.`,
+        "group-selectors": () =>
+          `Where multiple selectors share identical properties, group them together using commas — for example, h1, h2, h3 { font-family: ...; } — to reduce redundancy and keep your CSS concise.`,
+        "font-inheritance": () =>
+          `If you are using the same font family across the whole page, set it once on the body selector and all child elements will inherit it automatically. There is no need to redeclare the font-family on every individual element.`,
+        "no-unused-fonts": () =>
+          `Remove any font imports or font-family declarations in CSS that are not actually used on the page. Unused assets add unnecessary weight and clutter.`,
+        "use-flexbox-grid": () =>
+          `The overall layout would benefit from using flexbox or CSS grid rather than manual absolute positioning or tables. This gives you much greater control over alignment and responsiveness.`,
+        "overflow-hidden": () =>
+          `Make sure the design does not produce horizontal scrolling. If content overflows the viewport, use overflow: hidden on the containing element to keep the layout clean.`,
+        "prefer-classes-over-ids": () =>
+          `When styles are intended to be reusable or applied to more than one element, prefer classes over IDs. IDs should generally be reserved for unique elements or JavaScript hooks.`,
+        "consistent-width": () =>
+          `For a more uniform appearance, ensure questions and answers have the same width. Currently some answer boxes are narrower than their corresponding questions, creating an unbalanced look.`,
+        "css-comment-why": () =>
+          `When adding comments to your CSS, focus on the reasoning behind your choices — why did you select that particular color, font size, or layout approach? This is far more useful for anyone reading the code than simply describing what the rule does.`,
+
+        // VISUAL
+        "font-pairing": () =>
+          `The heading font is eye-catching, but the body text font feels a little plain in comparison. Consider pairing it with a complementary font from Google Fonts to create a more cohesive and polished typographic system.`,
+        "readability-colors": () =>
+          `Bright or vibrant colors generally work best for small UI elements like buttons or short headings. For larger blocks of body text, black, gray, or softer tones significantly improve readability. You could also introduce subtle color contrast between questions and answers — making questions slightly darker than answers creates a nice visual hierarchy.`,
+        "line-spacing": () =>
+          `Adding some line-height (line spacing) would improve readability considerably. A value of around 1.6–1.8 is a good starting point for body text.`,
+        "font-sizing": () =>
+          `Aim for better balance in font sizing between questions and answers — currently the gap between the two is slightly too large, which can feel unbalanced. Bringing them closer in size while keeping questions slightly bolder will achieve a clearer hierarchy without the jarring contrast.`,
+        "margins-padding": () =>
+          `The overall appearance would benefit from more considered use of margins and padding. In particular, ensure text is not sitting too close to the edge of its container or the browser window — a little breathing room goes a long way.`,
+        "animation-caution": () =>
+          `Animations can be a nice touch, but use them judiciously. They work well on small elements like buttons or short headings. Applying scaling or transition effects to large blocks of text tends to cause layout shifts that disrupt the reading experience. If you do use hover effects, also set cursor: pointer on the element so users know it is interactive.`,
+        "cursor-pointer": () =>
+          `Where elements have hover or click effects, add cursor: pointer in CSS so it is clear to users that the element is interactive.`,
+        "no-center-align-para": () =>
+          `Avoid centre-aligning paragraphs that span multiple lines. Centre alignment works well for short headings and labels, but for running text it significantly reduces readability.`,
+        "75ch-rule": () =>
+          `As a general web typography principle, a single line of text should not exceed around 75 characters (75ch). Longer lines are harder to read and cause eye fatigue. You can enforce this with max-width: 75ch on your paragraph elements — it is already set in reset.css for this reason.`,
+        "modern-fonts": () =>
+          `Consider browsing Google Fonts for a more distinctive typeface. A well-chosen modern font can elevate the overall design considerably.`,
+        "sticky-footer-ux": () =>
+          `A sticky footer can create an awkward UX on long pages, as it overlaps the content while the user is reading. Sticky headers are far more common and useful for navigation. Consider removing the sticky behaviour from the footer.`,
+        "column-count": () =>
+          `For long text content, avoid more than two or three columns. A wider column count forces constant vertical scrolling within each column and disrupts the natural left-to-right reading flow. Two columns is generally the comfortable maximum for paragraphs.`,
+      };
+
+      function getChecked(cls) {
+        return [...document.querySelectorAll("." + cls + ":checked")].map(
+          (el) => el.value,
+        );
+      }
+
+      function generate() {
+        const name =
+          document.getElementById("studentName").value.trim() || "Student";
+        const asgn = ["", "Assignment 1", "Assignment 2", "Assignment 3"][
+          +document.getElementById("assignment").value
+        ];
+        const site = document.getElementById("reviewedSite").value.trim();
+        const grade = document.getElementById("grade").value;
+        const praises = getChecked("praise");
+        const improves = getChecked("improve");
+        const customNote = document.getElementById("customNote").value.trim();
+
+        let parts = [];
+
+        // Opener
+        parts.push(OPENERS[grade](name, asgn));
+
+        // Praise
+        const praiseLines = praises
+          .filter((k) => k !== "reads-well")
+          .map((k) => PRAISE_TEXT[k])
+          .filter(Boolean);
+        if (praiseLines.length) {
+          parts.push(praiseLines.join(" "));
+        }
+
+        // Transition
+        if (improves.length || customNote) {
+          parts.push(
+            "However, there are a few things that can be further improved.",
+          );
+        }
+
+        // Improvements
+        improves.forEach((k) => {
+          const fn = IMPROVE_TEXT[k];
+          if (fn) parts.push(typeof fn === "function" ? fn(site) : fn);
+        });
+
+        // Custom note
+        if (customNote) {
+          parts.push(customNote);
+        }
+
+        // Closing
+        parts.push(
+          `Overall, nice work! By implementing these suggestions, you can further improve the quality and effectiveness of your website design.`,
+        );
+
+        const finalText = parts.join("\n\n");
+
+        document.getElementById("outputTitle").innerHTML =
+          `// <strong>${name}</strong> · ${asgn}`;
+        document.getElementById("outputArea").innerHTML =
+          `<textarea class="feedback-editor" id="feedbackText" spellcheck="true" oninput="updateCount()">${finalText}</textarea>`;
+        updateCount();
+      }
+
+      function updateCount() {
+        const el = document.getElementById("feedbackText");
+        if (!el) return;
+        const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+        document.getElementById("wordCount").textContent = `// ${words} words`;
+      }
+
+      function copyText() {
+        const el = document.getElementById("feedbackText");
+        if (!el) return;
+        navigator.clipboard.writeText(el.value).then(() => {
+          const t = document.getElementById("copyToast");
+          t.classList.add("show");
+          setTimeout(() => t.classList.remove("show"), 2000);
+        });
+      }
+
+      function clearOutput() {
+        document.getElementById("outputArea").innerHTML = `
+      <div class="placeholder-state">
+        <div class="placeholder-icon">&lt;/&gt;</div>
+        <p>Fill in student details and check the relevant boxes<br>then click <strong>// generate feedback</strong></p>
+      </div>`;
+        document.getElementById("outputTitle").textContent = "// no output yet";
+        document.getElementById("wordCount").textContent = "";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Feedback Generator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #f7f5f0;
+        --surface: #ffffff;
+        --surface2: #f0ede6;
+        --border: #e2ddd5;
+        --border-strong: #c8c2b8;
+        --text: #1a1814;
+        --text-muted: #6b6560;
+        --text-hint: #9e9890;
+        --accent: #2d5a3d;
+        --accent-light: #ebf3ee;
+        --accent-mid: #4a8c60;
+        --warn: #8b4513;
+        --warn-light: #fdf3ec;
+        --tag-bg: #e8e4dc;
+        --serif: "DM Serif Display", Georgia, serif;
+        --sans: "DM Sans", system-ui, sans-serif;
+        --radius: 10px;
+        --radius-sm: 6px;
+      }
+
+      body {
+        font-family: var(--sans);
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      header {
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+      }
+
+      header h1 {
+        font-family: var(--serif);
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: var(--text);
+      }
+
+      header span {
+        font-size: 0.8rem;
+        color: var(--text-hint);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        min-height: calc(100vh - 57px);
+      }
+
+      /* LEFT PANEL */
+      .sidebar {
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        overflow-y: auto;
+      }
+
+      .sidebar-section h2 {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-hint);
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 0.3rem;
+      }
+
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        font-family: var(--sans);
+        font-size: 0.88rem;
+        color: var(--text);
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.55rem 0.75rem;
+        outline: none;
+        transition: border-color 0.15s;
+        -webkit-appearance: none;
+      }
+
+      input[type="text"]:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--accent-mid);
+        background: #fff;
+      }
+
+      select {
+        cursor: pointer;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239E9890' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        padding-right: 2rem;
+      }
+
+      .checkbox-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+      }
+
+      .check-item {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        padding: 0.3rem 0.4rem;
+        border-radius: var(--radius-sm);
+        transition: background 0.1s;
+      }
+
+      .check-item:hover {
+        background: var(--bg);
+      }
+
+      .check-item input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--accent);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .generate-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--accent);
+        color: #fff;
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          transform 0.1s;
+        letter-spacing: 0.01em;
+      }
+
+      .generate-btn:hover {
+        background: #234d34;
+      }
+      .generate-btn:active {
+        transform: scale(0.99);
+      }
+
+      /* RIGHT PANEL */
+      .main {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+      }
+
+      .output-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .output-header h2 {
+        font-family: var(--serif);
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: var(--text-muted);
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .icon-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--sans);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .icon-btn:hover {
+        background: var(--accent-light);
+        border-color: var(--accent-mid);
+        color: var(--accent);
+      }
+
+      .feedback-editor {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 2rem 2.25rem;
+        flex: 1;
+        min-height: 500px;
+        font-family: var(--sans);
+        font-size: 0.9rem;
+        line-height: 1.75;
+        color: var(--text);
+        outline: none;
+        resize: none;
+        width: 100%;
+        transition: border-color 0.15s;
+      }
+
+      .feedback-editor:focus {
+        border-color: var(--border-strong);
+      }
+
+      .placeholder-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        gap: 1rem;
+        color: var(--text-hint);
+      }
+
+      .placeholder-icon {
+        width: 48px;
+        height: 48px;
+        border: 1.5px dashed var(--border-strong);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+      }
+
+      .placeholder-state p {
+        font-size: 0.85rem;
+        text-align: center;
+      }
+
+      /* SECTION BLOCKS in output */
+      .section-block {
+        margin-bottom: 1.2rem;
+      }
+
+      .section-label {
+        display: inline-block;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 600;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        margin-bottom: 0.5rem;
+      }
+
+      .label-praise {
+        background: var(--accent-light);
+        color: var(--accent);
+      }
+      .label-improve {
+        background: var(--warn-light);
+        color: var(--warn);
+      }
+      .label-format {
+        background: var(--tag-bg);
+        color: var(--text-muted);
+      }
+      .label-attend {
+        background: #fff3f3;
+        color: #8b2020;
+      }
+
+      /* COPY SUCCESS */
+      .copy-success {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: var(--accent);
+        color: #fff;
+        padding: 0.65rem 1.2rem;
+        border-radius: var(--radius);
+        font-size: 0.82rem;
+        font-weight: 500;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .copy-success.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin-top: 0.3rem;
+      }
+
+      .tag {
+        font-size: 0.72rem;
+        background: var(--tag-bg);
+        color: var(--text-muted);
+        padding: 0.2rem 0.55rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.12s;
+      }
+
+      .tag:hover {
+        background: var(--border-strong);
+        color: var(--text);
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+      }
+
+      textarea.feedback-editor {
+        font-size: 0.88rem;
+      }
+
+      .word-count {
+        font-size: 0.72rem;
+        color: var(--text-hint);
+        text-align: right;
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          border-right: none;
+          border-bottom: 1px solid var(--border);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Feedback Generator</h1>
+      <span>Studio Assignment Review</span>
+    </header>
+
+    <div class="app">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h2>Student Details</h2>
+          <div class="field-group">
+            <div>
+              <label>Student Name</label>
+              <input type="text" id="studentName" placeholder="e.g. Hayoung" />
+            </div>
+            <div>
+              <label>Assignment</label>
+              <select id="assignment">
+                <option value="1">Assignment 1 — Initial Proposal</option>
+                <option value="2">Assignment 2</option>
+                <option value="3">Assignment 3</option>
+                <option value="4">Assignment 4</option>
+              </select>
+            </div>
+            <div>
+              <label>Platform Analysed</label>
+              <input
+                type="text"
+                id="platform"
+                placeholder="e.g. Instagram, TikTok…"
+              />
+            </div>
+            <div>
+              <label>Lens Used</label>
+              <select id="lens">
+                <option value="">— Select lens —</option>
+                <option>Attention and wellbeing</option>
+                <option>Data and power</option>
+                <option>Community and social fabric</option>
+                <option>Place and belonging</option>
+                <option>Custom…</option>
+              </select>
+            </div>
+            <div id="customLensWrap" style="display: none">
+              <label>Custom Lens</label>
+              <input type="text" id="customLens" placeholder="Describe lens…" />
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="sidebar-section">
+          <h2>Strengths to Mention</h2>
+          <div class="checkbox-grid">
+            <label class="check-item"
+              ><input
+                type="checkbox"
+                class="praise"
+                value="personal-reflection"
+              />
+              Personal reflection</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="nice-template" />
+              Nice template</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="good-writing" />
+              Strong writing</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="references" /> Good
+              references</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="5-whys" /> 5 Whys
+              done well</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="images" /> Good use
+              of images</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="patterns" />
+              Insightful patterns</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="praise" value="cover-page" /> Cover
+              page</label
+            >
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="sidebar-section">
+          <h2>Areas to Improve</h2>
+          <div class="checkbox-grid">
+            <label class="check-item"
+              ><input
+                type="checkbox"
+                class="improve"
+                value="intro-transition"
+              />
+              Intro transition</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="add-images" /> Add
+              screenshots</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="5-whys-expand" />
+              Expand 5 Whys</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="regen-detail" />
+              Regen. detail</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="formatting" />
+              Formatting</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="captions" /> Image
+              captions</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="ai-acknowledge" />
+              AI acknowledgement</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="sketches" /> Add
+              sketches</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="redundancy" />
+              Avoid redundancy</label
+            >
+            <label class="check-item"
+              ><input type="checkbox" class="improve" value="subheadings" /> Use
+              subheadings</label
+            >
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="sidebar-section">
+          <h2>Attendance Note</h2>
+          <select id="attendance">
+            <option value="none">No attendance note needed</option>
+            <option value="mild">Gently encourage attendance</option>
+            <option value="strong">Strong note — group work impact</option>
+          </select>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="sidebar-section">
+          <h2>Custom Note (optional)</h2>
+          <textarea
+            style="
+              width: 100%;
+              font-family: var(--sans);
+              font-size: 0.82rem;
+              background: var(--bg);
+              border: 1px solid var(--border);
+              border-radius: var(--radius-sm);
+              padding: 0.55rem 0.75rem;
+              color: var(--text);
+              outline: none;
+              resize: vertical;
+              min-height: 70px;
+            "
+            id="customNote"
+            placeholder="Add a specific observation, compliment, or instruction unique to this student…"
+          ></textarea>
+        </div>
+
+        <button class="generate-btn" onclick="generate()">
+          Generate Feedback →
+        </button>
+      </aside>
+
+      <!-- MAIN OUTPUT -->
+      <main class="main">
+        <div class="output-header">
+          <h2 id="outputTitle">Configure and generate feedback</h2>
+          <div class="btn-row">
+            <button class="icon-btn" onclick="copyText()">⎘ Copy</button>
+            <button class="icon-btn" onclick="clearOutput()">✕ Clear</button>
+          </div>
+        </div>
+
+        <div id="outputArea">
+          <div class="placeholder-state">
+            <div class="placeholder-icon">✎</div>
+            <p>
+              Fill in the student details on the left<br />and click
+              <strong>Generate Feedback</strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="word-count" id="wordCount"></div>
+      </main>
+    </div>
+
+    <div class="copy-success" id="copyToast">Copied to clipboard ✓</div>
+
+    <script>
+      const lens = document.getElementById("lens");
+      const customLensWrap = document.getElementById("customLensWrap");
+      lens.addEventListener("change", () => {
+        customLensWrap.style.display =
+          lens.value === "Custom…" ? "block" : "none";
+      });
+
+      const PRAISE_TEXT = {
+        "personal-reflection":
+          "You have done an excellent job of integrating your personal reflection with your analysis — this is one of the strongest aspects of the draft.",
+        "nice-template":
+          "Kudos for using a well-designed template that gives the document a professional and polished look.",
+        "good-writing":
+          "Your writing is clear and lucid, and I admire your word choices — the document is a pleasurable read.",
+        references:
+          "Good to see that you backed your arguments with proper citations and references throughout.",
+        "5-whys":
+          "The 5 Whys analysis is well done and shows careful thinking about root causes.",
+        images:
+          "The use of images and figures to support your argument is commendable — they strengthen the narrative considerably.",
+        patterns:
+          "Your identified degenerative patterns are insightful and speak to genuine issues worth exploring further.",
+        "cover-page":
+          "Kudos for including a cover page, table of contents, and other professional touches that elevate the document.",
+      };
+
+      const IMPROVE_TEXT = {
+        "intro-transition": (name, platform, lensVal) =>
+          `The introduction begins well with a personal example, but the transition to the next section feels slightly abrupt — it shifts quite quickly from a warm personal tone to outlining the report's purpose. Consider expanding the opening paragraph to make it clearer why you chose ${platform || "this platform"} and the lens of "${lensVal}" for your analysis. While some readers may grasp this connection intuitively, making it explicit would strengthen the overall flow.`,
+
+        "add-images": (name, platform) =>
+          `Throughout the document — particularly in the digital day mapping, platform analysis, and degenerative patterns sections — consider adding screenshots and annotated images of ${platform || "the platform"}. Images allow readers to grasp concepts much faster than text alone, and they will significantly strengthen your arguments.`,
+
+        "5-whys-expand": () =>
+          `The 5 Whys analysis is a good start but could be developed further. Ideally, present it as a structured Q&A starting from the observed pattern all the way to the root cause, and then include a brief summary paragraph highlighting the key learnings and what opportunities they open up for regeneration.`,
+
+        "regen-detail": (name, platform) =>
+          `Your regenerative ideas are intriguing and directly address the patterns you have identified, but they would benefit from more detail. For each idea, describe how it would look, where it would sit within the interface, how it would be technically implemented, and how it connects back to the specific degenerative pattern it addresses. Preliminary sketches or even brief written descriptions of the UI would greatly strengthen this section.`,
+
+        formatting: () =>
+          `A few formatting suggestions: aim for consistent line-height and paragraph spacing throughout. The gap between sections should be slightly larger than the body line-height but not excessively so. Headings could benefit from a slightly different colour or a bolder typeface to create a clear typographic hierarchy. Using a modern, clean sans-serif for body text would also elevate the overall presentation.`,
+
+        captions: () =>
+          `When including images, ensure each has a meaningful figure caption (e.g., "Figure 1: ...") that describes the insight you are trying to convey — not just a URL or a generic label. Reference each figure within the text (e.g., "as seen in Figure 1") so images read as evidence rather than decoration.`,
+
+        "ai-acknowledge": () =>
+          `Don't forget to acknowledge your use of ChatGPT or AI tools in the document. If you have not used AI, you can proudly state that the work is entirely your own.`,
+
+        sketches: () =>
+          `Adding preliminary sketches — even rough hand-drawn ones — for your regenerative ideas would significantly strengthen the proposal. Sketches help readers visualise how a redesign would actually look and feel, and they demonstrate that you have thought through the implementation.`,
+
+        redundancy: () =>
+          `Some arguments appear in more than one section of the document. Before submitting, review for redundancy and, rather than restating the same point, use each section as an opportunity to go deeper — adding new evidence, examples, or analysis.`,
+
+        subheadings: () =>
+          `Consider using subheadings for each identified pattern and regenerative idea. This improves navigation, makes the document easier to skim, and signals to the reader that each pattern is a distinct, complete argument rather than part of a running narrative.`,
+      };
+
+      const ATTEND_TEXT = {
+        mild: (name) =>
+          `Finally, I haven't seen you much in classes lately. While attendance is not mandatory, regular engagement significantly helps your own understanding and performance, and also supports your peers — especially as we move toward the group-based assignments in the second half of the course. Please do try to attend where you can.`,
+        strong: (name) =>
+          `Finally, I have not seen you in class for a number of sessions. After the mid-semester break, we will begin forming groups for Assignments 3 and 4. If you do not attend or coordinate with your group members, it will impact everyone's work. Your involvement is crucial. If you are finding the studio challenging, please do not hesitate to reach out — you can also choose to withdraw by the census date (August 31st) if needed.`,
+      };
+
+      function getLens() {
+        const v = document.getElementById("lens").value;
+        if (v === "Custom…")
+          return (
+            document.getElementById("customLens").value || "your chosen lens"
+          );
+        return v || "your chosen lens";
+      }
+
+      function getChecked(cls) {
+        return [...document.querySelectorAll("." + cls + ":checked")].map(
+          (el) => el.value,
+        );
+      }
+
+      function generate() {
+        const name =
+          document.getElementById("studentName").value.trim() || "Student";
+        const assignment = document.getElementById("assignment").value;
+        const platform = document.getElementById("platform").value.trim();
+        const lensVal = getLens();
+        const praises = getChecked("praise");
+        const improves = getChecked("improve");
+        const attend = document.getElementById("attendance").value;
+        const customNote = document.getElementById("customNote").value.trim();
+
+        const assignmentLabel = [
+          "",
+          "Assignment 1",
+          "Assignment 2",
+          "Assignment 3",
+          "Assignment 4",
+        ][+assignment];
+
+        let parts = [];
+
+        // Opening
+        parts.push(
+          `Well done ${name} on ${assignmentLabel}!\n\nI really enjoyed reading your draft.`,
+        );
+
+        // Praise sentences
+        if (praises.length) {
+          parts.push(praises.map((k) => PRAISE_TEXT[k]).join(" "));
+        }
+
+        // Transition
+        parts.push(
+          `Here are a few things that can help further strengthen the narrative.`,
+        );
+
+        // Improvement paragraphs
+        if (improves.length) {
+          improves.forEach((k) => {
+            const fn = IMPROVE_TEXT[k];
+            parts.push(
+              typeof fn === "function" ? fn(name, platform, lensVal) : fn,
+            );
+          });
+        }
+
+        // Custom note
+        if (customNote) {
+          parts.push(customNote);
+        }
+
+        // Attendance
+        if (attend !== "none") {
+          parts.push(ATTEND_TEXT[attend](name));
+        }
+
+        // Closing
+        parts.push(
+          `Overall, it is wonderful to see the progress in your thinking. Nice work and all the best with ${+assignment < 4 ? "Assignment " + (+assignment + 1) : "the rest of the course"}! :)`,
+        );
+
+        const finalText = parts.join("\n\n");
+
+        document.getElementById("outputTitle").textContent =
+          `Feedback — ${name} · ${assignmentLabel}`;
+        document.getElementById("outputArea").innerHTML =
+          `<textarea class="feedback-editor" id="feedbackText" spellcheck="true" oninput="updateCount()">${finalText}</textarea>`;
+        updateCount();
+      }
+
+      function updateCount() {
+        const el = document.getElementById("feedbackText");
+        if (!el) return;
+        const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+        document.getElementById("wordCount").textContent = words + " words";
+      }
+
+      function copyText() {
+        const el = document.getElementById("feedbackText");
+        if (!el) return;
+        navigator.clipboard.writeText(el.value).then(() => {
+          const toast = document.getElementById("copyToast");
+          toast.classList.add("show");
+          setTimeout(() => toast.classList.remove("show"), 2000);
+        });
+      }
+
+      function clearOutput() {
+        document.getElementById("outputArea").innerHTML = `
+      <div class="placeholder-state">
+        <div class="placeholder-icon">✎</div>
+        <p>Fill in the student details on the left<br>and click <strong>Generate Feedback</strong></p>
+      </div>`;
+        document.getElementById("outputTitle").textContent =
+          "Configure and generate feedback";
+        document.getElementById("wordCount").textContent = "";
+      }
+    </script>
+  </body>
+</html>
