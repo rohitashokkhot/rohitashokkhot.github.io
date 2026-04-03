@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Regen A1 — Feedback Generator</title>
+<title>Regen Final — Feedback Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,6 +23,7 @@
     --accent-border: #2D5A3D;
     --warm: #8B5E3C;
     --warm-light: #FDF3EC;
+    --tag-bg: #E8E3DC;
     --serif: 'DM Serif Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
     --radius: 10px;
@@ -175,6 +176,7 @@
     border-radius: var(--radius);
     cursor: pointer;
     transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
   }
 
   .generate-btn:hover { background: var(--accent-border); }
@@ -204,6 +206,9 @@
   .btn-row { display: flex; gap: 0.5rem; }
 
   .icon-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: var(--sans);
     font-size: 0.75rem;
     font-weight: 500;
@@ -254,7 +259,10 @@
     border-radius: var(--radius);
   }
 
-  .placeholder-icon { font-size: 1.8rem; opacity: 0.4; }
+  .placeholder-icon {
+    font-size: 1.8rem;
+    opacity: 0.4;
+  }
 
   .placeholder-state p {
     font-size: 0.82rem;
@@ -289,8 +297,6 @@
 
   .copy-toast.show { opacity: 1; transform: translateY(0); }
 
-  #customLensWrap { display: none; }
-
   @media (max-width: 900px) {
     .app { grid-template-columns: 1fr; }
     .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
@@ -301,8 +307,8 @@
 
 <header>
   <h1>Regen Studio</h1>
-  <div class="header-badge">Assignment 1 — Platform Analysis &amp; Proposal</div>
-  <span>Regenerative design proposal review</span>
+  <div class="header-badge">Final Assignment — Written Reflection</div>
+  <span>Group project documentation review</span>
 </header>
 
 <div class="app">
@@ -316,31 +322,12 @@
           <input type="text" id="studentName" placeholder="e.g. Hayoung" />
         </div>
         <div>
-          <label class="field-label">Platform Analysed</label>
-          <input type="text" id="platform" placeholder="e.g. Instagram, TikTok, Google Maps…" />
-        </div>
-        <div>
-          <label class="field-label">Lens Used</label>
-          <select id="lens">
-            <option value="">— Select lens —</option>
-            <option>Attention and wellbeing</option>
-            <option>Data and power</option>
-            <option>Community and social fabric</option>
-            <option>Place and belonging</option>
-            <option>Custom…</option>
-          </select>
-        </div>
-        <div id="customLensWrap">
-          <label class="field-label">Custom Lens</label>
-          <input type="text" id="customLens" placeholder="Describe lens…" />
-        </div>
-        <div>
           <label class="field-label">Overall Grade Feel</label>
           <select id="grade">
-            <option value="good">Good / Solid start</option>
-            <option value="strong">Strong / Well done</option>
+            <option value="good">Good / Solid work</option>
+            <option value="strong">Strong / Well written</option>
             <option value="hd">High distinction / Outstanding</option>
-            <option value="short">Incomplete / needs more work</option>
+            <option value="short">Needs more development</option>
           </select>
         </div>
       </div>
@@ -351,69 +338,57 @@
     <div>
       <div class="section-head">Strengths</div>
       <div class="check-grid">
-        <label class="check-item"><input type="checkbox" class="praise" value="personal-reflection"><span>Strong personal reflection integrated</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="nice-template"><span>Nice template / professional layout</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="good-writing"><span>Clear and lucid writing style</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="references"><span>Good use of citations and references</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="5-whys"><span>5 Whys analysis done well</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="images-used"><span>Good use of images to support argument</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="patterns"><span>Insightful degenerative patterns identified</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="cover-page"><span>Cover page / table of contents included</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="interesting-platform"><span>Interesting and well-chosen platform</span></label>
-        <label class="check-item"><input type="checkbox" class="praise" value="nice-finding"><span>Specific finding / observation that stood out</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="addresses-brief"><span>Addresses most questions in the brief</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="careful-planning"><span>Careful planning and detailing of design steps</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="group-work"><span>Good articulation of group collaboration</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="group-work-hurdles"><span>Group collaboration despite hurdles / technology</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="closing-reflection"><span>Closing reflection on growth as a designer</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="key-takeaways"><span>Key takeaways for future journey articulated</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="visuals-included"><span>Good use of visuals / screenshots included</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="impact-drafted"><span>Impact section drafted thoughtfully</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="strong-writing"><span>Strong, clear and enjoyable writing</span></label>
       </div>
     </div>
 
     <hr class="divider">
 
     <div>
-      <div class="section-head">Introduction &amp; Structure</div>
+      <div class="section-head">Depth of Reflection</div>
       <div class="check-grid">
-        <label class="check-item"><input type="checkbox" class="improve" value="intro-transition"><span>Intro transition is abrupt — smooth the connection to lens / purpose</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="lens-connection"><span>Connection between personal experience and lens not explicit</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="deepen-reflection"><span>Reflection is surface-level — needs more depth</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="core-philosophy"><span>Core philosophy / "why" not clearly articulated (full version incl. strengths & weaknesses)</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="core-philosophy-short"><span>Core philosophy / "why" not clearly articulated (short version)</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="regen-principles-link"><span>Design choices not linked to regenerative principles</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="regen-lost"><span>Regenerative design ideology getting overshadowed</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="impact-section"><span>Impact section needs stronger argument / measurable outcomes</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="explain-regen-solution"><span>Explain how project addresses issues / what makes it regenerative</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="strengths-weaknesses"><span>Strengths and weaknesses of deliverables not analyzed</span></label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div>
+      <div class="section-head">Process & Visuals</div>
+      <div class="check-grid">
+        <label class="check-item"><input type="checkbox" class="improve" value="elaborate-process"><span>Design process needs more detail — sketches to final</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="add-visuals"><span>Add more visuals to support written argument</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="explain-visuals"><span>Visuals present but not explained / connected to text</span></label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div>
+      <div class="section-head">Writing & Formatting</div>
+      <div class="check-grid">
+        <label class="check-item"><input type="checkbox" class="improve" value="academic-references"><span>Add academic references to support arguments</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="document-layout"><span>Improve visual layout of document — use a template</span></label>
         <label class="check-item"><input type="checkbox" class="improve" value="avoid-brief-headings"><span>Don't use assignment brief questions as headings</span></label>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <div>
-      <div class="section-head">Content &amp; Analysis</div>
-      <div class="check-grid">
-        <label class="check-item"><input type="checkbox" class="improve" value="add-screenshots"><span>Add screenshots / annotated images throughout</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="5-whys-expand"><span>Expand 5 Whys into full structured Q&amp;A with summary</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="deeper-interaction"><span>Deeper interaction analysis of one specific pattern</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="degenerative-patterns-depth"><span>Degenerative patterns need more depth + citations</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="platform-business-model"><span>Explain platform business model before patterns</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="explain-key-terms"><span>Explain key terms on first use</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="user-agency"><span>Engage more with user agency, not just experience</span></label>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <div>
-      <div class="section-head">Regenerative Ideas</div>
-      <div class="check-grid">
-        <label class="check-item"><input type="checkbox" class="improve" value="regen-detail"><span>Regenerative ideas need more implementation detail</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="regen-link-patterns"><span>Ideas not clearly linked back to specific patterns</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="add-sketches"><span>Add preliminary sketches of proposed ideas</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="regen-viability"><span>Address viability / systemic constraints of ideas</span></label>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <div>
-      <div class="section-head">Writing &amp; Formatting</div>
-      <div class="check-grid">
-        <label class="check-item"><input type="checkbox" class="improve" value="academic-references"><span>Add academic references</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="document-layout"><span>Improve visual layout — use a template</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="formatting-details"><span>Inconsistent formatting — spacing, headings, alignment</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="captions"><span>Add meaningful figure captions + reference in text</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="ai-acknowledge"><span>Acknowledge AI / ChatGPT use (or state work is own)</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="avoid-ai-reliance"><span>Writing appears AI-derived — personal voice needs to emerge</span></label>
-        <label class="check-item"><input type="checkbox" class="improve" value="expand-answers"><span>Overall proposal is too short — expand key sections</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="avoid-overusing-word"><span>Word "regenerative" overused — show rather than label</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="avoid-bullet-points"><span>Avoid bullet points — use full paragraphs instead</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="expand-writing"><span>Writing is too short — expand on key points</span></label>
+        <label class="check-item"><input type="checkbox" class="improve" value="consistent-spacing"><span>Inconsistent / excessive paragraph spacing</span></label>
       </div>
     </div>
 
@@ -421,7 +396,7 @@
 
     <div>
       <div class="section-head">Custom Note (optional)</div>
-      <textarea style="width:100%; font-family:var(--sans); font-size:0.8rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.55rem 0.75rem; color:var(--text); outline:none; resize:vertical; min-height:70px;" id="customNote" placeholder="Add a specific observation, particular finding you loved, attendance note, or anything unique to this student…"></textarea>
+      <textarea style="width:100%; font-family:var(--sans); font-size:0.8rem; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.55rem 0.75rem; color:var(--text); outline:none; resize:vertical; min-height:70px;" id="customNote" placeholder="Add a specific observation, compliment, or note unique to this student…"></textarea>
     </div>
 
     <button class="generate-btn" onclick="generate()">Generate Feedback →</button>
@@ -449,28 +424,14 @@
 
 <div class="copy-toast" id="copyToast">Copied to clipboard ✓</div>
 
-<script src="feedback-text-regen-a1.js"></script>
+<script src="feedback-text-regen-final.js"></script>
 <script>
-  // Show custom lens field when needed
-  document.getElementById('lens').addEventListener('change', function () {
-    document.getElementById('customLensWrap').style.display =
-      this.value === 'Custom…' ? 'block' : 'none';
-  });
-
-  function getLens() {
-    const v = document.getElementById('lens').value;
-    if (v === 'Custom…') return document.getElementById('customLens').value || 'your chosen lens';
-    return v || 'your chosen lens';
-  }
-
   function getChecked(cls) {
     return [...document.querySelectorAll('.' + cls + ':checked')].map(el => el.value);
   }
 
   function generate() {
     const name       = document.getElementById('studentName').value.trim() || 'Student';
-    const platform   = document.getElementById('platform').value.trim();
-    const lensVal    = getLens();
     const grade      = document.getElementById('grade').value;
     const praises    = getChecked('praise');
     const improves   = getChecked('improve');
@@ -487,24 +448,24 @@
 
     // Transition
     if (improves.length || customNote) {
-      parts.push('However, there are a few things that can be further enhanced.');
+      parts.push('However there are a few things that can be further enhanced.');
     }
 
-    // Improvements — pass platform and lens where relevant
+    // Improvements
     improves.forEach(k => {
       const fn = IMPROVE_TEXT[k];
-      if (fn) parts.push(typeof fn === 'function' ? fn(platform, lensVal) : fn);
+      if (fn) parts.push(typeof fn === 'function' ? fn() : fn);
     });
 
     // Custom note
     if (customNote) parts.push(customNote);
 
     // Closing
-    parts.push(`Overall, this is a solid start. Nice work and all the best with Assignment 2. :)`);
+    parts.push(`Overall, nice work and good to see your progress throughout the studio. Keep up the good work and all the best for future endeavours. :)`);
 
     const finalText = parts.join('\n\n');
 
-    document.getElementById('outputTitle').textContent = `Feedback — ${name} · Assignment 1`;
+    document.getElementById('outputTitle').textContent = `Feedback — ${name} · Final Assignment`;
     document.getElementById('outputArea').innerHTML = `<textarea class="feedback-editor" id="feedbackText" spellcheck="true" oninput="updateCount()">${finalText}</textarea>`;
     updateCount();
   }

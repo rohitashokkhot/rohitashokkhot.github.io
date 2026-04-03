@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 Feedback Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0F1117;
+    --surface: #171B26;
+    --surface2: #1E2330;
+    --border: #2A2F40;
+    --border-strong: #3D4459;
+    --text: #E8EAF0;
+    --text-muted: #8B91A8;
+    --text-hint: #555D78;
+    --accent: #4DFFB0;
+    --accent-dim: #1A3D2E;
+    --accent-text: #00CC88;
+    --accent-border: #2A6B4D;
+    --tag-bg: #252B3B;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Sora', system-ui, sans-serif;
+    --radius: 8px;
+    --radius-sm: 5px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-badge {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    background: var(--accent-dim);
+    color: var(--accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--accent-border);
+  }
+
+  header h1 {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  header span {
+    font-size: 0.72rem;
+    color: var(--text-hint);
+    margin-left: auto;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    min-height: calc(100vh - 49px);
+  }
+
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+  }
+
+  .section-head {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  label.field-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  input[type="text"], select, textarea {
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--text);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.65rem;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+
+  input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--accent-text);
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23555D78' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    padding-right: 1.75rem;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 0.65rem; }
+
+  .check-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.1s;
+    line-height: 1.4;
+  }
+
+  .check-item:hover { background: var(--surface2); }
+  .check-item input:checked + span { color: var(--text); }
+
+  .check-item input[type="checkbox"] {
+    width: 13px; height: 13px;
+    accent-color: var(--accent-text);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .cat-tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cat-tab {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-hint);
+    transition: all 0.12s;
+    letter-spacing: 0.04em;
+  }
+
+  .cat-tab:hover { border-color: var(--border-strong); color: var(--text-muted); }
+  .cat-tab.active { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); }
+
+  .cat-panel { display: none; }
+  .cat-panel.active { display: block; }
+
+  .generate-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--accent-text);
+    color: #0A1A12;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.04em;
+  }
+
+  .generate-btn:hover { opacity: 0.9; }
+  .generate-btn:active { transform: scale(0.99); }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1rem;
+    background: var(--bg);
+  }
+
+  .output-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .output-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-hint);
+  }
+
+  .output-title strong { color: var(--accent); font-weight: 700; }
+
+  .btn-row { display: flex; gap: 0.4rem; }
+
+  .icon-btn {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.12s;
+    letter-spacing: 0.04em;
+  }
+
+  .icon-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+  .feedback-editor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    flex: 1;
+    min-height: 500px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+    outline: none;
+    resize: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  .feedback-editor:focus { border-color: var(--border-strong); }
+
+  .placeholder-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+    color: var(--text-hint);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .placeholder-icon {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    color: var(--border-strong);
+  }
+
+  .placeholder-state p {
+    font-size: 0.78rem;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .word-count {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--text-hint);
+  }
+
+  .copy-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent-text);
+    color: #0A1A12;
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 999;
+    letter-spacing: 0.04em;
+  }
+
+  .copy-toast.show { opacity: 1; transform: translateY(0); }
+
+  .divider { border: none; border-top: 1px solid var(--border); }
+
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>feedback_a2.html</h1>
+  <div class="header-badge">Assignment 2 — Media Player</div>
+  <span>Interactive Media · Media player review</span>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+
+    <!-- STUDENT DETAILS -->
+    <div>
+      <div class="section-head">Student Details</div>
+      <div class="field-group">
+        <div>
+          <label class="field-label">Student Name</label>
+          <input type="text" id="studentName" placeholder="e.g. Lia" />
+        </div>
+        <div>
+          <label class="field-label">Chosen Context</label>
+          <input type="text" id="projectContext" placeholder="e.g. music video, study, cooking…" />
+        </div>
+        <div>
+          <label class="field-label">Overall Grade Feel</label>
+          <select id="grade">
+            <option value="good">Good / Solid work</option>
+            <option value="strong">Strong / Well done</option>
+            <option value="hd">High distinction / Outstanding</option>
+            <option value="short">Needs more work</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- STRENGTHS -->
+    <div>
+      <div class="section-head">Strengths</div>
+      <div class="check-grid">
+        <label class="check-item"><input type="checkbox" class="praise" value="comments"><span>Good comments in code</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="advanced-techniques"><span>Advanced techniques used independently</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="acknowledgement"><span>Acknowledged resources / AI tools</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="playlist"><span>Nice playlist integration</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="context-fit"><span>Design feels unique to the chosen context</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="extra-feature"><span>Great extra feature (timer, comments, goals etc.)</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="strong-visuals"><span>Strong color palette and visual aesthetic</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="figma-readme"><span>Figma / readme / mood board included</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="code-clean"><span>Clean and well-structured code</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="functions-working"><span>Key playback functions working correctly</span></label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- IMPROVEMENTS — TABBED -->
+    <div>
+      <div class="section-head">Improvements</div>
+      <div class="cat-tabs">
+        <button class="cat-tab active" onclick="switchTab(this,'tab-context')">Context</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-player')">Player</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-visual')">Visual</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-code')">Code</button>
+      </div>
+
+      <!-- CONTEXT TAB -->
+      <div class="cat-panel active" id="tab-context">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="context-not-clear"><span>Context not clear / design feels generic</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="better-title"><span>Choose a more creative title</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="design-too-basic"><span>Too close to class example — needs more additions</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="layout-side-by-side"><span>Stack → side-by-side layout on wider screens</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="context-comments"><span>Comments lack design reasoning / context motivation</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="hide-footer-resources"><span>Hide footer — replace with resources button</span></label>
+        </div>
+      </div>
+
+      <!-- PLAYER TAB -->
+      <div class="cat-panel" id="tab-player">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="single-play-pause-btn"><span>Use single toggle play/pause button</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="hide-default-controls"><span>Hide default browser controls attribute</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="single-audio-element"><span>Use single audio element for playlist</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="progress-bar-placement"><span>Improve progress bar placement / alignment</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="timer-pause-reset"><span>Timer needs pause and reset options</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="timer-icons"><span>Use icons for timer buttons instead of text</span></label>
+        </div>
+      </div>
+
+      <!-- VISUAL TAB -->
+      <div class="cat-panel" id="tab-visual">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="button-depth"><span>Buttons need depth — box shadow + hover scale</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="button-consistency"><span>Inconsistent button styling across the page</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="cursor-pointer"><span>Add cursor: pointer to interactive elements</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="hover-playlist"><span>Add hover / active state to playlist items</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="animation-caution"><span>Looping animations — use sparingly / on interaction</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="semi-transparent-bg"><span>Give media player a semi-transparent background</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="font-choice"><span>Experiment with a more distinctive font</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="font-pairing"><span>Body font feels plain next to heading font</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="color-contrast"><span>Improve text / background color contrast</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="range-slider-color"><span>Style the range slider with accent-color</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="serif-font-warning"><span>Swap serif body font for sans-serif</span></label>
+        </div>
+      </div>
+
+      <!-- CODE TAB -->
+      <div class="cat-panel" id="tab-code">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="explain-advanced-techniques"><span>Explain advanced techniques in comments</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="avoid-mixing-selectors"><span>Avoid mixing getElementById + querySelector</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="no-inline-js"><span>Move inline styles + scripts to separate files</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="check-console"><span>Check Chrome DevTools console for errors</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="outdated-techniques"><span>Caution with outdated tutorials / ChatGPT code</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="use-input-not-prompt"><span>Use &lt;input&gt; instead of browser prompts</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="defer-keyword"><span>Add defer to script tag</span></label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div>
+      <div class="section-head">Custom Note (optional)</div>
+      <textarea style="width:100%; font-family:var(--sans); font-size:0.78rem; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.5rem 0.65rem; color:var(--text); outline:none; resize:vertical; min-height:70px;" id="customNote" placeholder="Specific observation unique to this student — a feature you loved, a specific code fix, a link to a working example…"></textarea>
+    </div>
+
+    <button class="generate-btn" onclick="generate()">// generate feedback</button>
+  </aside>
+
+  <!-- MAIN OUTPUT -->
+  <main class="main">
+    <div class="output-header">
+      <div class="output-title" id="outputTitle">// no output yet</div>
+      <div class="btn-row">
+        <button class="icon-btn" onclick="copyText()">[ copy ]</button>
+        <button class="icon-btn" onclick="clearOutput()">[ clear ]</button>
+      </div>
+    </div>
+
+    <div id="outputArea">
+      <div class="placeholder-state">
+        <div class="placeholder-icon">&lt;/&gt;</div>
+        <p>Fill in student details and check the relevant boxes<br>then click <strong>// generate feedback</strong></p>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="word-count" id="wordCount"></div>
+    </div>
+  </main>
+</div>
+
+<div class="copy-toast" id="copyToast">// copied to clipboard</div>
+
+<script src="feedback-text-a2.js"></script>
+<script>
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  function getChecked(cls) {
+    return [...document.querySelectorAll('.' + cls + ':checked')].map(el => el.value);
+  }
+
+  function generate() {
+    const name       = document.getElementById('studentName').value.trim() || 'Student';
+    const context    = document.getElementById('projectContext').value.trim();
+    const grade      = document.getElementById('grade').value;
+    const praises    = getChecked('praise');
+    const improves   = getChecked('improve');
+    const customNote = document.getElementById('customNote').value.trim();
+
+    let parts = [];
+
+    // Opener
+    parts.push(OPENERS[grade](name, 'Assignment 2'));
+
+    // Context mention woven into opener naturally if provided
+    if (context) {
+      parts.push(`The chosen context of "${context}" is a nice fit and the design reflects genuine thought about how to build on the class example.`);
+    }
+
+    // Praise
+    const praiseLines = praises.map(k => PRAISE_TEXT[k]).filter(Boolean);
+    if (praiseLines.length) parts.push(praiseLines.join(' '));
+
+    // Transition
+    if (improves.length || customNote) {
+      parts.push('However, there are a few things that can be further enhanced.');
+    }
+
+    // Improvements
+    improves.forEach(k => {
+      const fn = IMPROVE_TEXT[k];
+      if (fn) parts.push(typeof fn === 'function' ? fn(context) : fn);
+    });
+
+    // Custom note
+    if (customNote) parts.push(customNote);
+
+    // Closing
+    parts.push(`Overall, nice work! And all the best for the final assignment. :)`);
+
+    const finalText = parts.join('\n\n');
+
+    document.getElementById('outputTitle').innerHTML = `// <strong>${name}</strong> · Assignment 2`;
+    document.getElementById('outputArea').innerHTML  = `<textarea class="feedback-editor" id="feedbackText" spellcheck="true" oninput="updateCount()">${finalText}</textarea>`;
+    updateCount();
+  }
+
+  function updateCount() {
+    const el = document.getElementById('feedbackText');
+    if (!el) return;
+    const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('wordCount').textContent = `// ${words} words`;
+  }
+
+  function copyText() {
+    const el = document.getElementById('feedbackText');
+    if (!el) return;
+    navigator.clipboard.writeText(el.value).then(() => {
+      const t = document.getElementById('copyToast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    });
+  }
+
+  function clearOutput() {
+    document.getElementById('outputArea').innerHTML = `
+      <div class="placeholder-state">
+        <div class="placeholder-icon">&lt;/&gt;</div>
+        <p>Fill in student details and check the relevant boxes<br>then click <strong>// generate feedback</strong></p>
+      </div>`;
+    document.getElementById('outputTitle').textContent = '// no output yet';
+    document.getElementById('wordCount').textContent = '';
+  }
+</script>
+</body>
+</html>

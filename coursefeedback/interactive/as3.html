@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A3 Feedback Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0F1117;
+    --surface: #171B26;
+    --surface2: #1E2330;
+    --border: #2A2F40;
+    --border-strong: #3D4459;
+    --text: #E8EAF0;
+    --text-muted: #8B91A8;
+    --text-hint: #555D78;
+    --accent: #C084FC;
+    --accent-dim: #2D1A47;
+    --accent-text: #A855F7;
+    --accent-border: #5B2FA0;
+    --warn: #FFB84D;
+    --tag-bg: #252B3B;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Sora', system-ui, sans-serif;
+    --radius: 8px;
+    --radius-sm: 5px;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .header-badge {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    background: var(--accent-dim);
+    color: var(--accent);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--accent-border);
+  }
+
+  header h1 {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  header span {
+    font-size: 0.72rem;
+    color: var(--text-hint);
+    margin-left: auto;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    min-height: calc(100vh - 49px);
+  }
+
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    overflow-y: auto;
+  }
+
+  .section-head {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-hint);
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  label.field-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  input[type="text"], select, textarea {
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--text);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.65rem;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+
+  input[type="text"]:focus, select:focus, textarea:focus {
+    border-color: var(--accent-text);
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23555D78' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    padding-right: 1.75rem;
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 0.65rem; }
+
+  .check-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.3rem 0.4rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.1s;
+    line-height: 1.4;
+  }
+
+  .check-item:hover { background: var(--surface2); }
+  .check-item input:checked + span { color: var(--text); }
+
+  .check-item input[type="checkbox"] {
+    width: 13px; height: 13px;
+    accent-color: var(--accent-text);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .cat-tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cat-tab {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-hint);
+    transition: all 0.12s;
+    letter-spacing: 0.04em;
+  }
+
+  .cat-tab:hover { border-color: var(--border-strong); color: var(--text-muted); }
+  .cat-tab.active { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); }
+
+  .cat-panel { display: none; }
+  .cat-panel.active { display: block; }
+
+  .generate-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--accent-text);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s, transform 0.1s;
+    letter-spacing: 0.04em;
+  }
+
+  .generate-btn:hover { opacity: 0.88; }
+  .generate-btn:active { transform: scale(0.99); }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1rem;
+    background: var(--bg);
+  }
+
+  .output-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .output-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-hint);
+  }
+
+  .output-title strong { color: var(--accent); font-weight: 700; }
+
+  .btn-row { display: flex; gap: 0.4rem; }
+
+  .icon-btn {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.35rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.12s;
+    letter-spacing: 0.04em;
+  }
+
+  .icon-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+  .feedback-editor {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    flex: 1;
+    min-height: 500px;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text);
+    outline: none;
+    resize: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+
+  .feedback-editor:focus { border-color: var(--border-strong); }
+
+  .placeholder-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+    color: var(--text-hint);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .placeholder-icon {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    color: var(--border-strong);
+  }
+
+  .placeholder-state p {
+    font-size: 0.78rem;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .word-count {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--text-hint);
+  }
+
+  .copy-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent-text);
+    color: #fff;
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 999;
+    letter-spacing: 0.04em;
+  }
+
+  .copy-toast.show { opacity: 1; transform: translateY(0); }
+
+  .divider { border: none; border-top: 1px solid var(--border); }
+
+  @media (max-width: 860px) {
+    .app { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>feedback_a3.html</h1>
+  <div class="header-badge">Assignment 3 — Final Creative Interactive</div>
+  <span>Interactive Media · Final project review</span>
+</header>
+
+<div class="app">
+  <aside class="sidebar">
+
+    <!-- STUDENT DETAILS -->
+    <div>
+      <div class="section-head">Student Details</div>
+      <div class="field-group">
+        <div>
+          <label class="field-label">Student Name</label>
+          <input type="text" id="studentName" placeholder="e.g. Camille" />
+        </div>
+        <div>
+          <label class="field-label">Project Type / Context</label>
+          <input type="text" id="projectContext" placeholder="e.g. Vinyl library, memory game…" />
+        </div>
+        <div>
+          <label class="field-label">Overall Grade Feel</label>
+          <select id="grade">
+            <option value="good">Good / Solid work</option>
+            <option value="strong">Strong / Well done</option>
+            <option value="hd">High distinction / Outstanding</option>
+            <option value="short">Needs more work</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- STRENGTHS -->
+    <div>
+      <div class="section-head">Strengths</div>
+      <div class="check-grid">
+        <label class="check-item"><input type="checkbox" class="praise" value="comments"><span>Good comments in code</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="detailed-comments"><span>Detailed comments and reflections</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="advanced-techniques"><span>Advanced techniques used independently</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="acknowledgement"><span>Acknowledged resources / AI tools</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="illustrations"><span>Wonderful illustrations</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="sound"><span>Good use of sound effects</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="strong-visuals"><span>Strong color palette and visual aesthetic</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="interaction-quality"><span>Interactions are well thought-out</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="welcome-screen"><span>Good welcome screen / onboarding</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="context-fit"><span>Design feels unique to the chosen context</span></label>
+        <label class="check-item"><input type="checkbox" class="praise" value="presentation"><span>Great presentation / reflections shared</span></label>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- IMPROVEMENTS — TABBED -->
+    <div>
+      <div class="section-head">Improvements</div>
+      <div class="cat-tabs">
+        <button class="cat-tab active" onclick="switchTab(this,'tab-ux')">UX</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-visual')">Visual</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-interaction')">Interaction</button>
+        <button class="cat-tab" onclick="switchTab(this,'tab-code')">Code</button>
+      </div>
+
+      <!-- UX TAB -->
+      <div class="cat-panel active" id="tab-ux">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="add-welcome-screen"><span>Add a welcome screen / onboarding</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="cursor-pointer"><span>Add cursor: pointer to interactive elements</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="button-feedback"><span>Buttons need depth — box shadow + hover scale</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="add-sound"><span>Add sound effects to key interactions</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="mute-button"><span>Include a mute / volume toggle for audio</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="no-alerts"><span>Replace alert / prompt boxes with styled messages</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="interaction-clarity"><span>Interaction is not immediately clear — add guidance</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="randomise-content"><span>Randomise content for replay value</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="disable-after-interaction"><span>Disable repeated clicks after interaction triggers</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="overflow-scroll"><span>Content clipped — add overflow: scroll</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="remove-placeholder-elements"><span>Remove non-functional placeholder elements</span></label>
+        </div>
+      </div>
+
+      <!-- VISUAL TAB -->
+      <div class="cat-panel" id="tab-visual">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="font-choice"><span>Experiment with more distinctive fonts</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="font-pairing"><span>Body font feels plain — pair with heading font</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="layout-arrangement"><span>Vertical stack → side-by-side on larger screens</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="center-align"><span>Design appears off-center — center it</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="spacing-consistency"><span>Inconsistent spacing between elements</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="color-contrast"><span>Improve text / background color contrast</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="animation-use-sparingly"><span>Animations — use sparingly, trigger on interaction</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="shadow-depth"><span>Add shadows to create depth and polish</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="floating-items"><span>Items floating in mid-air — add a surface</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="welcome-page-title"><span>Choose a more creative / engaging title</span></label>
+        </div>
+      </div>
+
+      <!-- INTERACTION TAB -->
+      <div class="cat-panel" id="tab-interaction">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="drag-drop-feedback"><span>Drag and drop needs more visual feedback</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="prev-next-disabled"><span>Disable prev/next buttons at boundaries</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="step-counter"><span>Add a step counter or progress indicator</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="scoreboard-timer"><span>Add timer and scoreboard for competitive feel</span></label>
+        </div>
+      </div>
+
+      <!-- CODE TAB -->
+      <div class="cat-panel" id="tab-code">
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" class="improve" value="context-comments"><span>Comments need design reasoning / context motivation</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="explain-advanced-techniques"><span>Explain advanced techniques in comments</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="avoid-mixing-selectors"><span>Avoid mixing getElementById + querySelector</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="outdated-techniques"><span>Caution with outdated tutorials / ChatGPT code</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="check-console"><span>Check Chrome DevTools console for JS errors</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="use-array-for-data"><span>Store data in JS array — load dynamically</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="no-inline-js"><span>Move inline styles + scripts to separate files</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="defer-domcontentloaded"><span>Using defer — no need for DOMContentLoaded wrapper</span></label>
+          <label class="check-item"><input type="checkbox" class="improve" value="external-library-warning"><span>External JS library used — not permitted</span></label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div>
+      <div class="section-head">Custom Note (optional)</div>
+      <textarea style="width:100%; font-family:var(--sans); font-size:0.78rem; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:0.5rem 0.65rem; color:var(--text); outline:none; resize:vertical; min-height:70px;" id="customNote" placeholder="Specific observation unique to this student — a particular feature you loved, a specific code fix, a link to a relevant example…"></textarea>
+    </div>
+
+    <button class="generate-btn" onclick="generate()">// generate feedback</button>
+  </aside>
+
+  <!-- MAIN OUTPUT -->
+  <main class="main">
+    <div class="output-header">
+      <div class="output-title" id="outputTitle">// no output yet</div>
+      <div class="btn-row">
+        <button class="icon-btn" onclick="copyText()">[ copy ]</button>
+        <button class="icon-btn" onclick="clearOutput()">[ clear ]</button>
+      </div>
+    </div>
+
+    <div id="outputArea">
+      <div class="placeholder-state">
+        <div class="placeholder-icon">✦</div>
+        <p>Fill in student details and check the relevant boxes<br>then click <strong>// generate feedback</strong></p>
+      </div>
+    </div>
+
+    <div class="meta-row">
+      <div class="word-count" id="wordCount"></div>
+    </div>
+  </main>
+</div>
+
+<div class="copy-toast" id="copyToast">// copied to clipboard</div>
+
+<script src="feedback-text-a3.js"></script>
+<script>
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  function getChecked(cls) {
+    return [...document.querySelectorAll('.' + cls + ':checked')].map(el => el.value);
+  }
+
+  function generate() {
+    const name        = document.getElementById('studentName').value.trim() || 'Student';
+    const context     = document.getElementById('projectContext').value.trim();
+    const grade       = document.getElementById('grade').value;
+    const praises     = getChecked('praise');
+    const improves    = getChecked('improve');
+    const customNote  = document.getElementById('customNote').value.trim();
+
+    let parts = [];
+
+    // Opener
+    parts.push(OPENERS[grade](name, 'the final assignment'));
+
+    // Praise
+    const praiseLines = praises.map(k => PRAISE_TEXT[k]).filter(Boolean);
+    if (praiseLines.length) parts.push(praiseLines.join(' '));
+
+    // Transition
+    if (improves.length || customNote) {
+      parts.push('Here are a few suggestions that could further enhance the experience.');
+    }
+
+    // Improvements
+    improves.forEach(k => {
+      const fn = IMPROVE_TEXT[k];
+      if (fn) parts.push(typeof fn === 'function' ? fn(context) : fn);
+    });
+
+    // Custom note
+    if (customNote) parts.push(customNote);
+
+    // Closing
+    parts.push(`Overall, wonderful work! I wish you the best of luck in your future endeavors! :)`);
+
+    const finalText = parts.join('\n\n');
+
+    document.getElementById('outputTitle').innerHTML = `// <strong>${name}</strong> · Final Assignment`;
+    document.getElementById('outputArea').innerHTML  = `<textarea class="feedback-editor" id="feedbackText" spellcheck="true" oninput="updateCount()">${finalText}</textarea>`;
+    updateCount();
+  }
+
+  function updateCount() {
+    const el = document.getElementById('feedbackText');
+    if (!el) return;
+    const words = el.value.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('wordCount').textContent = `// ${words} words`;
+  }
+
+  function copyText() {
+    const el = document.getElementById('feedbackText');
+    if (!el) return;
+    navigator.clipboard.writeText(el.value).then(() => {
+      const t = document.getElementById('copyToast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    });
+  }
+
+  function clearOutput() {
+    document.getElementById('outputArea').innerHTML = `
+      <div class="placeholder-state">
+        <div class="placeholder-icon">✦</div>
+        <p>Fill in student details and check the relevant boxes<br>then click <strong>// generate feedback</strong></p>
+      </div>`;
+    document.getElementById('outputTitle').textContent = '// no output yet';
+    document.getElementById('wordCount').textContent = '';
+  }
+</script>
+</body>
+</html>

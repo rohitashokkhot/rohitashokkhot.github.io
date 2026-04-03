@@ -949,7 +949,7 @@
     </div>
 
     <div class="copy-toast" id="copyToast">// copied to clipboard</div>
-
+    <script src="feedback-text-a1.js"></script>
     <script>
       function switchTab(btn, panelId) {
         document
@@ -971,115 +971,6 @@
           `Excellent job, ${name}, on ${asgn}! Your assignment reads really well and you provided thoughtful answers to most questions.`,
         short: (name, asgn) =>
           `Thank you for submitting ${asgn}, ${name}. The assignment covers the key areas but there is room to develop it further.`,
-      };
-
-      const PRAISE_TEXT = {
-        "reads-well": null, // handled in opener
-        "nice-design": "The overall design is clean and well-presented.",
-        comments:
-          "It is great to see meaningful comments included in your code.",
-        "semantic-some":
-          "It is good to see the use of some semantic HTML tags.",
-        "images-used":
-          "The use of images to support your responses is commendable — they strengthen the argument considerably.",
-        "grid-layout":
-          "I liked the use of a grid-based layout, which gives the page a structured and polished look.",
-        typography:
-          "The typography is well chosen and contributes to a professional appearance.",
-        colors:
-          "The color palette is pleasing and creates a cohesive visual experience.",
-        "consistent-theme":
-          "I especially like how you have maintained a consistent theme throughout the assignment.",
-        "advanced-technique":
-          "It is impressive to see you experimenting with advanced techniques in your code — keep it up! :)",
-        "reset-css":
-          "Good to see reset.css included to ensure consistency across browsers.",
-        "nav-links":
-          "Good to see functioning navigation links and a well-structured multi-section layout.",
-      };
-
-      const IMPROVE_TEXT = {
-        // CONTENT
-        "expand-answers": () =>
-          `The overall answers are slightly short. Expand on them so that you are articulating your experience of browsing the website in detail and offering solid reasoning for your response.`,
-        "add-screenshots": (site) =>
-          `Consider using images or screenshots of ${site ? site + " " : "the website you are reviewing "}to support your argument and add more context. Relevant visuals can provide additional support to your points and engage your audience on a deeper level.`,
-        "include-questions": () =>
-          `You did not include the questions, so for the reader it is not always clear what each paragraph is responding to. Include the complete question before each answer to provide context.`,
-        "better-title": (site) =>
-          `Rather than a generic title like "Assignment 1" or "Interactive Media", consider something more descriptive — for example, "Review of ${site || "the website"}" makes the page's purpose immediately clear, and removes the need for a separate subheading.`,
-        "meaningful-comments": () =>
-          `Add meaningful comments to both HTML and CSS that explain your reasoning behind the layout and color choices — not just what each element is, but why you made the decision.`,
-
-        // HTML
-        "semantic-tags": () =>
-          `Consider using semantic HTML tags such as <section>, <main>, <article>, <header>, and <footer> to replace content currently structured using <div>s. Divs have no semantic meaning and should be reserved for layout purposes only. A good approach is to enclose each question and answer in a <section>, with <h3> for the question and <p> for the answer.`,
-        "reduce-divs": () =>
-          `Try to minimise the overuse of <div> elements. Where you have only a single <p> or heading inside a <div>, apply the class directly to that element instead — this results in cleaner, leaner code.`,
-        "no-content-outside-body": () =>
-          `All visible content — including the page heading — must sit inside the <body> tag. Any HTML elements placed before <body> or after </body> will cause semantic errors and unpredictable rendering.`,
-        "no-br-spacing": () =>
-          `You have relied on <br> to create spacing between sections. Instead, use CSS margin, padding, or flexbox/grid gap properties to achieve the same effect — this approach is more consistent and easier to maintain.`,
-        "heading-hierarchy": () =>
-          `Ensure heading tags are used in sequential order from <h1> through to <h5> without skipping levels. For example, avoid jumping from <h1> to <h3>.`,
-        "figure-captions": () =>
-          `Centre-align figure captions for consistency with the rest of the layout.`,
-        "anchor-content": () =>
-          `Avoid placing block-level elements like <div> or <button> inside anchor tags. If you need a clickable region, use a CSS-styled <a> or handle it with a JavaScript click event — we will cover this when we look at DOM handling in class.`,
-        "reset-css-order": () =>
-          `Make sure reset.css is linked before style.css in the <head>. This ensures your own styles always take precedence and are not accidentally overridden by the reset.`,
-        "add-reset-css": () =>
-          `Include reset.css so that the design renders consistently across different browsers. Without it, default browser styles can introduce unexpected spacing and font differences.`,
-        "semantic-errors": () =>
-          `There are a few semantic errors in the code to address — for example, check for duplicate closing tags, elements placed outside <body>, or tags that do not exist in standard HTML. A quick validation pass through the W3C validator will highlight these.`,
-
-        // CSS
-        "no-inline-style": () =>
-          `Avoid inline styling in your HTML. As we discussed in class, the principle of separation of concerns means HTML, CSS, and JavaScript should each live in their own file. Move any inline style="..." attributes into style.css instead.`,
-        "consolidate-classes": () =>
-          `If multiple elements share the same CSS properties, consolidate them under a single reusable class rather than duplicating the rules. For example, all questions could share a class like .question and all answers a class like .answer, with individual IDs only where unique overrides are needed.`,
-        "group-selectors": () =>
-          `Where multiple selectors share identical properties, group them together using commas — for example, h1, h2, h3 { font-family: ...; } — to reduce redundancy and keep your CSS concise.`,
-        "font-inheritance": () =>
-          `If you are using the same font family across the whole page, set it once on the body selector and all child elements will inherit it automatically. There is no need to redeclare the font-family on every individual element.`,
-        "no-unused-fonts": () =>
-          `Remove any font imports or font-family declarations in CSS that are not actually used on the page. Unused assets add unnecessary weight and clutter.`,
-        "use-flexbox-grid": () =>
-          `The overall layout would benefit from using flexbox or CSS grid rather than manual absolute positioning or tables. This gives you much greater control over alignment and responsiveness.`,
-        "overflow-hidden": () =>
-          `Make sure the design does not produce horizontal scrolling. If content overflows the viewport, use overflow: hidden on the containing element to keep the layout clean.`,
-        "prefer-classes-over-ids": () =>
-          `When styles are intended to be reusable or applied to more than one element, prefer classes over IDs. IDs should generally be reserved for unique elements or JavaScript hooks.`,
-        "consistent-width": () =>
-          `For a more uniform appearance, ensure questions and answers have the same width. Currently some answer boxes are narrower than their corresponding questions, creating an unbalanced look.`,
-        "css-comment-why": () =>
-          `When adding comments to your CSS, focus on the reasoning behind your choices — why did you select that particular color, font size, or layout approach? This is far more useful for anyone reading the code than simply describing what the rule does.`,
-
-        // VISUAL
-        "font-pairing": () =>
-          `The heading font is eye-catching, but the body text font feels a little plain in comparison. Consider pairing it with a complementary font from Google Fonts to create a more cohesive and polished typographic system.`,
-        "readability-colors": () =>
-          `Bright or vibrant colors generally work best for small UI elements like buttons or short headings. For larger blocks of body text, black, gray, or softer tones significantly improve readability. You could also introduce subtle color contrast between questions and answers — making questions slightly darker than answers creates a nice visual hierarchy.`,
-        "line-spacing": () =>
-          `Adding some line-height (line spacing) would improve readability considerably. A value of around 1.6–1.8 is a good starting point for body text.`,
-        "font-sizing": () =>
-          `Aim for better balance in font sizing between questions and answers — currently the gap between the two is slightly too large, which can feel unbalanced. Bringing them closer in size while keeping questions slightly bolder will achieve a clearer hierarchy without the jarring contrast.`,
-        "margins-padding": () =>
-          `The overall appearance would benefit from more considered use of margins and padding. In particular, ensure text is not sitting too close to the edge of its container or the browser window — a little breathing room goes a long way.`,
-        "animation-caution": () =>
-          `Animations can be a nice touch, but use them judiciously. They work well on small elements like buttons or short headings. Applying scaling or transition effects to large blocks of text tends to cause layout shifts that disrupt the reading experience. If you do use hover effects, also set cursor: pointer on the element so users know it is interactive.`,
-        "cursor-pointer": () =>
-          `Where elements have hover or click effects, add cursor: pointer in CSS so it is clear to users that the element is interactive.`,
-        "no-center-align-para": () =>
-          `Avoid centre-aligning paragraphs that span multiple lines. Centre alignment works well for short headings and labels, but for running text it significantly reduces readability.`,
-        "75ch-rule": () =>
-          `As a general web typography principle, a single line of text should not exceed around 75 characters (75ch). Longer lines are harder to read and cause eye fatigue. You can enforce this with max-width: 75ch on your paragraph elements — it is already set in reset.css for this reason.`,
-        "modern-fonts": () =>
-          `Consider browsing Google Fonts for a more distinctive typeface. A well-chosen modern font can elevate the overall design considerably.`,
-        "sticky-footer-ux": () =>
-          `A sticky footer can create an awkward UX on long pages, as it overlaps the content while the user is reading. Sticky headers are far more common and useful for navigation. Consider removing the sticky behaviour from the footer.`,
-        "column-count": () =>
-          `For long text content, avoid more than two or three columns. A wider column count forces constant vertical scrolling within each column and disrupts the natural left-to-right reading flow. Two columns is generally the comfortable maximum for paragraphs.`,
       };
 
       function getChecked(cls) {
