@@ -1,0 +1,1674 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Sustainable Transport · Card Scanner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --navy: #1a2d5a;
+        --navy-dk: #111e3d;
+        --navy-lt: #2a4080;
+        --sky: #d4e8f5;
+        --sky-lt: #eaf4fb;
+        --white: #ffffff;
+        --off-white: #f7f9fc;
+        --text: #1a2d5a;
+        --text-lt: #4a5f8a;
+        --accent: #2a6496;
+        --border: rgba(26, 45, 90, 0.12);
+        --border2: rgba(26, 45, 90, 0.07);
+        --radius: 14px;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--off-white);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+      }
+
+      /* ── Page shell ── */
+      .page {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 0 0 6rem;
+      }
+
+      /* ── App header ── */
+      .app-header {
+        background: var(--white);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.25rem 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .app-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--navy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .app-logo svg {
+        width: 20px;
+        height: 20px;
+      }
+      .app-title-wrap {
+      }
+      .app-title {
+        font-family: "Libre Baskerville", serif;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--navy);
+        letter-spacing: 0.01em;
+        line-height: 1;
+      }
+      .app-sub {
+        font-size: 0.72rem;
+        color: var(--text-lt);
+        margin-top: 2px;
+        font-weight: 300;
+        letter-spacing: 0.02em;
+      }
+
+      /* ── Section labels ── */
+      .section-label {
+        font-size: 0.65rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-lt);
+        padding: 1.1rem 1.25rem 0.5rem;
+      }
+
+      /* ── Camera viewfinder ── */
+      .vf-outer {
+        margin: 0 1.25rem;
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: #0a1220;
+        aspect-ratio: 3/2;
+        position: relative;
+        box-shadow: 0 4px 24px rgba(26, 45, 90, 0.12);
+      }
+
+      #video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.6s;
+      }
+      #video.live {
+        opacity: 1;
+      }
+
+      .vf-idle {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        color: rgba(255, 255, 255, 0.35);
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+      .vf-idle.hidden {
+        opacity: 0;
+      }
+      .vf-idle-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      /* quote targeting frame */
+      .quote-frame {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        top: 15%;
+        bottom: 22%;
+        border: 1.5px solid rgba(255, 255, 255, 0.35);
+        border-radius: 6px;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .quote-frame-label {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(26, 45, 90, 0.75);
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding: 1px 8px;
+        border-radius: 3px;
+        white-space: nowrap;
+      }
+      /* corner ticks */
+      .qt::before,
+      .qt::after,
+      .qb::before,
+      .qb::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-color: #5b9bd5;
+        border-style: solid;
+        border-width: 0;
+      }
+      .qt::before {
+        top: -1px;
+        left: -1px;
+        border-top-width: 2px;
+        border-left-width: 2px;
+        border-radius: 2px 0 0 0;
+      }
+      .qt::after {
+        top: -1px;
+        right: -1px;
+        border-top-width: 2px;
+        border-right-width: 2px;
+        border-radius: 0 2px 0 0;
+      }
+      .qb::before {
+        bottom: -1px;
+        left: -1px;
+        border-bottom-width: 2px;
+        border-left-width: 2px;
+        border-radius: 0 0 0 2px;
+      }
+      .qb::after {
+        bottom: -1px;
+        right: -1px;
+        border-bottom-width: 2px;
+        border-right-width: 2px;
+        border-radius: 0 0 2px 0;
+      }
+
+      /* scan beam */
+      #beam {
+        position: absolute;
+        left: 8%;
+        right: 8%;
+        height: 1.5px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #5b9bd5 20%,
+          #a8d0f0 50%,
+          #5b9bd5 80%,
+          transparent
+        );
+        top: 15%;
+        opacity: 0;
+        z-index: 4;
+        pointer-events: none;
+        box-shadow: 0 0 8px 1px rgba(91, 155, 213, 0.5);
+      }
+      #beam.on {
+        opacity: 1;
+        animation: sweep 1.4s ease-in-out infinite;
+      }
+      @keyframes sweep {
+        0%,
+        100% {
+          top: 17%;
+        }
+        50% {
+          top: 75%;
+        }
+      }
+
+      .vf-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+        background: radial-gradient(
+          ellipse 90% 90% at 50% 50%,
+          transparent 45%,
+          rgba(10, 18, 32, 0.6) 100%
+        );
+      }
+
+      /* ── Status pill ── */
+      .status-strip {
+        margin: 0.75rem 1.25rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.5rem 0.8rem;
+        border-radius: 8px;
+        background: var(--white);
+        border: 1px solid var(--border);
+        min-height: 2.2rem;
+      }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(26, 45, 90, 0.15);
+        flex-shrink: 0;
+      }
+      .dot.active {
+        background: #2a7fd4;
+        animation: blink 1.3s ease-in-out infinite;
+      }
+      .dot.ok {
+        background: #2e8b57;
+      }
+      .dot.err {
+        background: #c0392b;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+      #status-msg {
+        font-size: 0.8rem;
+        color: var(--text-lt);
+        line-height: 1.3;
+      }
+
+      /* OCR progress */
+      .prog-wrap {
+        margin: 0.5rem 1.25rem 0;
+        display: none;
+      }
+      .prog-wrap.show {
+        display: block;
+      }
+      .prog-track {
+        height: 3px;
+        background: var(--border2);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      #prog {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(to right, var(--navy-lt), #5b9bd5);
+        border-radius: 2px;
+        transition: width 0.3s;
+      }
+      #prog-msg {
+        font-size: 0.72rem;
+        color: var(--text-lt);
+        margin-top: 3px;
+      }
+
+      /* ── Buttons ── */
+      .btn-row {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 0.6rem;
+        padding: 0.85rem 1.25rem 0;
+      }
+
+      .btn {
+        padding: 0.65rem 0.5rem;
+        border-radius: 9px;
+        border: 1.5px solid var(--border);
+        background: var(--white);
+        color: var(--text-lt);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition: all 0.16s;
+        white-space: nowrap;
+      }
+      .btn:hover:not(:disabled) {
+        background: var(--sky-lt);
+        border-color: rgba(26, 45, 90, 0.25);
+        color: var(--navy);
+      }
+      .btn:active:not(:disabled) {
+        transform: scale(0.96);
+      }
+      .btn:disabled {
+        opacity: 0.3;
+        cursor: default;
+      }
+      .btn.primary {
+        background: var(--navy);
+        border-color: var(--navy);
+        color: #fff;
+        font-weight: 500;
+      }
+      .btn.primary:hover:not(:disabled) {
+        background: var(--navy-lt);
+        border-color: var(--navy-lt);
+      }
+      .btn.scanning {
+        background: #eaf4fb;
+        border-color: #5b9bd5;
+        color: #1a4a7a;
+      }
+
+      /* ── Result area ── */
+      #result {
+        padding: 0 1.25rem;
+        margin-top: 0.25rem;
+      }
+
+      /* ── Revealed card ── */
+      .reveal-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        animation: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: 0 8px 32px rgba(26, 45, 90, 0.1);
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* card replica header */
+      .card-replica-head {
+        background: var(--navy);
+        color: #fff;
+        padding: 1.1rem 1.25rem 1rem;
+        text-align: center;
+        position: relative;
+      }
+      .card-category {
+        font-size: 0.6rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+      }
+      .cat-icon {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.15);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card-title-big {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        line-height: 1.2;
+      }
+      .card-quote-box {
+        margin: 0.85rem 0 0;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.95);
+      }
+
+      /* strength/weakness strip */
+      .sw-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 1px solid var(--border);
+      }
+      .sw-col {
+        padding: 0.85rem 1rem;
+      }
+      .sw-col:first-child {
+        border-right: 1px solid var(--border);
+      }
+      .sw-head {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-lt);
+        margin-bottom: 0.45rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .sw-icon {
+        font-size: 0.75rem;
+      }
+      .sw-item {
+        font-size: 0.8rem;
+        color: var(--text);
+        line-height: 1.5;
+        padding: 2px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+      .sw-item::before {
+        content: "·";
+        color: var(--text-lt);
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+
+      /* expanded sections */
+      .expand-body {
+        padding: 0 1.25rem 1.25rem;
+      }
+
+      .exp-section {
+        margin-top: 1.1rem;
+      }
+      .exp-head {
+        font-size: 0.62rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--navy);
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 1.5px solid var(--sky);
+      }
+      .exp-head-icon {
+        font-size: 0.85rem;
+      }
+
+      /* overview */
+      .overview-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        line-height: 1.75;
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      /* examples */
+      .example-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+      }
+      .example-item {
+        padding: 0.7rem 0.9rem;
+        border-radius: 9px;
+        background: var(--sky-lt);
+        border: 1px solid rgba(91, 155, 213, 0.18);
+      }
+      .example-city {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--accent);
+        margin-bottom: 2px;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .example-desc {
+        font-size: 0.85rem;
+        color: var(--text);
+        line-height: 1.5;
+      }
+      .example-outcome {
+        margin-top: 0.4rem;
+        font-size: 0.78rem;
+        color: #2e6b3e;
+        font-weight: 500;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+      .example-outcome::before {
+        content: "↗";
+        font-size: 0.7rem;
+        margin-top: 1px;
+      }
+
+      /* impact metrics */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+      }
+      .metric {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 0.7rem 0.8rem;
+        text-align: center;
+      }
+      .metric-val {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1;
+      }
+      .metric-label {
+        font-size: 0.72rem;
+        color: var(--text-lt);
+        margin-top: 4px;
+        line-height: 1.3;
+      }
+
+      /* references */
+      .ref-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .ref-item {
+        padding: 0.65rem 0.85rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        transition: all 0.15s;
+      }
+      .ref-item:hover {
+        background: var(--sky-lt);
+        border-color: rgba(91, 155, 213, 0.3);
+      }
+      .ref-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--navy);
+        margin-bottom: 2px;
+      }
+      .ref-meta {
+        font-size: 0.75rem;
+        color: var(--text-lt);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .ref-tag {
+        display: inline-block;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-weight: 500;
+      }
+      .ref-tag.report {
+        background: rgba(26, 45, 90, 0.08);
+        color: var(--navy);
+      }
+      .ref-tag.paper {
+        background: rgba(46, 107, 62, 0.1);
+        color: #2e6b3e;
+      }
+      .ref-tag.tool {
+        background: rgba(42, 100, 150, 0.1);
+        color: var(--accent);
+      }
+
+      /* next steps */
+      .steps-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .step-item {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 0.6rem 0.8rem;
+        border-radius: 9px;
+        background: var(--off-white);
+        border: 1px solid var(--border2);
+      }
+      .step-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        background: var(--navy);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step-text {
+        font-size: 0.85rem;
+        color: var(--text);
+        line-height: 1.5;
+        padding-top: 1px;
+      }
+
+      /* no-match */
+      .no-match-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.5rem 1.25rem;
+        text-align: center;
+        animation: rise 0.35s ease;
+      }
+      .no-match-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+      }
+      .no-match-title {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+      }
+      .no-match-text {
+        font-size: 0.85rem;
+        color: var(--text-lt);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      .tip-list {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .tip {
+        font-size: 0.82rem;
+        color: var(--text-lt);
+        display: flex;
+        gap: 0.5rem;
+      }
+      .tip::before {
+        content: "→";
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+
+      /* detected raw text */
+      .detected-raw {
+        margin: 0.9rem 1.25rem 0;
+        padding: 0.7rem 0.9rem;
+        background: rgba(26, 45, 90, 0.04);
+        border-radius: 8px;
+        border: 1px solid var(--border2);
+      }
+      .detected-raw-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-lt);
+        margin-bottom: 3px;
+        font-weight: 500;
+      }
+      .detected-raw-val {
+        font-family: monospace;
+        font-size: 0.75rem;
+        color: var(--text-lt);
+        white-space: pre-wrap;
+        max-height: 60px;
+        overflow-y: auto;
+      }
+
+      /* browse */
+      .browse-section {
+        padding: 0 1.25rem;
+        margin-top: 1rem;
+      }
+      .browse-toggle {
+        width: 100%;
+        padding: 0.7rem 0.9rem;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        color: var(--text-lt);
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.15s;
+      }
+      .browse-toggle:hover {
+        background: var(--sky-lt);
+      }
+      .browse-arrow {
+        transition: transform 0.2s;
+        font-size: 0.65rem;
+      }
+      .browse-arrow.open {
+        transform: rotate(180deg);
+      }
+
+      .browse-grid {
+        display: none;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-top: 0.6rem;
+      }
+      .browse-grid.open {
+        display: grid;
+      }
+      .browse-item {
+        padding: 0.7rem 0.85rem;
+        border-radius: 9px;
+        border: 1px solid var(--border);
+        background: var(--white);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .browse-item:hover {
+        background: var(--sky-lt);
+        border-color: rgba(91, 155, 213, 0.3);
+      }
+      .browse-item-title {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--navy);
+        margin-bottom: 2px;
+      }
+      .browse-item-cat {
+        font-size: 0.72rem;
+        color: var(--text-lt);
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 1.25rem 1rem;
+        font-size: 0.72rem;
+        color: rgba(26, 45, 90, 0.3);
+      }
+      canvas {
+        display: none;
+      }
+
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- App header -->
+      <div class="app-header">
+        <div class="app-logo">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" />
+            <path
+              d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"
+            />
+          </svg>
+        </div>
+        <div class="app-title-wrap">
+          <div class="app-title">Sustainable Transport</div>
+          <div class="app-sub">Card Learning Companion</div>
+        </div>
+      </div>
+
+      <!-- Camera -->
+      <div class="section-label">Scan a card quote</div>
+
+      <div class="vf-outer">
+        <video id="video" autoplay playsinline muted></video>
+        <div class="vf-idle" id="vf-idle">
+          <svg
+            viewBox="0 0 48 48"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="40"
+            height="40"
+          >
+            <rect x="7" y="11" width="34" height="26" rx="2" />
+            <circle cx="24" cy="24" r="7" />
+            <path d="M3 16V8h8M45 16V8h-8M3 32v8h8M45 32v8h-8" />
+          </svg>
+          <span class="vf-idle-label">Camera inactive</span>
+        </div>
+        <div class="quote-frame qt qb">
+          <span class="quote-frame-label">Align card quote here</span>
+        </div>
+        <div id="beam"></div>
+        <div class="vf-vignette"></div>
+      </div>
+
+      <div class="status-strip">
+        <div class="dot" id="dot"></div>
+        <span id="status-msg">Tap Activate to start your camera</span>
+      </div>
+
+      <div class="prog-wrap" id="prog-wrap">
+        <div class="prog-track"><div id="prog"></div></div>
+        <div id="prog-msg">Loading recognition engine…</div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" id="btn-start">Activate</button>
+        <button class="btn" id="btn-scan" disabled>Scan Quote</button>
+        <button class="btn" id="btn-stop" disabled>Stop</button>
+      </div>
+
+      <div id="result" style="margin-top: 1rem"></div>
+      <div id="detected-raw-wrap"></div>
+
+      <!-- Browse all cards -->
+      <div class="browse-section" style="margin-top: 1.25rem">
+        <button class="browse-toggle" id="browse-toggle">
+          <span>Browse all cards</span>
+          <span class="browse-arrow" id="browse-arrow">▾</span>
+        </button>
+        <div class="browse-grid" id="browse-grid"></div>
+      </div>
+    </div>
+
+    <footer>
+      Sustainable Transport Card Series · Text recognition runs entirely on your
+      device
+    </footer>
+    <canvas id="snap"></canvas>
+
+    <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js"></script>
+    <script>
+      // ═══════════════════════════════════════════════════════════════════════
+      //  CARD DATABASE
+      //  Each card represents a technology/approach in sustainable transport.
+      //  Scanning any key phrase from the card's quote will reveal full detail.
+      // ═══════════════════════════════════════════════════════════════════════
+      const CARDS = [
+        {
+          id: "traffic-cameras",
+          category: "Technology",
+          title: "Sustainable Transport",
+          subtitle: "Traffic Monitoring",
+          quote: "First look at the flow.",
+          // scanPhrases: words/fragments OCR needs to match (fuzzy)
+          scanPhrases: [
+            "first look",
+            "look at the flow",
+            "first look at the flow",
+            "flow",
+            "look flow",
+          ],
+          strengths: ["Improves route planning", "Some real-time insights"],
+          weaknesses: ["Not preventative", "Reactive", "Privacy concerns"],
+          overview:
+            "Installing cameras to track congestion lets cities observe traffic patterns before making costly infrastructure changes. By capturing baseline movement data, urban planners gain evidence for where interventions will have the most ecological and social impact — turning raw flow into actionable insight.",
+          examples: [
+            {
+              city: "Amsterdam, Netherlands",
+              flag: "🇳🇱",
+              description:
+                "The city deployed 1,200 traffic cameras across key corridors in 2019, creating a live congestion map used by both planners and bus operators.",
+              outcome:
+                "Bus journey times reduced by 14% in monitored corridors within 18 months.",
+            },
+            {
+              city: "Singapore",
+              flag: "🇸🇬",
+              description:
+                "Singapore's Electronic Road Pricing system uses camera-based vehicle counting to dynamically adjust tolls, redistributing traffic load across the network in real time.",
+              outcome:
+                "Peak-hour CBD congestion reduced by 25% since full deployment.",
+            },
+            {
+              city: "Melbourne, Australia",
+              flag: "🇦🇺",
+              description:
+                "VicRoads partnered with university researchers to use intersection cameras to analyse pedestrian and cyclist interaction with traffic signals across the inner city.",
+              outcome:
+                "Informed a $40M signal upgrade programme targeting the 30 highest-conflict intersections.",
+            },
+          ],
+          metrics: [
+            {
+              val: "25%",
+              label: "Average congestion reduction in monitored zones",
+            },
+            {
+              val: "14%",
+              label: "Typical improvement in public transport reliability",
+            },
+            { val: "3–5×", label: "ROI vs. building new road capacity" },
+            {
+              val: "6 mo",
+              label: "Typical time to generate actionable baseline data",
+            },
+          ],
+          nextSteps: [
+            "Combine camera data with GPS traces from public transport to identify knock-on delays.",
+            "Share anonymised flow data publicly to enable third-party analysis and civic engagement.",
+            "Use baseline data to set measurable targets before any infrastructure investment.",
+            "Pair with community engagement to explain how movement data shapes planning decisions.",
+          ],
+          references: [
+            {
+              title: "ITF Urban Mobility Report: Monitoring as a First Step",
+              type: "report",
+              url: "https://www.itf-oecd.org/urban-mobility",
+              year: "2022",
+            },
+            {
+              title: "Singapore LTA: Congestion Pricing Effectiveness Study",
+              type: "paper",
+              url: "https://www.lta.gov.sg/content/ltagov/en/getting_around/roads_and_motoring.html",
+              year: "2023",
+            },
+            {
+              title: "VicRoads Traffic Signal Management Framework",
+              type: "tool",
+              url: "https://www.vicroads.vic.gov.au",
+              year: "2021",
+            },
+            {
+              title: "European Commission: Urban ITS Deployment Guide",
+              type: "report",
+              url: "https://transport.ec.europa.eu/transport-themes/intelligent-transport-systems_en",
+              year: "2023",
+            },
+          ],
+        },
+        {
+          id: "cycling-infrastructure",
+          category: "Infrastructure",
+          title: "Sustainable Transport",
+          subtitle: "Protected Cycling",
+          quote: "Separate the wheels from the engines.",
+          scanPhrases: [
+            "separate",
+            "wheels",
+            "engines",
+            "separate wheels",
+            "wheels from engines",
+          ],
+          strengths: [
+            "Zero emissions",
+            "Improves public health",
+            "Low cost per km",
+          ],
+          weaknesses: [
+            "Weather dependent",
+            "Political resistance",
+            "Requires cultural shift",
+          ],
+          overview:
+            "Protected cycling lanes physically separated from motor traffic are the single most effective intervention for increasing cycling uptake. When people feel safe, they ride — regardless of age, income, or experience. The infrastructure speaks louder than any awareness campaign.",
+          examples: [
+            {
+              city: "Copenhagen, Denmark",
+              flag: "🇩🇰",
+              description:
+                "The city has 390km of protected cycling lanes, with cyclists outnumbering cars in the city centre since 2016.",
+              outcome:
+                "62% of residents cycle to work or education daily, saving 90,000 tonnes of CO₂ annually.",
+            },
+            {
+              city: "Bogotá, Colombia",
+              flag: "🇨🇴",
+              description:
+                "The Ciclovía programme closes 127km of roads to car traffic every Sunday, combined with 550km of permanent protected lanes.",
+              outcome: "Cycling modal share rose from 0.5% to 9% in 15 years.",
+            },
+            {
+              city: "Paris, France",
+              flag: "🇫🇷",
+              description:
+                "Post-COVID Plan Vélo created 180km of new protected lanes ('coronapistes') in just 6 months, many of which became permanent.",
+              outcome: "Cycling trips increased 70% between 2019 and 2023.",
+            },
+          ],
+          metrics: [
+            {
+              val: "70%",
+              label: "Increase in cycling when protected lanes added",
+            },
+            {
+              val: "€0.5M",
+              label: "Average cost per km vs. €10M+ for road widening",
+            },
+            {
+              val: "11%",
+              label: "Reduction in nearby road traffic within 2 years",
+            },
+            {
+              val: "30yr",
+              label: "Average infrastructure lifespan with maintenance",
+            },
+          ],
+          nextSteps: [
+            "Map existing desire lines using GPS data from cycling apps before designing routes.",
+            "Prioritise connections between residential areas, transit hubs, and employment centres.",
+            "Engage local businesses early — research shows cycling customers spend more per month.",
+            "Pilot temporary lanes with paint and bollards before committing to permanent kerbs.",
+          ],
+          references: [
+            {
+              title: "Copenhagen City of Cyclists: Bicycle Account 2022",
+              type: "report",
+              url: "https://www.cycling-embassy.dk",
+              year: "2022",
+            },
+            {
+              title: "Bogotá Ciclovía: Urban Health Evidence Review",
+              type: "paper",
+              url: "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+              year: "2021",
+            },
+            {
+              title: "Paris Plan Vélo: Lessons for European Cities",
+              type: "report",
+              url: "https://www.paris.fr/pages/les-deplacements-a-paris-211",
+              year: "2023",
+            },
+          ],
+        },
+        {
+          id: "demand-responsive",
+          category: "Operations",
+          title: "Sustainable Transport",
+          subtitle: "Demand-Responsive Transit",
+          quote: "Run the bus where the people actually are.",
+          scanPhrases: [
+            "run the bus",
+            "where the people",
+            "people actually are",
+            "demand",
+            "responsive",
+          ],
+          strengths: [
+            "Efficient in low-density areas",
+            "Reduces dead running",
+            "Flexible",
+          ],
+          weaknesses: [
+            "Complex to operate",
+            "Requires digital access",
+            "Can reduce fixed routes",
+          ],
+          overview:
+            "Demand-responsive transit (DRT) uses algorithms and real-time booking to route shared vehicles dynamically — like a smarter, shared taxi. In low-density suburbs and rural areas where fixed routes are uneconomical, DRT can maintain genuine connectivity while dramatically reducing empty vehicle kilometres.",
+          examples: [
+            {
+              city: "Helsinki, Finland",
+              flag: "🇫🇮",
+              description:
+                "Kutsuplus — later succeeded by Whim — pioneered app-based shared minibus routing across Helsinki's outer suburbs from 2012.",
+              outcome:
+                "Reduced car dependency in pilot areas by 17% and cut per-passenger emissions by 40% vs. private car.",
+            },
+            {
+              city: "West Sussex, UK",
+              flag: "🇬🇧",
+              description:
+                "Arriva's 'Click' DRT service replaced underperforming fixed routes in rural West Sussex with an on-demand shared service.",
+              outcome:
+                "Passenger numbers increased 3× compared to the fixed routes they replaced.",
+            },
+            {
+              city: "Berlin, Germany",
+              flag: "🇩🇪",
+              description:
+                "BVG's Berlkönig electric DRT service operated in the city centre, focusing on connecting late-night passengers to the U-Bahn network.",
+              outcome:
+                "92% of trips completed with under 5-minute wait time; 35% of users reported switching from private taxi.",
+            },
+          ],
+          metrics: [
+            {
+              val: "40%",
+              label: "Reduction in per-passenger emissions vs. private car",
+            },
+            {
+              val: "3×",
+              label: "Typical ridership increase vs. replaced fixed route",
+            },
+            {
+              val: "60%",
+              label: "Reduction in vehicle kilometres in low-density pilots",
+            },
+            {
+              val: "5 min",
+              label: "Target maximum wait time for well-designed systems",
+            },
+          ],
+          nextSteps: [
+            "Identify specific low-density corridors where fixed routes consistently run near-empty.",
+            "Ensure digital booking is supplemented with phone-based booking for non-smartphone users.",
+            "Integrate DRT with fixed-network journey planners so passengers see it as part of the system.",
+            "Track not just ridership but vehicle kilometres saved and mode shift from private car.",
+          ],
+          references: [
+            {
+              title: "ITF: On-Demand Shared Mobility for All",
+              type: "report",
+              url: "https://www.itf-oecd.org/on-demand-transport",
+              year: "2022",
+            },
+            {
+              title: "Kutsuplus Helsinki: Post-Pilot Assessment",
+              type: "paper",
+              url: "https://www.hsl.fi/en",
+              year: "2016",
+            },
+            {
+              title: "MaaS Alliance: Demand Responsive Transport Guide",
+              type: "tool",
+              url: "https://maas-alliance.eu",
+              year: "2023",
+            },
+          ],
+        },
+      ];
+
+      // ═══════════════════════════════════════════════════════════════════════
+      //  FUZZY MATCHING ENGINE
+      // ═══════════════════════════════════════════════════════════════════════
+      function lev(a, b) {
+        const m = a.length,
+          n = b.length;
+        const d = Array.from({ length: m + 1 }, (_, i) =>
+          Array.from({ length: n + 1 }, (_, j) =>
+            i === 0 ? j : j === 0 ? i : 0,
+          ),
+        );
+        for (let i = 1; i <= m; i++)
+          for (let j = 1; j <= n; j++)
+            d[i][j] =
+              a[i - 1] === b[j - 1]
+                ? d[i - 1][j - 1]
+                : 1 + Math.min(d[i - 1][j], d[i][j - 1], d[i - 1][j - 1]);
+        return d[m][n];
+      }
+
+      function bigrams(s) {
+        const g = new Set();
+        for (let i = 0; i < s.length - 1; i++) g.add(s.slice(i, i + 2));
+        return g;
+      }
+
+      function bigramSim(a, b) {
+        const ga = bigrams(a),
+          gb = bigrams(b);
+        if (!ga.size || !gb.size) return 0;
+        let shared = 0;
+        ga.forEach((g) => {
+          if (gb.has(g)) shared++;
+        });
+        return shared / Math.max(ga.size, gb.size);
+      }
+
+      function scoreCard(card, rawText) {
+        const norm = (s) =>
+          s
+            .toLowerCase()
+            .replace(/[^a-z0-9 ]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+        const text = norm(rawText);
+        if (!text || text.length < 2) return 0;
+
+        let best = 0;
+
+        for (const phrase of card.scanPhrases) {
+          const p = norm(phrase);
+          const words = p.split(" ").filter((w) => w.length > 1);
+          const textWords = text.split(" ").filter((w) => w.length > 1);
+
+          let s = 0;
+
+          // Direct substring hit — strongest signal
+          if (text.includes(p)) {
+            s += 120;
+          }
+
+          // Per-word fuzzy match
+          let hits = 0;
+          for (const w of words) {
+            if (textWords.includes(w)) {
+              s += 25;
+              hits++;
+              continue;
+            }
+            let minDist = Infinity;
+            for (const tw of textWords) {
+              const d = lev(w, tw);
+              if (d < minDist) minDist = d;
+            }
+            const allowed = Math.max(1, Math.floor(w.length * 0.3));
+            if (minDist <= allowed) {
+              s += Math.max(5, 20 - minDist * 4);
+              hits++;
+            }
+          }
+          if (words.length) s += (hits / words.length) * 35;
+
+          // Bigram similarity between phrase and full text
+          s +=
+            bigramSim(
+              p.replace(/ /g, ""),
+              text.replace(/ /g, "").slice(0, 200),
+            ) * 25;
+
+          if (s > best) best = s;
+        }
+
+        return best;
+      }
+
+      function findBestCard(rawText) {
+        let best = null,
+          bestScore = 0;
+        for (const card of CARDS) {
+          const s = scoreCard(card, rawText);
+          if (s > bestScore) {
+            bestScore = s;
+            best = card;
+          }
+        }
+        return { card: bestScore >= 18 ? best : null, score: bestScore };
+      }
+
+      // ═══════════════════════════════════════════════════════════════════════
+      //  DOM REFS
+      // ═══════════════════════════════════════════════════════════════════════
+      const video = document.getElementById("video");
+      const snap = document.getElementById("snap");
+      const btnStart = document.getElementById("btn-start");
+      const btnScan = document.getElementById("btn-scan");
+      const btnStop = document.getElementById("btn-stop");
+      const dotEl = document.getElementById("dot");
+      const statusEl = document.getElementById("status-msg");
+      const beamEl = document.getElementById("beam");
+      const resultEl = document.getElementById("result");
+      const rawWrap = document.getElementById("detected-raw-wrap");
+      const progWrap = document.getElementById("prog-wrap");
+      const progFill = document.getElementById("prog");
+      const progMsg = document.getElementById("prog-msg");
+      const vfIdle = document.getElementById("vf-idle");
+      const browseGrid = document.getElementById("browse-grid");
+      const browseTog = document.getElementById("browse-toggle");
+      const browseArr = document.getElementById("browse-arrow");
+
+      let stream = null,
+        worker = null,
+        ready = false;
+
+      // ── Build browse panel ──
+      CARDS.forEach((card) => {
+        const el = document.createElement("div");
+        el.className = "browse-item";
+        el.innerHTML = `<div class="browse-item-title">${card.subtitle}</div><div class="browse-item-cat">${card.category}</div>`;
+        el.addEventListener("click", () => {
+          renderCard(card, 100, "(manual)");
+          resultEl.scrollIntoView({ behavior: "smooth" });
+        });
+        browseGrid.appendChild(el);
+      });
+
+      browseTog.addEventListener("click", () => {
+        browseGrid.classList.toggle("open");
+        browseArr.classList.toggle("open");
+      });
+
+      // ── Helpers ──
+      function setStatus(msg, state = "idle") {
+        statusEl.textContent = msg;
+        dotEl.className = "dot" + (state === "idle" ? "" : " " + state);
+      }
+
+      // ── OCR Worker ──
+      async function loadWorker() {
+        progWrap.classList.add("show");
+        setStatus("Loading recognition engine…", "active");
+        try {
+          worker = await Tesseract.createWorker("eng", 1, {
+            logger: (m) => {
+              if (m.status === "loading tesseract core") {
+                progFill.style.width = "20%";
+                progMsg.textContent = "Loading core…";
+              }
+              if (m.status === "loading language traineddata") {
+                progFill.style.width = "55%";
+                progMsg.textContent = "Loading language data…";
+              }
+              if (m.status === "initializing api") {
+                progFill.style.width = "82%";
+                progMsg.textContent = "Initialising…";
+              }
+            },
+          });
+          await worker.setParameters({
+            tessedit_pageseg_mode: "6",
+            tessedit_ocr_engine_mode: "1",
+            tessedit_char_whitelist:
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 '\".,!?-",
+          });
+          progFill.style.width = "100%";
+          progMsg.textContent = "Ready";
+          setTimeout(() => progWrap.classList.remove("show"), 700);
+          ready = true;
+          btnScan.disabled = false;
+          setStatus("Ready — point at a card quote and tap Scan", "active");
+        } catch (e) {
+          progMsg.textContent = "Failed: " + e.message;
+          setStatus("OCR engine failed", "err");
+        }
+      }
+
+      // ── Camera ──
+      btnStart.addEventListener("click", async () => {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: "environment" },
+              width: { ideal: 1920 },
+              height: { ideal: 1080 },
+            },
+          });
+          video.srcObject = stream;
+          await video.play();
+          video.classList.add("live");
+          vfIdle.classList.add("hidden");
+          btnStart.disabled = true;
+          btnStop.disabled = false;
+          setStatus("Camera on — loading OCR…", "active");
+          await loadWorker();
+        } catch (e) {
+          setStatus("Camera error: " + e.message, "err");
+        }
+      });
+
+      btnStop.addEventListener("click", () => {
+        if (stream) {
+          stream.getTracks().forEach((t) => t.stop());
+          stream = null;
+        }
+        video.srcObject = null;
+        video.classList.remove("live");
+        vfIdle.classList.remove("hidden");
+        beamEl.classList.remove("on");
+        btnStart.disabled = false;
+        btnStop.disabled = true;
+        btnScan.disabled = true;
+        ready = false;
+        setStatus("Camera stopped");
+      });
+
+      // ── Scan ──
+      btnScan.addEventListener("click", async () => {
+        if (!ready || !stream) return;
+        btnScan.disabled = true;
+        btnScan.textContent = "Scanning…";
+        btnScan.classList.add("scanning");
+        beamEl.classList.add("on");
+        setStatus("Reading quote…", "active");
+        resultEl.innerHTML = "";
+        rawWrap.innerHTML = "";
+
+        const ctx = snap.getContext("2d");
+        snap.width = video.videoWidth || 1280;
+        snap.height = video.videoHeight || 720;
+
+        // Scan three regions and pool results
+        const regions = [
+          {
+            sx: snap.width * 0.05,
+            sy: snap.height * 0.05,
+            sw: snap.width * 0.9,
+            sh: snap.height * 0.55,
+          },
+          { sx: 0, sy: 0, sw: snap.width, sh: snap.height },
+          {
+            sx: snap.width * 0.05,
+            sy: snap.height * 0.2,
+            sw: snap.width * 0.9,
+            sh: snap.height * 0.6,
+          },
+        ];
+
+        let allText = "";
+        for (const r of regions) {
+          const c = document.createElement("canvas");
+          c.width = Math.round(r.sw);
+          c.height = Math.round(r.sh);
+          const cx = c.getContext("2d");
+          cx.filter = "contrast(1.5) brightness(1.1) saturate(0)";
+          cx.drawImage(video, r.sx, r.sy, r.sw, r.sh, 0, 0, c.width, c.height);
+          try {
+            const {
+              data: { text },
+            } = await worker.recognize(c);
+            allText += " " + text;
+          } catch (_) {}
+        }
+
+        beamEl.classList.remove("on");
+        const { card, score } = findBestCard(allText);
+        renderCard(card, score, allText);
+
+        btnScan.disabled = false;
+        btnScan.textContent = "Scan Quote";
+        btnScan.classList.remove("scanning");
+      });
+
+      // ═══════════════════════════════════════════════════════════════════════
+      //  RENDER
+      // ═══════════════════════════════════════════════════════════════════════
+      function renderCard(card, score, rawText) {
+        rawWrap.innerHTML = rawText
+          ? `
+    <div class="detected-raw" style="margin:0.6rem 1.25rem 0;">
+      <div class="detected-raw-lbl">Detected text</div>
+      <div class="detected-raw-val">${rawText.trim().slice(0, 200)}</div>
+    </div>`
+          : "";
+
+        if (!card) {
+          setStatus("No card matched — see tips below", "err");
+          resultEl.innerHTML = `
+      <div class="no-match-card">
+        <div class="no-match-icon">🔍</div>
+        <div class="no-match-title">Quote not recognised</div>
+        <div class="no-match-text">Make sure the card's quote text is visible inside the frame.</div>
+        <div class="tip-list">
+          <div class="tip">Hold the card flat and steady</div>
+          <div class="tip">Ensure the quote box is well-lit — avoid glare</div>
+          <div class="tip">Move closer so the text fills the frame</div>
+          <div class="tip">Try browsing cards below to open one manually</div>
+        </div>
+      </div>`;
+          return;
+        }
+
+        const conf = score >= 80 ? "High" : score >= 35 ? "Medium" : "Low";
+        setStatus(`Matched: ${card.subtitle}`, "ok");
+
+        const examplesHTML = card.examples
+          .map(
+            (e) => `
+    <div class="example-item">
+      <div class="example-city">${e.flag} ${e.city}</div>
+      <div class="example-desc">${e.description}</div>
+      <div class="example-outcome">${e.outcome}</div>
+    </div>`,
+          )
+          .join("");
+
+        const metricsHTML = card.metrics
+          .map(
+            (m) => `
+    <div class="metric">
+      <div class="metric-val">${m.val}</div>
+      <div class="metric-label">${m.label}</div>
+    </div>`,
+          )
+          .join("");
+
+        const stepsHTML = card.nextSteps
+          .map(
+            (s, i) => `
+    <div class="step-item">
+      <div class="step-num">${i + 1}</div>
+      <div class="step-text">${s}</div>
+    </div>`,
+          )
+          .join("");
+
+        const refsHTML = card.references
+          .map(
+            (r) => `
+    <a class="ref-item" href="${r.url}" target="_blank" rel="noopener">
+      <div class="ref-title">${r.title}</div>
+      <div class="ref-meta">
+        <span class="ref-tag ${r.type}">${r.type}</span>
+        <span>${r.year}</span>
+      </div>
+    </a>`,
+          )
+          .join("");
+
+        const strengthsHTML = card.strengths
+          .map((s) => `<div class="sw-item">${s}</div>`)
+          .join("");
+        const weaknessesHTML = card.weaknesses
+          .map((w) => `<div class="sw-item">${w}</div>`)
+          .join("");
+
+        resultEl.innerHTML = `
+    <div class="reveal-card">
+
+      <!-- Card replica header -->
+      <div class="card-replica-head">
+        <div class="card-category">
+          <span class="cat-icon">
+            <svg viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round" width="10" height="10">
+              <circle cx="6" cy="6" r="2"/><path d="M6 1v2M6 9v2M1 6h2M9 6h2"/>
+            </svg>
+          </span>
+          ${card.category}
+        </div>
+        <div class="card-title-big">${card.title}</div>
+        <div class="card-quote-box">"${card.quote}"</div>
+      </div>
+
+      <!-- Strengths / Weaknesses -->
+      <div class="sw-strip">
+        <div class="sw-col">
+          <div class="sw-head"><span class="sw-icon">✦</span> Strengths</div>
+          ${strengthsHTML}
+        </div>
+        <div class="sw-col">
+          <div class="sw-head"><span class="sw-icon">◇</span> Weaknesses</div>
+          ${weaknessesHTML}
+        </div>
+      </div>
+
+      <!-- Expanded content -->
+      <div class="expand-body">
+
+        <div class="exp-section">
+          <div class="exp-head"><span class="exp-head-icon">📖</span> Overview</div>
+          <div class="overview-text">${card.overview}</div>
+        </div>
+
+        <div class="exp-section">
+          <div class="exp-head"><span class="exp-head-icon">🌍</span> Real-World Examples</div>
+          <div class="example-list">${examplesHTML}</div>
+        </div>
+
+        <div class="exp-section">
+          <div class="exp-head"><span class="exp-head-icon">📊</span> Impact at a Glance</div>
+          <div class="metrics-grid">${metricsHTML}</div>
+        </div>
+
+        <div class="exp-section">
+          <div class="exp-head"><span class="exp-head-icon">→</span> Next Steps</div>
+          <div class="steps-list">${stepsHTML}</div>
+        </div>
+
+        <div class="exp-section">
+          <div class="exp-head"><span class="exp-head-icon">📚</span> References & Resources</div>
+          <div class="ref-list">${refsHTML}</div>
+        </div>
+
+      </div>
+    </div>`;
+
+        resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    </script>
+  </body>
+</html>
